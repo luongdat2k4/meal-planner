@@ -4,45 +4,74 @@ import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
+import ChipTabs from '../../shared/ui/ChipTabs.vue'
+import SearchField from '../../shared/ui/SearchField.vue'
+import { MEAL_CATEGORIES, mealCategories } from './categories'
 import { MEALS } from './meals'
+import type { Meal } from './types'
+import { useFavorites } from './useFavorites'
+
+const { isFavorite, toggleFavorite } = useFavorites()
 
 const query = ref('')
+const category = ref('all')
+
+const chips = [
+  { id: 'all', label: 'Tất cả' },
+  { id: 'favorites', label: '♥ Yêu thích' },
+  ...MEAL_CATEGORIES.map((c) => ({ id: c.id, label: `${c.emoji} ${c.label}` })),
+]
+
+function inCategory(meal: Meal): boolean {
+  if (category.value === 'all') return true
+  if (category.value === 'favorites') return isFavorite(meal.id)
+  return mealCategories(meal.id).some((c) => c.id === category.value)
+}
 
 const filtered = computed(() => {
   const q = query.value.trim().toLowerCase()
-  return q ? MEALS.filter((m) => m.title.toLowerCase().includes(q)) : MEALS
+  return MEALS.filter((meal) => inCategory(meal) && (!q || meal.title.toLowerCase().includes(q)))
 })
 </script>
 
 <template>
   <section class="space-y-4">
-    <div class="relative">
-      <Icon :icon="ICONS.magnify" class="absolute left-3 top-1/2 -translate-y-1/2 text-xl text-gray-400" />
-      <input
-        v-model="query"
-        type="search"
-        placeholder="Tìm món ăn..."
-        class="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-10 pr-3 outline-none focus:border-brand"
-      />
-    </div>
+    <SearchField v-model="query" placeholder="Tìm món ăn..." />
+    <ChipTabs v-model="category" :options="chips" />
 
     <p class="text-sm text-gray-500">{{ filtered.length }} món</p>
 
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
-      <RouterLink
-        v-for="meal in filtered"
-        :key="meal.id"
-        :to="{ name: 'meal-detail', params: { id: meal.id } }"
-        class="overflow-hidden rounded-2xl bg-white text-left shadow-sm ring-1 ring-black/5 active:scale-[0.98]"
-      >
-        <img
-          :src="assetUrl(meal.image)"
-          :alt="meal.title"
-          loading="lazy"
-          class="aspect-square w-full object-cover"
-        />
-        <span class="block p-2.5 text-sm font-medium leading-snug">{{ meal.title }}</span>
-      </RouterLink>
+    <div class="grid grid-cols-2 gap-4">
+      <article v-for="meal in filtered" :key="meal.id" class="relative">
+        <RouterLink
+          :to="{ name: 'meal-detail', params: { id: meal.id } }"
+          class="block overflow-hidden rounded-3xl bg-white shadow-card transition active:scale-[0.98]"
+        >
+          <div class="relative">
+            <img :src="assetUrl(meal.image)" :alt="meal.title" loading="lazy" class="aspect-[4/3] w-full object-cover" />
+            <span
+              v-if="mealCategories(meal.id)[0]"
+              class="absolute bottom-2 left-2 rounded-full bg-brand px-2.5 py-1 text-xs font-semibold text-white shadow"
+            >
+              {{ mealCategories(meal.id)[0]?.label }}
+            </span>
+          </div>
+          <div class="p-3">
+            <p class="line-clamp-2 min-h-10 text-sm font-semibold leading-snug">{{ meal.title }}</p>
+          </div>
+        </RouterLink>
+
+        <button
+          type="button"
+          class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 shadow"
+          :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-400'"
+          :aria-label="isFavorite(meal.id) ? 'Bỏ yêu thích' : 'Yêu thích'"
+          :aria-pressed="isFavorite(meal.id)"
+          @click="toggleFavorite(meal.id)"
+        >
+          <Icon :icon="isFavorite(meal.id) ? ICONS.heart : ICONS.heartOutline" class="text-xl" />
+        </button>
+      </article>
     </div>
 
     <p v-if="filtered.length === 0" class="py-10 text-center text-gray-500">Không tìm thấy món phù hợp.</p>

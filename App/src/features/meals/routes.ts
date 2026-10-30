@@ -13,6 +13,6 @@ export const mealsRoutes: RouteRecordRaw[] = [
     name: 'meal-detail',
     component: () => import('./MealDetailView.vue'),
     props: true,
-    meta: { title: 'Chi tiết món', backTo: { name: 'meals' } },
+    meta: { title: 'Chi tiết món', fullscreen: true },
   },
 ]

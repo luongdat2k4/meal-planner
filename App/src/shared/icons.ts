@@ -7,6 +7,9 @@ import chevronDown from '@iconify-icons/mdi/chevron-down'
 import close from '@iconify-icons/mdi/close'
 import cog from '@iconify-icons/mdi/cog'
 import crown from '@iconify-icons/mdi/crown'
+import chevronRight from '@iconify-icons/mdi/chevron-right'
+import heart from '@iconify-icons/mdi/heart'
+import heartOutline from '@iconify-icons/mdi/heart-outline'
 import carrot from '@iconify-icons/mdi/carrot'
 import silverware from '@iconify-icons/mdi/silverware-fork-knife'
 import magnify from '@iconify-icons/mdi/magnify'
@@ -21,6 +24,9 @@ export const ICONS = {
   cart,
   check,
   chevronDown,
+  chevronRight,
+  heart,
+  heartOutline,
   close,
   cog,
   crown,
