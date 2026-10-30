@@ -34,7 +34,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
 
 <template>
   <div class="mx-auto flex min-h-dvh max-w-2xl flex-col">
-    <header v-if="showHeader" class="flex items-center gap-2 px-5 pb-2 pt-[max(env(safe-area-inset-top),1.25rem)]">
+    <header v-if="showHeader" class="glass sticky top-0 z-20 flex items-center gap-2 bg-white/40 px-5 pb-3 pt-[max(env(safe-area-inset-top),1.25rem)]">
       <RouterLink
         v-if="route.meta.backTo"
         :to="route.meta.backTo"
