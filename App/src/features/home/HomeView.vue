@@ -5,12 +5,10 @@ import { RouterLink } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
 import { formatMinutes } from '../../shared/format'
 import { ICONS } from '../../shared/icons'
-import { useAccount } from '../account'
 import { getMeal, getRecipe, useFavorites } from '../meals'
 import { DAY_NAMES, usePlanner } from '../planner'
 import { useShopping } from '../shopping'
 
-const { state: account } = useAccount()
 const { state: planner, plannedMealCount } = usePlanner()
 const { state: favorites } = useFavorites()
 const { state: shopping } = useShopping()
@@ -18,7 +16,7 @@ const { state: shopping } = useShopping()
 // Monday = 0.
 const today = (new Date().getDay() + 6) % 7
 
-const greeting = computed(() => (account.signedIn ? `Xin chào, ${account.name} 👋` : 'Xin chào bạn 👋'))
+const greeting = 'Xin chào bạn 👋'
 const pendingCount = computed(() => shopping.items.filter((item) => !item.checked).length)
 
 const todayMeals = computed(() =>
@@ -42,13 +40,6 @@ const tiles = computed(() => [
         <p class="text-gray-600">{{ greeting }}</p>
         <h1 class="mt-1 text-4xl font-semibold leading-tight tracking-tight">Hôm nay<br />ăn gì?</h1>
       </div>
-      <RouterLink
-        :to="{ name: 'settings' }"
-        class="glass flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-card shadow-card"
-        aria-label="Cài đặt và tài khoản"
-      >
-        <Icon :icon="ICONS.accountCircle" class="text-3xl text-gray-700" />
-      </RouterLink>
     </header>
 
     <RouterLink :to="{ name: 'meals' }" class="glass flex items-center gap-3 rounded-full bg-card px-5 py-4 text-gray-500 shadow-card">

@@ -1,5 +1,4 @@
 import { resetRuntime } from '../backend/runtime'
-import { useAccount } from '../features/account'
 import { useHousehold } from '../features/household'
 import { usePreferences } from '../features/preferences'
 import { usePremium } from '../features/premium'
@@ -12,6 +11,5 @@ export function resetAllData() {
   useShopping().reset()
   usePreferences().reset()
   useHousehold().leave()
-  useAccount().reset()
   usePremium().reset()
 }

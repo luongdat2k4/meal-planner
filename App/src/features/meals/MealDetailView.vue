@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
 import { formatMinutes, formatVnd } from '../../shared/format'
 import { ICONS } from '../../shared/icons'
@@ -27,6 +27,8 @@ import { useMealActivity } from './useMealActivity'
 
 const props = defineProps<{ id: string }>()
 
+const router = useRouter()
+
 const { addMealToDay } = usePlanner()
 const { addIngredientItem, addIngredientItems } = useShopping()
 const { state: prefs } = usePreferences()
@@ -40,7 +42,6 @@ const categories = computed(() => mealCategories(props.id))
 const servings = ref(prefs.householdSize)
 const method = ref('')
 const selectedDay = ref(String((new Date().getDay() + 6) % 7))
-const addedDay = ref<number | null>(null)
 
 const scale = computed(() => (recipe.value ? servings.value / recipe.value.baseServings : 1))
 const methodOptions = computed(() => (recipe.value?.methods ?? []).map((m) => ({ id: m, label: methodLabel(m) })))
@@ -71,7 +72,6 @@ watch(
     activity.markViewed(id)
     servings.value = prefs.householdSize
     method.value = getRecipe(id)?.methods[0] ?? ''
-    addedDay.value = null
   },
   { immediate: true },
 )
@@ -95,19 +95,22 @@ function addToPlan() {
   if (!meal.value) return
   const day = Number(selectedDay.value)
   addMealToDay(day, meal.value.id)
-  addedDay.value = day
+  showToast(`Đã thêm vào ${DAY_NAMES[day]}`, 3500, { label: 'Xem kế hoạch', onClick: () => router.push({ name: 'planner' }) })
 }
 </script>
 
 <template>
-  <section v-if="meal && recipe" class="px-5 pb-40 pt-[max(env(safe-area-inset-top),1rem)]">
-    <div class="flex items-center justify-between">
-      <RouterLink :to="{ name: 'meals' }" class="glass flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card" aria-label="Quay lại">
+  <section v-if="meal && recipe" class="px-5 pb-40 pt-[calc(max(env(safe-area-inset-top),1rem)+2.75rem)]">
+    <!-- Back and favourite stay fixed at the top while the page scrolls. -->
+    <div
+      class="pointer-events-none fixed inset-x-0 top-0 z-20 mx-auto flex max-w-2xl items-center justify-between px-5 pt-[max(env(safe-area-inset-top),1rem)]"
+    >
+      <RouterLink :to="{ name: 'meals' }" class="glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card" aria-label="Quay lại">
         <Icon :icon="ICONS.arrowLeft" class="text-2xl" />
       </RouterLink>
       <button
         type="button"
-        class="glass flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
+        class="glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
         :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-700'"
         :aria-label="isFavorite(meal.id) ? 'Bỏ yêu thích' : 'Yêu thích'"
         :aria-pressed="isFavorite(meal.id)"
@@ -239,13 +242,6 @@ function addToPlan() {
       <section>
         <h2 class="mb-1 text-lg font-semibold">Thêm vào kế hoạch</h2>
         <ChipTabs v-model="selectedDay" :options="dayOptions" />
-        <p v-if="addedDay !== null" class="mt-2 flex items-center gap-2 rounded-2xl bg-brand-soft p-3 text-sm text-brand">
-          <Icon :icon="ICONS.check" class="text-lg" />
-          <span>
-            Đã thêm vào {{ DAY_NAMES[addedDay] }}.
-            <RouterLink :to="{ name: 'planner' }" class="font-semibold underline">Xem kế hoạch</RouterLink>
-          </span>
-        </p>
       </section>
     </div>
 

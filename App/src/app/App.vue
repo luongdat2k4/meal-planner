@@ -45,6 +45,20 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       <h1 class="text-2xl font-semibold tracking-tight">{{ route.meta.title }}</h1>
     </header>
 
+    <!-- Profile and settings button: fixed, so it stays put while a tab screen scrolls. -->
+    <div
+      v-if="showChrome && route.meta.tab"
+      class="pointer-events-none fixed inset-x-0 top-0 z-30 mx-auto flex max-w-2xl justify-end px-5 pt-[max(env(safe-area-inset-top),1.25rem)]"
+    >
+      <RouterLink
+        :to="{ name: 'settings' }"
+        class="glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
+        aria-label="Hồ sơ và cài đặt"
+      >
+        <Icon :icon="ICONS.accountCircle" class="text-3xl text-gray-700" />
+      </RouterLink>
+    </div>
+
     <main class="flex-1" :class="showChrome ? (showHeader ? 'px-5 pb-32 pt-2' : 'px-5 pb-32') : ''">
       <RouterView v-slot="{ Component }">
         <KeepAlive :include="cachedViews">

@@ -10,7 +10,6 @@ import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import ListRow from '../../shared/ui/ListRow.vue'
 import ToggleSwitch from '../../shared/ui/ToggleSwitch.vue'
-import { useAccount } from '../account'
 import { MAX_MEMBERS, useHousehold } from '../household'
 import { getIngredients } from '../ingredients'
 import { getMeals } from '../meals'
@@ -20,7 +19,6 @@ import { usePremium } from '../premium'
 import { STORES } from '../shopping'
 
 const router = useRouter()
-const { state: account } = useAccount()
 const { state: household } = useHousehold()
 const { state: prefs } = usePreferences()
 const { plannedMealCount } = usePlanner()
@@ -55,19 +53,6 @@ async function confirmReset() {
 
 <template>
   <section class="space-y-4">
-    <!-- Account -->
-    <RouterLink :to="{ name: 'account' }" class="flex items-center gap-4 rounded-3xl bg-card p-4 shadow-card transition active:scale-[0.99]">
-      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
-        <span v-if="account.signedIn" class="text-2xl font-bold">{{ account.name.charAt(0) }}</span>
-        <Icon v-else :icon="ICONS.accountCircle" class="text-4xl" />
-      </span>
-      <span class="min-w-0 flex-1">
-        <span class="block font-bold">{{ account.signedIn ? account.name : 'Đang dùng ẩn danh' }}</span>
-        <span class="block truncate text-sm text-gray-500">{{ account.signedIn ? account.email : 'Đăng nhập để sao lưu dữ liệu' }}</span>
-      </span>
-      <Icon :icon="ICONS.chevronRight" class="text-xl text-gray-300" />
-    </RouterLink>
-
     <!-- Premium -->
     <RouterLink
       :to="{ name: 'premium' }"

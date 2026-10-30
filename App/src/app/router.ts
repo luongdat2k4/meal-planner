@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
-import { accountRoutes } from '../features/account/routes'
 import { homeRoutes } from '../features/home/routes'
 import { householdRoutes } from '../features/household/routes'
 import { ingredientsRoutes } from '../features/ingredients/routes'
@@ -21,7 +20,6 @@ const featureRoutes: RouteRecordRaw[] = [
   ...settingsRoutes,
   ...preferencesRoutes,
   ...householdRoutes,
-  ...accountRoutes,
   ...premiumRoutes,
   ...onboardingRoutes,
 ]
