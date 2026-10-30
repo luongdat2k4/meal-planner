@@ -2,8 +2,9 @@ import { createPersistedState } from '../../shared/persisted'
 import type { Preferences } from './types'
 
 const defaults = (): Preferences => ({
-  onboardingDone: false,
-  onboardingStep: 0,
+  onboardingSeen: false,
+  setupDone: false,
+  setupStep: 0,
   householdSize: 2,
   dietaryIds: [],
   allergenIds: [],
@@ -18,13 +19,17 @@ const state = createPersistedState<Preferences>('meal-planner:preferences', defa
 
 export function usePreferences() {
   function completeOnboarding() {
-    state.onboardingDone = true
-    state.onboardingStep = 0
+    state.onboardingSeen = true
+  }
+
+  function completeSetup() {
+    state.setupDone = true
+    state.setupStep = 0
   }
 
   function reset() {
     Object.assign(state, defaults())
   }
 
-  return { state, completeOnboarding, reset }
+  return { state, completeOnboarding, completeSetup, reset }
 }

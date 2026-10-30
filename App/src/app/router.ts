@@ -4,6 +4,7 @@ import { homeRoutes } from '../features/home/routes'
 import { householdRoutes } from '../features/household/routes'
 import { ingredientsRoutes } from '../features/ingredients/routes'
 import { mealsRoutes } from '../features/meals/routes'
+import { onboardingRoutes } from '../features/onboarding/routes'
 import { plannerRoutes } from '../features/planner/routes'
 import { usePreferences } from '../features/preferences'
 import { preferencesRoutes } from '../features/preferences/routes'
@@ -22,6 +23,7 @@ const featureRoutes: RouteRecordRaw[] = [
   ...householdRoutes,
   ...accountRoutes,
   ...premiumRoutes,
+  ...onboardingRoutes,
 ]
 
 // Clean URLs need the server (Vite, Capacitor's local server) to fall back to index.html for unknown paths.
@@ -35,11 +37,14 @@ export const router = createRouter({
   scrollBehavior: (_to, _from, saved) => saved ?? { top: 0 },
 })
 
-// First run: send people through onboarding until they finish or skip it.
+// First run: welcome slides (/onboarding), preference questions (/setup), then the app.
 router.beforeEach((to) => {
   const { state } = usePreferences()
-  if (!state.onboardingDone && to.name !== 'onboarding') return { name: 'onboarding' }
-  if (state.onboardingDone && to.name === 'onboarding') return { name: 'home' }
+  if (state.setupDone) {
+    return to.name === 'onboarding' || to.name === 'setup' ? { name: 'home' } : undefined
+  }
+  if (!state.onboardingSeen) return to.name === 'onboarding' ? undefined : { name: 'onboarding' }
+  return to.name === 'setup' ? undefined : { name: 'setup' }
 })
 
 export const tabs = featureRoutes

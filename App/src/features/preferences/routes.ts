@@ -2,10 +2,10 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export const preferencesRoutes: RouteRecordRaw[] = [
   {
-    path: '/onboarding',
-    name: 'onboarding',
-    component: () => import('./OnboardingView.vue'),
-    meta: { title: 'Làm quen', fullscreen: true },
+    path: '/setup',
+    name: 'setup',
+    component: () => import('./SetupView.vue'),
+    meta: { title: 'Thiết lập', fullscreen: true },
   },
   {
     path: '/preferences',

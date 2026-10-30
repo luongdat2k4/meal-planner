@@ -12,9 +12,12 @@ export interface Reminder {
 }
 
 export interface Preferences {
-  onboardingDone: boolean
-  // Last onboarding step reached, so an interrupted flow can resume.
-  onboardingStep: number
+  // The welcome slides (/onboarding) shown before the preference questions.
+  onboardingSeen: boolean
+  // The preference questions (/setup) are finished or skipped.
+  setupDone: boolean
+  // Last setup step reached, so an interrupted flow can resume.
+  setupStep: number
   householdSize: number
   dietaryIds: string[]
   allergenIds: string[]

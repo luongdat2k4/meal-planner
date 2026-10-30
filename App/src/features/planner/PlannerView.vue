@@ -8,7 +8,7 @@ import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import BottomSheet from '../../shared/ui/BottomSheet.vue'
 import ChipTabs from '../../shared/ui/ChipTabs.vue'
-import { MEALS, getMeal, getRecipe, type Meal } from '../meals'
+import { getMeal, getRecipe, type Meal } from '../meals'
 import { usePreferences } from '../preferences'
 import { useShopping } from '../shopping'
 import { planCost, regeneratePlan, swapCandidates } from './generatePlan'
@@ -16,22 +16,16 @@ import { planIngredientLabels } from './planIngredients'
 import { DAY_NAMES } from './types'
 import { usePlanner } from './usePlanner'
 
-const { state, plannedMealCount, addMealToDay, removeMealFromDay, replaceMeal, clearDay } = usePlanner()
+const { state, plannedMealCount, removeMealFromDay, replaceMeal, clearDay } = usePlanner()
 const { state: prefs } = usePreferences()
 const { addManyShoppingItems } = useShopping()
 
 // Open on today (Monday = 0).
 const activeDay = ref(String((new Date().getDay() + 6) % 7))
-const pendingMeal = ref('')
 const generating = ref(false)
 
 const dayIndex = computed(() => Number(activeDay.value))
-const dayOptions = computed(() =>
-  DAY_NAMES.map((name, index) => {
-    const count = (state.plan[index] ?? []).length
-    return { id: String(index), label: count ? `${name} · ${count}` : name }
-  }),
-)
+const dayOptions = DAY_NAMES.map((name, index) => ({ id: String(index), label: name }))
 const dayMeals = computed(() =>
   (state.plan[dayIndex.value] ?? []).map((mealId, index) => ({ index, mealId, meal: getMeal(mealId) })),
 )
@@ -59,12 +53,6 @@ async function generate() {
 function addToShopping() {
   const added = addManyShoppingItems(planIngredientLabels())
   showToast(added ? `Đã thêm ${added} nguyên liệu vào danh sách đi chợ` : 'Danh sách đi chợ đã có đủ nguyên liệu')
-}
-
-function addQuick() {
-  if (!pendingMeal.value) return
-  addMealToDay(dayIndex.value, pendingMeal.value)
-  pendingMeal.value = ''
 }
 
 const swapTarget = ref<{ day: number; index: number; mealId: string } | null>(null)
@@ -187,24 +175,6 @@ function applySwap(newMealId: string) {
       <RouterLink :to="{ name: 'meals' }" class="inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white">
         Chọn món
       </RouterLink>
-    </div>
-
-    <div class="flex gap-2">
-      <select
-        v-model="pendingMeal"
-        class="min-w-0 flex-1 rounded-2xl bg-card px-4 py-3.5 text-sm shadow-card outline-none ring-1 ring-transparent focus:ring-brand/40"
-      >
-        <option value="" disabled>Thêm nhanh một món...</option>
-        <option v-for="meal in MEALS" :key="meal.id" :value="meal.id">{{ meal.title }}</option>
-      </select>
-      <button
-        type="button"
-        class="flex shrink-0 items-center gap-1 rounded-2xl bg-brand px-4 text-sm font-semibold text-white disabled:opacity-40"
-        :disabled="!pendingMeal"
-        @click="addQuick"
-      >
-        <Icon :icon="ICONS.plus" /> Thêm
-      </button>
     </div>
 
     <!-- Swap sheet -->

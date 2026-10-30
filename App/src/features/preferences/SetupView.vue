@@ -13,10 +13,9 @@ import FieldTaste from './components/FieldTaste.vue'
 import { usePreferences } from './usePreferences'
 
 const router = useRouter()
-const { state, completeOnboarding } = usePreferences()
+const { state, completeSetup } = usePreferences()
 
 const steps = [
-  { key: 'welcome', title: 'Chào mừng bạn đến với Mise', subtitle: 'Trả lời vài câu hỏi để nhận kế hoạch bữa ăn hợp với bạn.' },
   { key: 'household', title: 'Bạn nấu cho mấy người?', subtitle: 'Dùng để tính khẩu phần và chi phí.' },
   { key: 'diet', title: 'Chế độ ăn và dị ứng', subtitle: 'Món không phù hợp sẽ không được gợi ý.' },
   { key: 'taste', title: 'Khẩu vị của bạn', subtitle: 'Chọn đạm yêu thích và thời gian nấu tối đa.' },
@@ -24,17 +23,11 @@ const steps = [
   { key: 'reminder', title: 'Nhắc lập kế hoạch', subtitle: 'Nhận lời nhắc mỗi tuần để không bỏ lỡ.' },
 ] as const
 
-const benefits = [
-  { icon: ICONS.autoFix, text: 'Gợi ý món hợp khẩu vị và ngân sách' },
-  { icon: ICONS.cart, text: 'Danh sách đi chợ gom sẵn nguyên liệu' },
-  { icon: ICONS.bellOutline, text: 'Nhắc bạn lên kế hoạch mỗi tuần' },
-]
-
-const step = ref(Math.min(state.onboardingStep, steps.length - 1))
+const step = ref(Math.min(state.setupStep, steps.length - 1))
 const generating = ref(false)
 
 watch(step, (value) => {
-  state.onboardingStep = value
+  state.setupStep = value
 })
 
 const current = computed(() => steps[step.value])
@@ -50,13 +43,13 @@ async function next() {
   // Short pause so the plan "generation" feels intentional.
   await new Promise((resolve) => setTimeout(resolve, 1100))
   regeneratePlan()
-  completeOnboarding()
+  completeSetup()
   showToast('Kế hoạch tuần của bạn đã sẵn sàng')
   await router.replace({ name: 'planner' })
 }
 
 function skip() {
-  completeOnboarding()
+  completeSetup()
   router.replace({ name: 'home' })
 }
 </script>
@@ -80,31 +73,13 @@ function skip() {
     </header>
 
     <main class="flex-1 py-8">
-      <div v-if="current.key === 'welcome'" class="flex flex-col items-center pt-6 text-center">
-        <div class="mb-8 flex h-32 w-32 items-center justify-center rounded-full bg-brand text-white shadow-xl shadow-brand/30">
-          <Icon :icon="ICONS.silverware" class="text-7xl" />
-        </div>
-        <h1 class="mb-2 text-3xl font-bold leading-tight">{{ current.title }}</h1>
-        <p class="mb-8 text-gray-500">{{ current.subtitle }}</p>
-        <ul class="w-full space-y-3 text-left">
-          <li v-for="benefit in benefits" :key="benefit.text" class="flex items-center gap-3 rounded-2xl bg-card p-4 shadow-card">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand">
-              <Icon :icon="benefit.icon" class="text-2xl" />
-            </span>
-            <span class="font-medium">{{ benefit.text }}</span>
-          </li>
-        </ul>
-      </div>
-
-      <template v-else>
-        <h1 class="mb-1 text-2xl font-bold leading-tight">{{ current.title }}</h1>
-        <p class="mb-6 text-gray-500">{{ current.subtitle }}</p>
-        <FieldHousehold v-if="current.key === 'household'" />
-        <FieldDiet v-else-if="current.key === 'diet'" />
-        <FieldTaste v-else-if="current.key === 'taste'" />
-        <FieldSchedule v-else-if="current.key === 'schedule'" />
-        <FieldReminder v-else-if="current.key === 'reminder'" />
-      </template>
+      <h1 class="mb-1 text-2xl font-bold leading-tight">{{ current.title }}</h1>
+      <p class="mb-6 text-gray-500">{{ current.subtitle }}</p>
+      <FieldHousehold v-if="current.key === 'household'" />
+      <FieldDiet v-else-if="current.key === 'diet'" />
+      <FieldTaste v-else-if="current.key === 'taste'" />
+      <FieldSchedule v-else-if="current.key === 'schedule'" />
+      <FieldReminder v-else-if="current.key === 'reminder'" />
     </main>
 
     <button
