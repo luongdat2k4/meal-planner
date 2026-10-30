@@ -1,0 +1,45 @@
+{
+  "formatVersion": 1,
+  "catalogVersion": "2026-10-30.2",
+  "generatedAt": "2026-10-30T09:50:17.582Z",
+  "dbFiles": [
+    {
+      "name": "catalog/catalog.db",
+      "purpose": "catalog",
+      "tables": [
+        "language",
+        "category",
+        "ingredient",
+        "meal",
+        "meal_ingredient"
+      ],
+      "sha256": "52131e1ca17221e84801b6bfef4f3e407ca870081c955d1c1cb61161d9612547",
+      "sizeBytes": 69632
+    },
+    {
+      "name": "runtime-template.db",
+      "purpose": "runtime-template",
+      "tables": [
+        "preference",
+        "meal_activity",
+        "plan",
+        "plan_item",
+        "shopping_item"
+      ],
+      "sha256": "d85b44b9b429e437b3d71ca45eaf6e401e8983a0a7d684227ba8578c0ead3f47",
+      "sizeBytes": 53248
+    }
+  ],
+  "tableIndex": {
+    "language": "catalog/catalog.db",
+    "category": "catalog/catalog.db",
+    "ingredient": "catalog/catalog.db",
+    "meal": "catalog/catalog.db",
+    "meal_ingredient": "catalog/catalog.db",
+    "preference": "runtime-template.db",
+    "meal_activity": "runtime-template.db",
+    "plan": "runtime-template.db",
+    "plan_item": "runtime-template.db",
+    "shopping_item": "runtime-template.db"
+  }
+}

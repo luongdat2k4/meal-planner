@@ -1,0 +1,37 @@
+{
+  "name": "meal-planner-toolkit",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5175 --configLoader runner",
+    "build": "vue-tsc -b tsconfig.app.json --noEmit && vite build --configLoader runner",
+    "typecheck": "tsc --noEmit",
+    "typecheck:server": "tsc --noEmit -p tsconfig.server.json",
+    "server:standalone": "tsx src_server/main.ts",
+    "run:full": "node scripts/run-full.mjs",
+    "db:build": "tsx scripts/cli.ts build",
+    "db:build:recreate": "tsx scripts/cli.ts build-recreate",
+    "db:split": "tsx scripts/cli.ts split",
+    "db:verify-split": "tsx scripts/cli.ts verify-split",
+    "db:validate-sqljs": "tsx scripts/cli.ts validate-sqljs",
+    "db:stage": "tsx scripts/cli.ts stage"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^6.0.3",
+    "better-sqlite3": "^12.4.1",
+    "express": "^4.22.2",
+    "sql.js": "^1.14.2",
+    "vite": "^7.1.12",
+    "vue": "^3.5.24"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^4.17.25",
+    "@types/node": "^24.12.3",
+    "@types/sql.js": "^1.4.11",
+    "tsx": "^4.23.13",
+    "typescript": "~6.0.2",
+    "vue-tsc": "^3.1.5"
+  }
+}

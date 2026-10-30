@@ -1,0 +1,6 @@
+{
+  "catalogDefaultFile": "catalog/catalog.db",
+  "groups": {},
+  "runtime": ["preference", "meal_activity", "plan", "plan_item", "shopping_item"],
+  "appExcluded": []
+}
