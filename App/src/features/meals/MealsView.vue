@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onActivated, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { formatMinutes } from '../../shared/format'
@@ -15,6 +15,7 @@ import type { CookMethod, Meal } from './types'
 import { useFavorites } from './useFavorites'
 import { useMealActivity } from './useMealActivity'
 import AppImage from '../../shared/ui/AppImage.vue'
+import FeaturedSlideshow from './components/FeaturedSlideshow.vue'
 
 const route = useRoute()
 const { isFavorite, toggleFavorite } = useFavorites()
@@ -22,7 +23,7 @@ const activity = useMealActivity()
 
 const query = ref('')
 const category = ref('all')
-const featured = ref<Meal | null>(null)
+const featuredMeals = ref<Meal[]>([])
 
 // The home screen links here with ?filter=favorites.
 watch(
@@ -33,9 +34,10 @@ watch(
   { immediate: true },
 )
 
-// One suggestion that fits the user's preferences, picked when the screen first opens.
-onMounted(() => {
-  featured.value = swapCandidates('', 1)[0] ?? null
+// Suggestions that fit the user's preferences. The screen is kept alive between tabs, so they are picked each
+// time it is shown again: leaving the screen and coming back gives a fresh set of five.
+onActivated(() => {
+  featuredMeals.value = swapCandidates('', 5)
 })
 
 // Cooking devices worth filtering on; hob and oven cover nearly every meal.
@@ -120,39 +122,8 @@ function levelOf(mealId: string): string {
     <SearchField v-model="query" :placeholder="t('meal.search.placeholder')" />
     <ChipTabs v-model="category" :options="chips" />
 
-    <!-- Featured -->
-    <div v-if="isBrowsing && featured" class="space-y-3">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold">{{ t('meal.list.suggested') }}</h2>
-      </div>
-      <article class="relative">
-        <RouterLink
-          :to="{ name: 'meal-detail', params: { id: featured.id } }"
-          class="glass block rounded-[32px] bg-card p-4 text-center shadow-card transition active:scale-[0.99]"
-        >
-          <AppImage :src="featured.image" :alt="featured.title" class="aspect-[4/3] w-full rounded-3xl object-cover" />
-          <h3 class="mt-3 text-xl font-semibold leading-snug">{{ featured.title }}</h3>
-          <p class="mt-2 flex flex-wrap items-center justify-center gap-2 text-xs text-gray-600">
-            <span class="flex items-center gap-1 rounded-full bg-white/80 px-3 py-1"><Icon :icon="ICONS.clockOutline" /> {{ formatMinutes(minutesOf(featured.id)) }}</span>
-            <span class="rounded-full bg-white/80 px-3 py-1">{{ levelOf(featured.id) }}</span>
-            <span v-if="mealCategories(featured.id)[0]" class="rounded-full bg-white/80 px-3 py-1">{{ mealCategories(featured.id)[0]?.label }}</span>
-          </p>
-        </RouterLink>
-        <button
-          type="button"
-          class="glass absolute left-7 top-7 flex h-10 w-10 items-center justify-center rounded-full bg-card shadow"
-          :class="isFavorite(featured.id) ? 'text-brand' : 'text-gray-600'"
-          :aria-label="isFavorite(featured.id) ? t('meal.unfavorite') : t('meal.favorite')"
-          :aria-pressed="isFavorite(featured.id)"
-          @click="toggleFavorite(featured.id)"
-        >
-          <Icon :icon="isFavorite(featured.id) ? ICONS.heart : ICONS.heartOutline" class="text-xl" />
-        </button>
-        <span class="pointer-events-none absolute right-7 top-7 flex h-10 w-10 items-center justify-center rounded-full bg-ink text-white" aria-hidden="true">
-          <Icon :icon="ICONS.chevronRight" class="text-xl" />
-        </span>
-      </article>
-    </div>
+    <!-- Featured: a few suggestions that fit the user's preferences, shown as a slideshow -->
+    <FeaturedSlideshow v-if="isBrowsing" :meals="featuredMeals" />
 
     <!-- Recently viewed -->
     <div v-if="showRecent" class="space-y-2">

@@ -53,7 +53,8 @@
       "popular": "Popular meals",
       "results": "Results",
       "count": "{count} meals",
-      "empty": "No matching meals found."
+      "empty": "No matching meals found.",
+      "slide": "Suggestion {n}"
     },
     "toast": {
       "added": "Added {name} to your shopping list",

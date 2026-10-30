@@ -53,7 +53,8 @@
       "popular": "Món phổ biến",
       "results": "Kết quả",
       "count": "{count} món",
-      "empty": "Không tìm thấy món phù hợp."
+      "empty": "Không tìm thấy món phù hợp.",
+      "slide": "Món gợi ý {n}"
     },
     "toast": {
       "added": "Đã thêm {name} vào danh sách đi chợ",
