@@ -8,10 +8,10 @@ import { ICONS } from '../../shared/icons'
 import ChipTabs from '../../shared/ui/ChipTabs.vue'
 import SearchField from '../../shared/ui/SearchField.vue'
 import { swapCandidates } from '../planner'
-import { MEAL_CATEGORIES, mealCategories } from './categories'
-import { MEALS, getMeal } from './meals'
+import { getMealCategories, getMethodCategories, mealCategories } from './categories'
+import { getMeal, getMeals } from './meals'
 import { getLevel, getRecipe } from './recipe'
-import type { Meal } from './types'
+import type { CookMethod, Meal } from './types'
 import { useFavorites } from './useFavorites'
 import { useMealActivity } from './useMealActivity'
 
@@ -37,11 +37,17 @@ onMounted(() => {
   featured.value = swapCandidates('', 1)[0] ?? null
 })
 
-const chips = [
+// Cooking devices worth filtering on; hob and oven cover nearly every meal.
+const FILTER_METHODS = ['airfryer', 'microwave']
+
+const chips = computed(() => [
   { id: 'all', label: 'Tất cả' },
   { id: 'favorites', label: '♥ Yêu thích' },
-  ...MEAL_CATEGORIES.map((c) => ({ id: c.id, label: `${c.emoji} ${c.label}` })),
-]
+  ...[...getMealCategories(), ...getMethodCategories().filter((c) => FILTER_METHODS.includes(c.id))].map((c) => ({
+    id: c.id,
+    label: `${c.emoji} ${c.label}`,
+  })),
+])
 
 const recentMeals = computed(() => activity.state.recent.map(getMeal).filter((meal): meal is Meal => !!meal).slice(0, 8))
 const isBrowsing = computed(() => category.value === 'all' && !query.value.trim())
@@ -50,12 +56,13 @@ const showRecent = computed(() => isBrowsing.value && recentMeals.value.length >
 function inCategory(meal: Meal): boolean {
   if (category.value === 'all') return true
   if (category.value === 'favorites') return isFavorite(meal.id)
+  if (FILTER_METHODS.includes(category.value)) return getRecipe(meal.id)?.methods.includes(category.value as CookMethod) ?? false
   return mealCategories(meal.id).some((c) => c.id === category.value)
 }
 
 const filtered = computed(() => {
   const q = query.value.trim().toLowerCase()
-  return MEALS.filter((meal) => inCategory(meal) && (!q || meal.title.toLowerCase().includes(q)))
+  return getMeals().filter((meal) => inCategory(meal) && (!q || meal.title.toLowerCase().includes(q)))
 })
 
 function minutesOf(mealId: string): number {

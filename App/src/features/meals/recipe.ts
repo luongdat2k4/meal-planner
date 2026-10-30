@@ -1,15 +1,8 @@
-import { buildMockRecipe } from '../../mock-data/recipes'
-import { getMeal } from './meals'
+import { findMeal, recipeLines } from '../../backend/catalog'
+import { stepText, text } from '../../backend/catalogText'
 import type { CookMethod, Recipe } from './types'
 
-export const METHOD_LABELS: Record<CookMethod, string> = {
-  hob: '🍳 Bếp',
-  oven: '♨️ Lò nướng',
-  airfryer: '🍟 Air fryer',
-  microwave: '⚡ Lò vi sóng',
-}
-
-// Rough difficulty derived from total time (mock until real data has a level).
+// Rough difficulty derived from total time (the catalog has no level column).
 export function getLevel(recipe: Recipe): 'Dễ' | 'Vừa' | 'Khó' {
   const total = recipe.prepMinutes + recipe.cookMinutes
   return total <= 25 ? 'Dễ' : total <= 45 ? 'Vừa' : 'Khó'
@@ -17,13 +10,39 @@ export function getLevel(recipe: Recipe): 'Dễ' | 'Vừa' | 'Khó' {
 
 const cache = new Map<string, Recipe>()
 
-// Recipes are mock data for now; swap buildMockRecipe for real data when it exists.
 export function getRecipe(mealId: string): Recipe | null {
   const cached = cache.get(mealId)
   if (cached) return cached
-  const meal = getMeal(mealId)
-  if (!meal) return null
-  const recipe = buildMockRecipe(meal)
+  const row = findMeal(mealId)
+  if (!row) return null
+
+  const recipe: Recipe = {
+    mealId: row.slug,
+    baseServings: row.baseServings,
+    prepMinutes: row.prepMinutes,
+    cookMinutes: row.cookMinutes,
+    pricePerServing: row.pricePerServing,
+    macros: { calories: row.calories, protein: row.proteinG, carbs: row.carbsG, fat: row.fatG },
+    dietary: row.dietary,
+    allergens: row.allergens,
+    ingredients: recipeLines(row.slug).map((line) => ({
+      ingredientId: line.ingredientSlug,
+      get name() {
+        return text(line.ingredientSlug)
+      },
+      image: line.image,
+      amount: line.amount,
+      unit: line.unit,
+    })),
+    methods: row.methods as CookMethod[],
+    get steps() {
+      const steps: Partial<Record<CookMethod, string[]>> = {}
+      for (const [method, numbers] of Object.entries(row.steps)) {
+        steps[method as CookMethod] = numbers.map((n) => stepText(row.slug, method, n))
+      }
+      return steps
+    },
+  }
   cache.set(mealId, recipe)
   return recipe
 }

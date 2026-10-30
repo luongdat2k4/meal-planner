@@ -1,21 +1,24 @@
-import { createPersistedState } from '../../shared/persisted'
+import { computed } from 'vue'
+import { dataVersion } from '../../backend/database'
+import { listActivity, patchActivity } from '../../backend/runtime'
 
-interface FavoritesState {
-  ids: string[]
+// Saved meals are the meal_activity rows with is_saved = 1.
+const saved = computed(() => {
+  void dataVersion.value
+  return listActivity()
+    .filter((row) => row.isSaved)
+    .map((row) => row.mealSlug)
+})
+
+const state = {
+  get ids(): string[] {
+    return saved.value
+  },
 }
 
-const state = createPersistedState<FavoritesState>('meal-planner:favorites', () => ({ ids: [] }))
-
 export function useFavorites() {
-  const isFavorite = (id: string) => state.ids.includes(id)
+  const isFavorite = (id: string) => saved.value.includes(id)
+  const toggleFavorite = (id: string) => patchActivity(id, { isSaved: !isFavorite(id) })
 
-  function toggleFavorite(id: string) {
-    state.ids = isFavorite(id) ? state.ids.filter((i) => i !== id) : [...state.ids, id]
-  }
-
-  function reset() {
-    state.ids = []
-  }
-
-  return { state, isFavorite, toggleFavorite, reset }
+  return { state, isFavorite, toggleFavorite }
 }

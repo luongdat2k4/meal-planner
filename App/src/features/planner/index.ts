@@ -1,4 +1,6 @@
 export { usePlanner } from './usePlanner'
+export type { Plan } from './usePlanner'
 export { DAY_NAMES } from './types'
 export { planCost, regeneratePlan, swapCandidates } from './generatePlan'
-export { planIngredientLabels } from './planIngredients'
+export { planIngredients } from './planIngredients'
+export type { PlanIngredient } from './planIngredients'

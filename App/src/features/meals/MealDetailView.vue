@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
-import { formatAmount, formatMinutes, formatVnd } from '../../shared/format'
+import { formatMinutes, formatVnd } from '../../shared/format'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import ChipTabs from '../../shared/ui/ChipTabs.vue'
@@ -11,14 +11,16 @@ import StarRating from '../../shared/ui/StarRating.vue'
 import Stepper from '../../shared/ui/Stepper.vue'
 import ToggleSwitch from '../../shared/ui/ToggleSwitch.vue'
 import { DAY_NAMES, usePlanner } from '../planner'
-import { ALLERGENS, DIET_LABELS, usePreferences } from '../preferences'
+import { text } from '../../backend/catalogText'
+import { usePreferences } from '../preferences'
 import { useShopping } from '../shopping'
-import { mealCategories } from './categories'
+import { listIngredients } from '../../backend/catalog'
+import { mealCategories, methodLabel } from './categories'
 import IngredientList from './components/IngredientList.vue'
 import MacroCards from './components/MacroCards.vue'
 import StepList from './components/StepList.vue'
 import { getMeal } from './meals'
-import { METHOD_LABELS, getLevel, getRecipe } from './recipe'
+import { getLevel, getRecipe } from './recipe'
 import type { CookMethod, RecipeIngredient } from './types'
 import { useFavorites } from './useFavorites'
 import { useMealActivity } from './useMealActivity'
@@ -26,7 +28,7 @@ import { useMealActivity } from './useMealActivity'
 const props = defineProps<{ id: string }>()
 
 const { addMealToDay } = usePlanner()
-const { addShoppingItem, addManyShoppingItems } = useShopping()
+const { addIngredientItem, addIngredientItems } = useShopping()
 const { state: prefs } = usePreferences()
 const { isFavorite, toggleFavorite } = useFavorites()
 const activity = useMealActivity()
@@ -41,12 +43,12 @@ const selectedDay = ref(String((new Date().getDay() + 6) % 7))
 const addedDay = ref<number | null>(null)
 
 const scale = computed(() => (recipe.value ? servings.value / recipe.value.baseServings : 1))
-const methodOptions = computed(() => (recipe.value?.methods ?? []).map((m) => ({ id: m, label: METHOD_LABELS[m] })))
+const methodOptions = computed(() => (recipe.value?.methods ?? []).map((m) => ({ id: m, label: methodLabel(m) })))
 const steps = computed(() => recipe.value?.steps[method.value as CookMethod] ?? [])
 const dayOptions = DAY_NAMES.map((name, index) => ({ id: String(index), label: name }))
 const level = computed(() => (recipe.value ? getLevel(recipe.value) : ''))
 const allergenLabels = computed(() =>
-  (recipe.value?.allergens ?? []).map((id) => ALLERGENS.find((a) => a.id === id)?.label ?? id).join(', '),
+  (recipe.value?.allergens ?? []).map((id) => text(id)).join(', '),
 )
 
 const rating = computed({
@@ -74,16 +76,18 @@ watch(
   { immediate: true },
 )
 
-const labelFor = (item: RecipeIngredient) => `${item.name} · ${formatAmount(item.amount * scale.value, item.unit)}`
+const pantry = new Set(listIngredients().filter((i) => i.isPantry).map((i) => i.slug))
+const isPantry = (item: RecipeIngredient) => pantry.has(item.ingredientId)
+const lineOf = (item: RecipeIngredient) => ({ ingredientSlug: item.ingredientId, quantity: item.amount * scale.value, unit: item.unit })
 
 function addIngredient(item: RecipeIngredient) {
-  addShoppingItem(labelFor(item))
-  showToast(`Đã thêm ${item.name} vào danh sách đi chợ`)
+  const added = addIngredientItem(item.ingredientId, item.amount * scale.value, item.unit)
+  showToast(added ? `Đã thêm ${item.name} vào danh sách đi chợ` : `${item.name} đã có trong danh sách`)
 }
 
 function addAllIngredients() {
   if (!recipe.value) return
-  const added = addManyShoppingItems(recipe.value.ingredients.map(labelFor))
+  const added = addIngredientItems(recipe.value.ingredients.filter((item) => !isPantry(item)).map(lineOf))
   showToast(added ? `Đã thêm ${added} nguyên liệu vào danh sách đi chợ` : 'Các nguyên liệu này đã có trong danh sách')
 }
 
@@ -134,14 +138,14 @@ function addToPlan() {
             {{ category.emoji }} {{ category.label }}
           </li>
           <li v-for="id in recipe.dietary" :key="id" class="rounded-full bg-tile-green px-3 py-1 text-xs font-semibold text-emerald-800">
-            ✓ {{ DIET_LABELS[id] ?? id }}
+            ✓ {{ text(id) }}
           </li>
         </ul>
         <p v-if="allergenLabels" class="mt-2 text-xs text-amber-700">⚠️ Có thể chứa: {{ allergenLabels }}</p>
       </div>
 
       <p class="rounded-2xl bg-tile-yellow/60 p-3 text-xs text-amber-900">
-        Công thức, dinh dưỡng và nguyên liệu bên dưới là dữ liệu mẫu để thiết kế giao diện, chưa phải dữ liệu thật.
+        Công thức, dinh dưỡng và nguyên liệu bên dưới là dữ liệu mẫu, chưa phải dữ liệu thật.
       </p>
 
       <ul class="grid grid-cols-3 gap-2 text-center">

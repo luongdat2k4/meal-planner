@@ -1,27 +1,35 @@
-import { MEAL_CATEGORIES } from '../meals'
+import { text } from '../../backend/catalogText'
+import { getMealCategories, type MealCategory } from '../meals'
 
-// Ids match the allergen ids produced by the mock recipes.
-export const ALLERGENS = [
-  { id: 'milk', label: 'Sữa', emoji: '🥛' },
-  { id: 'egg', label: 'Trứng', emoji: '🥚' },
-  { id: 'gluten', label: 'Gluten', emoji: '🌾' },
-  { id: 'soy', label: 'Đậu nành', emoji: '🫘' },
-  { id: 'peanut', label: 'Đậu phộng', emoji: '🥜' },
-  { id: 'nuts', label: 'Hạt cây', emoji: '🌰' },
-  { id: 'shellfish', label: 'Hải sản có vỏ', emoji: '🦐' },
-  { id: 'fish', label: 'Cá', emoji: '🐟' },
-  { id: 'sesame', label: 'Mè', emoji: '⚪' },
-]
-
-export const DIET_LABELS: Record<string, string> = {
-  dairyfree: 'Không sữa',
-  glutenfree: 'Không gluten',
-  pescatarian: 'Ăn chay có cá',
-  sesamefree: 'Không mè',
+export interface Allergen {
+  // Allergen slug; also the key of its translated name.
+  id: string
+  emoji: string
+  readonly label: string
 }
 
+const allergen = (id: string, emoji: string): Allergen => ({
+  id,
+  emoji,
+  get label() {
+    return text(id)
+  },
+})
+
+export const ALLERGENS: Allergen[] = [
+  allergen('milk', '🥛'),
+  allergen('egg', '🥚'),
+  allergen('gluten', '🌾'),
+  allergen('soy', '🫘'),
+  allergen('peanut', '🥜'),
+  allergen('nuts', '🌰'),
+  allergen('shellfish', '🦐'),
+  allergen('fish', '🐟'),
+  allergen('sesame', '⚪'),
+]
+
 const PROTEIN_IDS = ['chicken', 'beef', 'pork', 'seafood', 'veg']
-export const PROTEIN_OPTIONS = MEAL_CATEGORIES.filter((category) => PROTEIN_IDS.includes(category.id))
+export const getProteinOptions = (): MealCategory[] => getMealCategories().filter((category) => PROTEIN_IDS.includes(category.id))
 
 export const COOK_TIME_OPTIONS = [
   { id: '15', label: '≤ 15 phút' },

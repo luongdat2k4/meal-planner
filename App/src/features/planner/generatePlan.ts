@@ -1,13 +1,16 @@
-import { MEALS, getRecipe, mealCategories, useFavorites, useMealActivity, type Meal } from '../meals'
+import { listPreviousWeekMeals } from '../../backend/runtime'
+import { weekStart } from '../../shared/date'
+import { getMeals, getRecipe, useFavorites, useMealActivity, type Meal } from '../meals'
 import { usePreferences, type Preferences } from '../preferences'
-import { usePlanner } from './usePlanner'
+import { usePlanner, type Plan } from './usePlanner'
 
-type Plan = Record<number, string[]>
+const REPEAT_DAYS = 14
 
 const mealCost = (mealId: string, people: number) => (getRecipe(mealId)?.pricePerServing ?? 0) * people
 
-export function planCost(plan: Plan, people: number): number {
-  return Object.values(plan).reduce((sum, ids) => sum + ids.reduce((inner, id) => inner + mealCost(id, people), 0), 0)
+// Cost of this week's plan: price per serving x the servings stored on each plan_item.
+export function planCost(): number {
+  return usePlanner().state.items.reduce((sum, item) => sum + mealCost(item.mealSlug, item.servings), 0)
 }
 
 // A meal fits when it satisfies every dietary choice, avoids every allergen and (optionally) the time limit.
@@ -22,23 +25,29 @@ function isEligible(meal: Meal, prefs: Preferences, enforceTime: boolean): boole
 // Random jitter keeps regenerated plans different; preferences nudge the ranking.
 function score(meal: Meal, prefs: Preferences, favoriteIds: string[], recent: Set<string>): number {
   let value = Math.random()
-  if (mealCategories(meal.id).some((category) => prefs.proteinLikes.includes(category.id))) value += 2
+  if (meal.categorySlug && prefs.proteinLikes.includes(meal.categorySlug)) value += 2
   if (favoriteIds.includes(meal.id)) value += 1
   if (recent.has(meal.id)) value -= 3
   return value
 }
 
+// Meals to avoid repeating: this week's plan about to be replaced, last week's plan, and recently cooked meals.
+function recentMeals(): Set<string> {
+  const cutoff = Date.now() - REPEAT_DAYS * 24 * 60 * 60 * 1000
+  const cooked = useMealActivity().cookedSince(cutoff)
+  return new Set([...Object.values(usePlanner().state.plan).flat(), ...listPreviousWeekMeals(weekStart()), ...cooked])
+}
+
 export function generatePlan(): Plan {
   const prefs = usePreferences().state
-  const planner = usePlanner().state
   const disliked = new Set(useMealActivity().state.disliked)
   const favoriteIds = useFavorites().state.ids
 
   const days = [...prefs.cookingDays].sort((a, b) => a - b)
   if (!days.length) return {}
 
-  const recent = new Set(Object.values(planner.previousPlan).flat())
-  const eligible = (enforceTime: boolean) => MEALS.filter((meal) => !disliked.has(meal.id) && isEligible(meal, prefs, enforceTime))
+  const recent = recentMeals()
+  const eligible = (enforceTime: boolean) => getMeals().filter((meal) => !disliked.has(meal.id) && isEligible(meal, prefs, enforceTime))
 
   // Relax the time limit when too few meals qualify.
   let pool = eligible(true)
@@ -49,12 +58,12 @@ export function generatePlan(): Plan {
     .sort((a, b) => b.value - a.value)
     .map((entry) => entry.meal)
 
-  // Prefer variety: at most two meals from the same main category.
+  // Prefer variety: at most two meals from the same category.
   const picked: Meal[] = []
   const perCategory = new Map<string, number>()
   for (const meal of ranked) {
     if (picked.length >= days.length) break
-    const key = mealCategories(meal.id)[0]?.id ?? 'other'
+    const key = meal.categorySlug ?? 'other'
     if ((perCategory.get(key) ?? 0) >= 2) continue
     picked.push(meal)
     perCategory.set(key, (perCategory.get(key) ?? 0) + 1)
@@ -91,7 +100,8 @@ export function swapCandidates(currentMealId: string, limit = 8): Meal[] {
   const disliked = new Set(useMealActivity().state.disliked)
   const favoriteIds = useFavorites().state.ids
 
-  return MEALS.filter((meal) => meal.id !== currentMealId && !planned.has(meal.id) && !disliked.has(meal.id) && isEligible(meal, prefs, false))
+  return getMeals()
+    .filter((meal) => meal.id !== currentMealId && !planned.has(meal.id) && !disliked.has(meal.id) && isEligible(meal, prefs, false))
     .map((meal) => ({ meal, value: score(meal, prefs, favoriteIds, new Set()) }))
     .sort((a, b) => b.value - a.value)
     .slice(0, limit)

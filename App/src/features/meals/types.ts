@@ -1,17 +1,22 @@
 export interface Meal {
+  // The catalog slug; also the key of the meal's translated name.
   id: string
-  title: string
+  // Translated name, read through the i18n files so it follows the language switch.
+  readonly title: string
   image: string
+  categorySlug: string | null
 }
 
 export type CookMethod = 'hob' | 'oven' | 'airfryer' | 'microwave'
 
 export interface RecipeIngredient {
+  // Ingredient slug.
   ingredientId: string
-  name: string
+  readonly name: string
   image: string
   // Amount for `baseServings`.
   amount: number
+  // Unit slug: g, tbsp, tsp, piece.
   unit: string
 }
 
@@ -36,5 +41,6 @@ export interface Recipe {
   allergens: string[]
   ingredients: RecipeIngredient[]
   methods: CookMethod[]
-  steps: Partial<Record<CookMethod, string[]>>
+  // Translated step text per cooking method.
+  readonly steps: Partial<Record<CookMethod, string[]>>
 }

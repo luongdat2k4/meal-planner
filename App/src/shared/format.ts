@@ -1,3 +1,5 @@
+import { text } from '../backend/catalogText'
+
 export function formatVnd(value: number): string {
   return `${new Intl.NumberFormat('vi-VN').format(Math.round(value))} đ`
 }
@@ -9,13 +11,13 @@ export function formatMinutes(minutes: number): string {
   return rest ? `${hours} giờ ${rest} phút` : `${hours} giờ`
 }
 
-// Grams round to 10, other units to the nearest half.
+// Grams round to 10, other units (slugs such as tbsp, tsp, piece) to the nearest half.
 export function formatAmount(amount: number, unit: string): string {
   if (unit === 'g') {
     const grams = Math.max(10, Math.round(amount / 10) * 10)
     return grams >= 1000 ? `${Math.round(grams / 100) / 10} kg` : `${grams} g`
   }
-  return `${Math.max(0.5, Math.round(amount * 2) / 2)} ${unit}`
+  return `${Math.max(0.5, Math.round(amount * 2) / 2)} ${text(unit)}`
 }
 
 export function formatDateTime(iso: string): string {

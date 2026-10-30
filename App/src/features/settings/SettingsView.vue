@@ -5,14 +5,15 @@ import { RouterLink, useRouter } from 'vue-router'
 import { resetAllData } from '../../app/resetAll'
 import { PLAN_OPTIONS } from '../../mock-data/plans'
 import { formatVnd } from '../../shared/format'
+import { lang, languages } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import ListRow from '../../shared/ui/ListRow.vue'
 import ToggleSwitch from '../../shared/ui/ToggleSwitch.vue'
 import { useAccount } from '../account'
 import { MAX_MEMBERS, useHousehold } from '../household'
-import { INGREDIENTS } from '../ingredients'
-import { MEALS } from '../meals'
+import { getIngredients } from '../ingredients'
+import { getMeals } from '../meals'
 import { DAY_NAMES, usePlanner } from '../planner'
 import { usePreferences } from '../preferences'
 import { usePremium } from '../premium'
@@ -38,8 +39,8 @@ const premiumSummary = computed(() => {
 })
 
 const stats = computed(() => [
-  { label: 'Món ăn', value: MEALS.length },
-  { label: 'Nguyên liệu', value: INGREDIENTS.length },
+  { label: 'Món ăn', value: getMeals().length },
+  { label: 'Nguyên liệu', value: getIngredients().length },
   { label: 'Siêu thị', value: STORES.length },
   { label: 'Món đã lên lịch', value: plannedMealCount.value },
 ])
@@ -91,6 +92,11 @@ async function confirmReset() {
         :subtitle="`${household.members.length}/${MAX_MEMBERS} thành viên`"
         :to="{ name: 'household' }"
       />
+      <ListRow :icon="ICONS.translate" title="Ngôn ngữ món ăn" subtitle="Tên món, nguyên liệu và cách nấu">
+        <select v-model="lang" class="rounded-xl bg-surface px-3 py-1.5 text-sm outline-none" aria-label="Ngôn ngữ món ăn">
+          <option v-for="option in languages" :key="option.id" :value="option.id">{{ option.label }}</option>
+        </select>
+      </ListRow>
       <ListRow :icon="ICONS.bellOutline" title="Nhắc lập kế hoạch" :subtitle="reminderSummary">
         <ToggleSwitch v-model="prefs.reminder.enabled" label="Nhắc lập kế hoạch hằng tuần" />
       </ListRow>

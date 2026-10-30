@@ -12,13 +12,12 @@ import { getMeal, getRecipe, type Meal } from '../meals'
 import { usePreferences } from '../preferences'
 import { useShopping } from '../shopping'
 import { planCost, regeneratePlan, swapCandidates } from './generatePlan'
-import { planIngredientLabels } from './planIngredients'
 import { DAY_NAMES } from './types'
 import { usePlanner } from './usePlanner'
 
 const { state, plannedMealCount, removeMealFromDay, replaceMeal, clearDay } = usePlanner()
 const { state: prefs } = usePreferences()
-const { addManyShoppingItems } = useShopping()
+const { importFromPlan } = useShopping()
 
 // Open on today (Monday = 0).
 const activeDay = ref(String((new Date().getDay() + 6) % 7))
@@ -27,14 +26,16 @@ const generating = ref(false)
 const dayIndex = computed(() => Number(activeDay.value))
 const dayOptions = DAY_NAMES.map((name, index) => ({ id: String(index), label: name }))
 const dayMeals = computed(() =>
-  (state.plan[dayIndex.value] ?? []).map((mealId, index) => ({ index, mealId, meal: getMeal(mealId) })),
+  state.items
+    .filter((item) => item.weekday === dayIndex.value + 1)
+    .map((item, index) => ({ index, mealId: item.mealSlug, servings: item.servings, meal: getMeal(item.mealSlug) })),
 )
 
-const cost = computed(() => planCost(state.plan, prefs.householdSize))
+const cost = computed(() => planCost())
 const budgetRatio = computed(() => (prefs.weeklyBudget ? Math.min(cost.value / prefs.weeklyBudget, 1) : 0))
 const overBudget = computed(() => cost.value > prefs.weeklyBudget)
 
-const priceOf = (mealId: string) => (getRecipe(mealId)?.pricePerServing ?? 0) * prefs.householdSize
+const priceOf = (mealId: string, servings = prefs.householdSize) => (getRecipe(mealId)?.pricePerServing ?? 0) * servings
 const minutesOf = (mealId: string) => {
   const recipe = getRecipe(mealId)
   return recipe ? recipe.prepMinutes + recipe.cookMinutes : 0
@@ -51,7 +52,7 @@ async function generate() {
 }
 
 function addToShopping() {
-  const added = addManyShoppingItems(planIngredientLabels())
+  const added = importFromPlan()
   showToast(added ? `Đã thêm ${added} nguyên liệu vào danh sách đi chợ` : 'Danh sách đi chợ đã có đủ nguyên liệu')
 }
 
@@ -147,7 +148,7 @@ function applySwap(newMealId: string) {
           />
           <span class="min-w-0">
             <span class="line-clamp-2 block text-sm font-semibold leading-snug">{{ item.meal?.title ?? item.mealId }}</span>
-            <span class="text-xs text-gray-500">{{ formatMinutes(minutesOf(item.mealId)) }} · {{ formatVnd(priceOf(item.mealId)) }}</span>
+            <span class="text-xs text-gray-500">{{ formatMinutes(minutesOf(item.mealId)) }} · {{ formatVnd(priceOf(item.mealId, item.servings)) }}</span>
           </span>
         </RouterLink>
         <button

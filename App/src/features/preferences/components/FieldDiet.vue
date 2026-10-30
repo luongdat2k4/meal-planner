@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { assetUrl } from '../../../shared/assets'
 import ChipGroup from '../../../shared/ui/ChipGroup.vue'
 import { DIETARY } from '../dietary'
-import { ALLERGENS, DIET_LABELS } from '../options'
+import { ALLERGENS } from '../options'
 import { usePreferences } from '../usePreferences'
 
 const { state } = usePreferences()
 
-const allergenOptions = ALLERGENS.map((allergen) => ({ id: allergen.id, label: `${allergen.emoji} ${allergen.label}` }))
+const allergenOptions = computed(() => ALLERGENS.map((allergen) => ({ id: allergen.id, label: `${allergen.emoji} ${allergen.label}` })))
 
 function toggleDiet(id: string) {
   state.dietaryIds = state.dietaryIds.includes(id) ? state.dietaryIds.filter((value) => value !== id) : [...state.dietaryIds, id]
@@ -29,7 +30,7 @@ function toggleDiet(id: string) {
           @click="toggleDiet(diet.id)"
         >
           <img :src="assetUrl(diet.icon)" alt="" class="h-9 w-9 object-contain" />
-          {{ DIET_LABELS[diet.id] ?? diet.name }}
+          {{ diet.name }}
         </button>
       </div>
     </div>

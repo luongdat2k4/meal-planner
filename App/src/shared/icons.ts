@@ -37,6 +37,7 @@ import starOutline from '@iconify-icons/mdi/star-outline'
 import storefront from '@iconify-icons/mdi/storefront-outline'
 import swapHorizontal from '@iconify-icons/mdi/swap-horizontal'
 import timerOutline from '@iconify-icons/mdi/timer-outline'
+import translate from '@iconify-icons/mdi/translate'
 import trash from '@iconify-icons/mdi/trash-can-outline'
 import tuneVariant from '@iconify-icons/mdi/tune-variant'
 
@@ -81,5 +82,6 @@ export const ICONS = {
   swapHorizontal,
   timerOutline,
   trash,
+  translate,
   tuneVariant,
 }

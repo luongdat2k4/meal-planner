@@ -1,6 +1,7 @@
 export interface Dietary {
+  // Dietary slug; also the key of its translated name.
   id: string
-  name: string
+  readonly name: string
   icon: string
 }
 

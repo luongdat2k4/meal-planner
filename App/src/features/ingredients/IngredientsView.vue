@@ -5,18 +5,19 @@ import { assetUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
 import SearchField from '../../shared/ui/SearchField.vue'
 import { useShopping } from '../shopping'
-import { INGREDIENTS } from './ingredients'
+import { getIngredients } from './ingredients'
 
-const { state, addShoppingItem } = useShopping()
+const { state, addIngredientItem } = useShopping()
 
 const query = ref('')
 
 const filtered = computed(() => {
   const q = query.value.trim().toLowerCase()
-  return q ? INGREDIENTS.filter((i) => i.name.toLowerCase().includes(q)) : INGREDIENTS
+  const all = getIngredients()
+  return q ? all.filter((i) => i.name.toLowerCase().includes(q)) : all
 })
 
-const onList = (name: string) => state.items.some((s) => s.label === name && !s.checked)
+const onList = (slug: string) => state.items.some((s) => s.ingredientSlug === slug && !s.checked)
 </script>
 
 <template>
@@ -32,12 +33,12 @@ const onList = (name: string) => state.items.some((s) => s.label === name && !s.
         <button
           type="button"
           class="mt-auto flex h-8 w-8 items-center justify-center rounded-full transition active:scale-90"
-          :class="onList(item.name) ? 'bg-brand-soft text-brand' : 'bg-brand text-white shadow shadow-brand/30'"
-          :disabled="onList(item.name)"
-          :aria-label="onList(item.name) ? 'Đã có trong danh sách đi chợ' : `Thêm ${item.name} vào danh sách đi chợ`"
-          @click="addShoppingItem(item.name)"
+          :class="onList(item.id) ? 'bg-brand-soft text-brand' : 'bg-brand text-white shadow shadow-brand/30'"
+          :disabled="onList(item.id)"
+          :aria-label="onList(item.id) ? 'Đã có trong danh sách đi chợ' : `Thêm ${item.name} vào danh sách đi chợ`"
+          @click="addIngredientItem(item.id)"
         >
-          <Icon :icon="onList(item.name) ? ICONS.check : ICONS.plus" class="text-lg" />
+          <Icon :icon="onList(item.id) ? ICONS.check : ICONS.plus" class="text-lg" />
         </button>
       </li>
     </ul>

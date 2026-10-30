@@ -1,5 +1,6 @@
 export interface Ingredient {
+  // The catalog slug; also the key of the ingredient's translated name.
   id: string
-  name: string
+  readonly name: string
   image: string
 }

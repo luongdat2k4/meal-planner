@@ -2,12 +2,12 @@
 import { computed } from 'vue'
 import ChipGroup from '../../../shared/ui/ChipGroup.vue'
 import ChipTabs from '../../../shared/ui/ChipTabs.vue'
-import { COOK_TIME_OPTIONS, PROTEIN_OPTIONS } from '../options'
+import { COOK_TIME_OPTIONS, getProteinOptions } from '../options'
 import { usePreferences } from '../usePreferences'
 
 const { state } = usePreferences()
 
-const proteinOptions = PROTEIN_OPTIONS.map((category) => ({ id: category.id, label: `${category.emoji} ${category.label}` }))
+const proteinOptions = computed(() => getProteinOptions().map((category) => ({ id: category.id, label: `${category.emoji} ${category.label}` })))
 
 const cookTime = computed({
   get: () => String(state.maxCookMinutes),
