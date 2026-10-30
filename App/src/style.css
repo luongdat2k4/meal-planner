@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #2f7d5b;
+  --color-brand-soft: #e6f2ec;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  background: #f6f7f5;
+  color: #1f2a24;
+  -webkit-tap-highlight-color: transparent;
+}

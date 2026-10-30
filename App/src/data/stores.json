@@ -1,0 +1,647 @@
+[
+  {
+    "id": "ahorramas",
+    "name": "Ahorramas",
+    "logo": "images/assets_ahorramaslogo.png"
+  },
+  {
+    "id": "albertheijn",
+    "name": "Albertheijn",
+    "logo": "images/assets_albertheijnlogo.png"
+  },
+  {
+    "id": "albertsons",
+    "name": "Albertsons",
+    "logo": "images/assets_albertsonslogo.png"
+  },
+  {
+    "id": "alcampo",
+    "name": "Alcampo",
+    "logo": "images/assets_alcampologo.png"
+  },
+  {
+    "id": "aldi",
+    "name": "Aldi",
+    "logo": "images/assets_aldilogo.png"
+  },
+  {
+    "id": "asda",
+    "name": "Asda",
+    "logo": "images/assets_asdalogo.png"
+  },
+  {
+    "id": "assai",
+    "name": "Assai",
+    "logo": "images/assets_assailogo.png"
+  },
+  {
+    "id": "atacadao",
+    "name": "Atacadao",
+    "logo": "images/assets_atacadaologo.png"
+  },
+  {
+    "id": "auchan",
+    "name": "Auchan",
+    "logo": "images/assets_auchanlogo.png"
+  },
+  {
+    "id": "bjs",
+    "name": "Bjs",
+    "logo": "images/assets_bjslogo.png"
+  },
+  {
+    "id": "bristolfarms",
+    "name": "Bristolfarms",
+    "logo": "images/assets_bristolfarmslogo.png"
+  },
+  {
+    "id": "carrefour",
+    "name": "Carre Four",
+    "logo": "images/assets_carrefourlogo.png"
+  },
+  {
+    "id": "centra",
+    "name": "Centra",
+    "logo": "images/assets_centralogo.png"
+  },
+  {
+    "id": "citygross",
+    "name": "Citygross",
+    "logo": "images/assets_citygrosslogo.png"
+  },
+  {
+    "id": "coles",
+    "name": "Coles",
+    "logo": "images/assets_coleslogo.png"
+  },
+  {
+    "id": "comper",
+    "name": "Com Per",
+    "logo": "images/assets_comperlogo.png"
+  },
+  {
+    "id": "consum",
+    "name": "Consum",
+    "logo": "images/assets_consumlogo.png"
+  },
+  {
+    "id": "coop",
+    "name": "Coop",
+    "logo": "images/assets_cooplogo.png"
+  },
+  {
+    "id": "coopsweden",
+    "name": "Coopswe Den",
+    "logo": "images/assets_coopswedenlogo.png"
+  },
+  {
+    "id": "costco",
+    "name": "Costco",
+    "logo": "images/assets_costcologo.png"
+  },
+  {
+    "id": "cub",
+    "name": "Cub",
+    "logo": "images/assets_cublogo.png"
+  },
+  {
+    "id": "dekamarkt",
+    "name": "Dekamarkt",
+    "logo": "images/assets_dekamarktlogo.png"
+  },
+  {
+    "id": "dia",
+    "name": "Dia",
+    "logo": "images/assets_dialogo.png"
+  },
+  {
+    "id": "dirk",
+    "name": "Dirk",
+    "logo": "images/assets_dirklogo.png"
+  },
+  {
+    "id": "drakes",
+    "name": "Drakes",
+    "logo": "images/assets_drakeslogo.png"
+  },
+  {
+    "id": "dunnes",
+    "name": "Dunnes",
+    "logo": "images/assets_dunneslogo.png"
+  },
+  {
+    "id": "edeka",
+    "name": "Edeka",
+    "logo": "images/assets_edekalogo.png"
+  },
+  {
+    "id": "eleclerc",
+    "name": "Eleclerc",
+    "logo": "images/assets_eleclerclogo.png"
+  },
+  {
+    "id": "eroski",
+    "name": "Eroski",
+    "logo": "images/assets_eroskilogo.png"
+  },
+  {
+    "id": "eurospar",
+    "name": "Eurospar",
+    "logo": "images/assets_eurosparlogo.png"
+  },
+  {
+    "id": "facebook",
+    "name": "Facebook",
+    "logo": "images/assets_facebooklogo.png"
+  },
+  {
+    "id": "farmboy",
+    "name": "Farmboy",
+    "logo": "images/assets_farmboylogo.png"
+  },
+  {
+    "id": "farrofresh",
+    "name": "Farro Fresh",
+    "logo": "images/assets_farrofreshlogo.png"
+  },
+  {
+    "id": "foodbasics",
+    "name": "Foodbasics",
+    "logo": "images/assets_foodbasicslogo.png"
+  },
+  {
+    "id": "foodland",
+    "name": "Foodl And",
+    "logo": "images/assets_foodlandlogo.png"
+  },
+  {
+    "id": "foodlion",
+    "name": "Foodli On",
+    "logo": "images/assets_foodlionlogo.png"
+  },
+  {
+    "id": "fortatacadista",
+    "name": "For Tatacadista",
+    "logo": "images/assets_fortatacadistalogo.png"
+  },
+  {
+    "id": "foursquare",
+    "name": "Four Square",
+    "logo": "images/assets_foursquarelogo.png"
+  },
+  {
+    "id": "franprix",
+    "name": "Franprix",
+    "logo": "images/assets_franprixlogo.png"
+  },
+  {
+    "id": "fredmeyer",
+    "name": "Fredmeyer",
+    "logo": "images/assets_fredmeyerlogo.png"
+  },
+  {
+    "id": "freshchoice",
+    "name": "Fresh Choice",
+    "logo": "images/assets_freshchoicelogo.png"
+  },
+  {
+    "id": "freshco",
+    "name": "Freshco",
+    "logo": "images/assets_freshcologo.png"
+  },
+  {
+    "id": "friendlygrocer",
+    "name": "Friendlygrocer",
+    "logo": "images/assets_friendlygrocerlogo.png"
+  },
+  {
+    "id": "frys",
+    "name": "Frys",
+    "logo": "images/assets_fryslogo.png"
+  },
+  {
+    "id": "gelsons",
+    "name": "Gelsons",
+    "logo": "images/assets_gelsonslogo.png"
+  },
+  {
+    "id": "gianteagle",
+    "name": "Gianteagle",
+    "logo": "images/assets_gianteaglelogo.png"
+  },
+  {
+    "id": "giant",
+    "name": "Giant",
+    "logo": "images/assets_giantlogo.png"
+  },
+  {
+    "id": "globus",
+    "name": "Globus",
+    "logo": "images/assets_globuslogo.png"
+  },
+  {
+    "id": "hannaford",
+    "name": "Hannaford",
+    "logo": "images/assets_hannafordlogo.png"
+  },
+  {
+    "id": "harrisfarm",
+    "name": "Harrisfarm",
+    "logo": "images/assets_harrisfarmlogo.png"
+  },
+  {
+    "id": "harristeeter",
+    "name": "Harristeeter",
+    "logo": "images/assets_harristeeterlogo.png"
+  },
+  {
+    "id": "heb",
+    "name": "Heb",
+    "logo": "images/assets_heblogo.png"
+  },
+  {
+    "id": "hemkop",
+    "name": "Hemkop",
+    "logo": "images/assets_hemkoplogo.png"
+  },
+  {
+    "id": "hit",
+    "name": "Hit",
+    "logo": "images/assets_hitlogo.png"
+  },
+  {
+    "id": "hyvee",
+    "name": "Hyvee",
+    "logo": "images/assets_hyveelogo.png"
+  },
+  {
+    "id": "icakvantum",
+    "name": "Icakvantum",
+    "logo": "images/assets_icakvantumlogo.png"
+  },
+  {
+    "id": "icamaxi",
+    "name": "Icamaxi",
+    "logo": "images/assets_icamaxilogo.png"
+  },
+  {
+    "id": "icanara",
+    "name": "Icanara",
+    "logo": "images/assets_icanaralogo.png"
+  },
+  {
+    "id": "iga",
+    "name": "Iga",
+    "logo": "images/assets_igalogo.png"
+  },
+  {
+    "id": "ingles",
+    "name": "In Gles",
+    "logo": "images/assets_ingleslogo.png"
+  },
+  {
+    "id": "instagram",
+    "name": "In Stagram",
+    "logo": "images/assets_instagramlogo.png"
+  },
+  {
+    "id": "intermarche",
+    "name": "In Termarche",
+    "logo": "images/assets_intermarchelogo.png"
+  },
+  {
+    "id": "jewelosco",
+    "name": "Jewelosco",
+    "logo": "images/assets_jeweloscologo.png"
+  },
+  {
+    "id": "jumbo",
+    "name": "Jumbo",
+    "logo": "images/assets_jumbologo.png"
+  },
+  {
+    "id": "kaufland",
+    "name": "Kaufl And",
+    "logo": "images/assets_kauflandlogo.png"
+  },
+  {
+    "id": "kingsoopers",
+    "name": "Kingsoopers",
+    "logo": "images/assets_kingsooperslogo.png"
+  },
+  {
+    "id": "kroger",
+    "name": "Kroger",
+    "logo": "images/assets_krogerlogo.png"
+  },
+  {
+    "id": "lidl",
+    "name": "Lidl",
+    "logo": "images/assets_lidllogo.png"
+  },
+  {
+    "id": "marketbasket",
+    "name": "Market Basket",
+    "logo": "images/assets_marketbasketlogo.png"
+  },
+  {
+    "id": "mateus",
+    "name": "Mateus",
+    "logo": "images/assets_mateuslogo.png"
+  },
+  {
+    "id": "meijer",
+    "name": "Meijer",
+    "logo": "images/assets_meijerlogo.png"
+  },
+  {
+    "id": "mercadona",
+    "name": "Mercadona",
+    "logo": "images/assets_mercadonalogo.png"
+  },
+  {
+    "id": "metro",
+    "name": "Metro",
+    "logo": "images/assets_metrologo.png"
+  },
+  {
+    "id": "mise",
+    "name": "Mise",
+    "logo": "images/assets_miselogo.png"
+  },
+  {
+    "id": "monoprix",
+    "name": "Monoprix",
+    "logo": "images/assets_monoprixlogo.png"
+  },
+  {
+    "id": "moorewilsons",
+    "name": "Moorewilsons",
+    "logo": "images/assets_moorewilsonslogo.png"
+  },
+  {
+    "id": "morrisons",
+    "name": "Morrisons",
+    "logo": "images/assets_morrisonslogo.png"
+  },
+  {
+    "id": "ms",
+    "name": "Ms",
+    "logo": "images/assets_mslogo.png"
+  },
+  {
+    "id": "netto",
+    "name": "Net To",
+    "logo": "images/assets_nettologo.png"
+  },
+  {
+    "id": "newworld",
+    "name": "Newworld",
+    "logo": "images/assets_newworldlogo.png"
+  },
+  {
+    "id": "nofrills",
+    "name": "Nofrills",
+    "logo": "images/assets_nofrillslogo.png"
+  },
+  {
+    "id": "paknsave",
+    "name": "Pakn Save",
+    "logo": "images/assets_paknsavelogo.png"
+  },
+  {
+    "id": "paodeacucar",
+    "name": "Paodeacucar",
+    "logo": "images/assets_paodeacucarlogo.png"
+  },
+  {
+    "id": "pavilions",
+    "name": "Pavilions",
+    "logo": "images/assets_pavilionslogo.png"
+  },
+  {
+    "id": "penny",
+    "name": "Penny",
+    "logo": "images/assets_pennylogo.png"
+  },
+  {
+    "id": "picnic",
+    "name": "Picnic",
+    "logo": "images/assets_picniclogo.png"
+  },
+  {
+    "id": "plus",
+    "name": "Plus",
+    "logo": "images/assets_pluslogo.png"
+  },
+  {
+    "id": "pricechopper",
+    "name": "Price Chop Per",
+    "logo": "images/assets_pricechopperlogo.png"
+  },
+  {
+    "id": "publix",
+    "name": "Publix",
+    "logo": "images/assets_publixlogo.png"
+  },
+  {
+    "id": "qfc",
+    "name": "Qfc",
+    "logo": "images/assets_qfclogo.png"
+  },
+  {
+    "id": "raleys",
+    "name": "Raleys",
+    "logo": "images/assets_raleyslogo.png"
+  },
+  {
+    "id": "ralphs",
+    "name": "Ralphs",
+    "logo": "images/assets_ralphslogo.png"
+  },
+  {
+    "id": "realcanadiansuperstore",
+    "name": "Realcanadiansuperstore",
+    "logo": "images/assets_realcanadiansuperstorelogo.png"
+  },
+  {
+    "id": "rewe",
+    "name": "Rewe",
+    "logo": "images/assets_rewelogo.png"
+  },
+  {
+    "id": "safeway",
+    "name": "Safe Way",
+    "logo": "images/assets_safewaylogo.png"
+  },
+  {
+    "id": "sainsburys",
+    "name": "Sainsburys",
+    "logo": "images/assets_sainsburyslogo.png"
+  },
+  {
+    "id": "samsclub",
+    "name": "Samsclub",
+    "logo": "images/assets_samsclublogo.png"
+  },
+  {
+    "id": "saveonfoods",
+    "name": "Save On Foods",
+    "logo": "images/assets_saveonfoodslogo.png"
+  },
+  {
+    "id": "schnucks",
+    "name": "Schnucks",
+    "logo": "images/assets_schnuckslogo.png"
+  },
+  {
+    "id": "shoprite",
+    "name": "Shoprite",
+    "logo": "images/assets_shopritelogo.png"
+  },
+  {
+    "id": "smiths",
+    "name": "Smiths",
+    "logo": "images/assets_smithslogo.png"
+  },
+  {
+    "id": "sobeys",
+    "name": "Sobeys",
+    "logo": "images/assets_sobeyslogo.png"
+  },
+  {
+    "id": "spar",
+    "name": "Spar",
+    "logo": "images/assets_sparlogo.png"
+  },
+  {
+    "id": "sprouts",
+    "name": "Sprouts",
+    "logo": "images/assets_sproutslogo.png"
+  },
+  {
+    "id": "staterbros",
+    "name": "Staterbros",
+    "logo": "images/assets_staterbroslogo.png"
+  },
+  {
+    "id": "stopandshop",
+    "name": "Stopandshop",
+    "logo": "images/assets_stopandshoplogo.png"
+  },
+  {
+    "id": "storacoop",
+    "name": "Storacoop",
+    "logo": "images/assets_storacooplogo.png"
+  },
+  {
+    "id": "supercor",
+    "name": "Super Cor",
+    "logo": "images/assets_supercorlogo.png"
+  },
+  {
+    "id": "supermercadosbh",
+    "name": "Supermercadosbh",
+    "logo": "images/assets_supermercadosbhlogo.png"
+  },
+  {
+    "id": "supermuffato",
+    "name": "Supermuffa To",
+    "logo": "images/assets_supermuffatologo.png"
+  },
+  {
+    "id": "superu",
+    "name": "Superu",
+    "logo": "images/assets_superulogo.png"
+  },
+  {
+    "id": "supervaluenz",
+    "name": "Supervaluenz",
+    "logo": "images/assets_supervaluenzlogo.png"
+  },
+  {
+    "id": "supervalu",
+    "name": "Supervalu",
+    "logo": "images/assets_supervalulogo.png"
+  },
+  {
+    "id": "target",
+    "name": "Target",
+    "logo": "images/assets_targetlogo.png"
+  },
+  {
+    "id": "tesco",
+    "name": "Tesco",
+    "logo": "images/assets_tescologo.png"
+  },
+  {
+    "id": "tiktok",
+    "name": "Tiktok",
+    "logo": "images/assets_tiktoklogo.png"
+  },
+  {
+    "id": "traderjoes",
+    "name": "Traderjoes",
+    "logo": "images/assets_traderjoeslogo.jpg"
+  },
+  {
+    "id": "vons",
+    "name": "Vons",
+    "logo": "images/assets_vonslogo.png"
+  },
+  {
+    "id": "waitrose",
+    "name": "Waitrose",
+    "logo": "images/assets_waitroselogo.png"
+  },
+  {
+    "id": "walmart",
+    "name": "Walmart",
+    "logo": "images/assets_walmartlogo.png"
+  },
+  {
+    "id": "wegmans",
+    "name": "Wegmans",
+    "logo": "images/assets_wegmanslogo.png"
+  },
+  {
+    "id": "weis",
+    "name": "Weis",
+    "logo": "images/assets_weislogo.png"
+  },
+  {
+    "id": "wholefoods",
+    "name": "Wholefoods",
+    "logo": "images/assets_wholefoodslogo.png"
+  },
+  {
+    "id": "willys",
+    "name": "Willys",
+    "logo": "images/assets_willyslogo.png"
+  },
+  {
+    "id": "winco",
+    "name": "Winco",
+    "logo": "images/assets_wincologo.png"
+  },
+  {
+    "id": "winndixie",
+    "name": "Winndixie",
+    "logo": "images/assets_winndixielogo.png"
+  },
+  {
+    "id": "woolworths",
+    "name": "Woolworths",
+    "logo": "images/assets_woolworthslogo.png"
+  },
+  {
+    "id": "woolworthsnz",
+    "name": "Woolworthsnz",
+    "logo": "images/assets_woolworthsnzlogo.png"
+  },
+  {
+    "id": "youtube",
+    "name": "Youtube",
+    "logo": "images/assets_youtubelogo.png"
+  }
+]
