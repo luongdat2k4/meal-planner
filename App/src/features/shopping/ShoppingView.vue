@@ -5,6 +5,7 @@ import { RouterLink } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
+import { INGREDIENTS } from '../ingredients'
 import { planIngredientLabels, usePlanner } from '../planner'
 import { STORES } from './stores'
 import { useShopping } from './useShopping'
@@ -25,6 +26,13 @@ const checkedCount = computed(() => state.items.filter((i) => i.checked).length)
 const progress = computed(() => (state.items.length ? (checkedCount.value / state.items.length) * 100 : 0))
 // Items still to buy first; bought ones sink to the bottom.
 const sortedItems = computed(() => [...state.items].sort((a, b) => Number(a.checked) - Number(b.checked)))
+
+// Items are plain labels, so match them to a catalog ingredient by name (longest match wins).
+const imageByName = INGREDIENTS.map((i) => ({ name: i.name.toLowerCase(), image: i.image })).sort((a, b) => b.name.length - a.name.length)
+function itemImage(label: string): string | null {
+  const text = label.trim().toLowerCase()
+  return imageByName.find((i) => text === i.name || text.startsWith(`${i.name} `))?.image ?? null
+}
 
 function submit() {
   addShoppingItem(newItem.value)
@@ -174,6 +182,10 @@ async function copyList() {
         >
           <Icon v-if="item.checked" :icon="ICONS.check" class="text-sm" />
         </button>
+        <img v-if="itemImage(item.label)" :src="assetUrl(itemImage(item.label)!)" alt="" loading="lazy" class="h-10 w-10 shrink-0 rounded-xl bg-white object-contain p-1" :class="item.checked ? 'opacity-50' : ''" />
+        <span v-else class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand">
+          <Icon :icon="ICONS.carrot" class="text-xl" />
+        </span>
         <span class="min-w-0 flex-1 truncate" :class="item.checked ? 'text-gray-400 line-through' : 'font-medium'">{{ item.label }}</span>
         <button type="button" class="rounded-full p-1.5 text-gray-400 hover:bg-gray-100 hover:text-red-600" aria-label="Xóa" @click="removeShoppingItem(item.id)">
           <Icon :icon="ICONS.trash" class="text-xl" />
