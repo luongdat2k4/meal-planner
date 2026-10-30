@@ -9,6 +9,12 @@ export const METHOD_LABELS: Record<CookMethod, string> = {
   microwave: '⚡ Lò vi sóng',
 }
 
+// Rough difficulty derived from total time (mock until real data has a level).
+export function getLevel(recipe: Recipe): 'Dễ' | 'Vừa' | 'Khó' {
+  const total = recipe.prepMinutes + recipe.cookMinutes
+  return total <= 25 ? 'Dễ' : total <= 45 ? 'Vừa' : 'Khó'
+}
+
 const cache = new Map<string, Recipe>()
 
 // Recipes are mock data for now; swap buildMockRecipe for real data when it exists.

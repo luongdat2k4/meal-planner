@@ -31,27 +31,27 @@ async function regenerate() {
   <section class="space-y-4">
     <p class="text-sm text-gray-500">Thay đổi được lưu tự động. Tạo lại kế hoạch để áp dụng sở thích mới.</p>
 
-    <article class="rounded-3xl bg-white p-5 shadow-card">
+    <article class="rounded-3xl bg-card p-5 shadow-card">
       <h2 class="mb-3 font-bold">Số người ăn</h2>
       <FieldHousehold />
     </article>
 
-    <article class="rounded-3xl bg-white p-5 shadow-card">
+    <article class="rounded-3xl bg-card p-5 shadow-card">
       <h2 class="mb-4 font-bold">Ăn uống</h2>
       <FieldDiet />
     </article>
 
-    <article class="rounded-3xl bg-white p-5 shadow-card">
+    <article class="rounded-3xl bg-card p-5 shadow-card">
       <h2 class="mb-4 font-bold">Khẩu vị</h2>
       <FieldTaste />
     </article>
 
-    <article class="rounded-3xl bg-white p-5 shadow-card">
+    <article class="rounded-3xl bg-card p-5 shadow-card">
       <h2 class="mb-4 font-bold">Lịch nấu và ngân sách</h2>
       <FieldSchedule />
     </article>
 
-    <article class="rounded-3xl bg-white p-5 shadow-card">
+    <article class="rounded-3xl bg-card p-5 shadow-card">
       <h2 class="mb-4 font-bold">Nhắc nhở</h2>
       <FieldReminder />
     </article>

@@ -25,7 +25,7 @@ function toggleDiet(id: string) {
           type="button"
           :aria-pressed="state.dietaryIds.includes(diet.id)"
           class="flex items-center gap-3 rounded-2xl p-3 text-left text-sm font-medium transition"
-          :class="state.dietaryIds.includes(diet.id) ? 'bg-brand-soft ring-2 ring-brand' : 'bg-white shadow-card'"
+          :class="state.dietaryIds.includes(diet.id) ? 'bg-brand-soft ring-2 ring-brand' : 'bg-card shadow-card'"
           @click="toggleDiet(diet.id)"
         >
           <img :src="assetUrl(diet.icon)" alt="" class="h-9 w-9 object-contain" />

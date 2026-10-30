@@ -31,7 +31,7 @@ const perPersonMeal = computed(() =>
           :aria-label="DAY_NAMES[index]"
           :aria-pressed="state.cookingDays.includes(index)"
           class="flex h-11 w-11 items-center justify-center rounded-full text-sm font-semibold transition"
-          :class="state.cookingDays.includes(index) ? 'bg-brand text-white shadow-md shadow-brand/30' : 'bg-white text-gray-600 shadow-card'"
+          :class="state.cookingDays.includes(index) ? 'bg-brand text-white shadow-md shadow-brand/30' : 'bg-card text-gray-600 shadow-card'"
           @click="toggleDay(index)"
         >
           {{ label }}

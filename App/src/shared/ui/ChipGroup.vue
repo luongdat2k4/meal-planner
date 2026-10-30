@@ -20,7 +20,7 @@ function toggle(id: string) {
       role="checkbox"
       :aria-checked="model.includes(option.id)"
       class="rounded-full px-4 py-2 text-sm font-medium transition"
-      :class="model.includes(option.id) ? 'bg-brand text-white shadow-md shadow-brand/30' : 'bg-white text-gray-700 shadow-card'"
+      :class="model.includes(option.id) ? 'bg-ink text-white shadow-md shadow-black/20' : 'bg-card text-gray-700 shadow-card'"
       @click="toggle(option.id)"
     >
       {{ option.label }}

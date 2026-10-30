@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { accountRoutes } from '../features/account/routes'
+import { homeRoutes } from '../features/home/routes'
 import { householdRoutes } from '../features/household/routes'
 import { ingredientsRoutes } from '../features/ingredients/routes'
 import { mealsRoutes } from '../features/meals/routes'
@@ -11,6 +12,7 @@ import { settingsRoutes } from '../features/settings/routes'
 import { shoppingRoutes } from '../features/shopping/routes'
 
 const featureRoutes: RouteRecordRaw[] = [
+  ...homeRoutes,
   ...mealsRoutes,
   ...plannerRoutes,
   ...ingredientsRoutes,
@@ -26,9 +28,9 @@ const featureRoutes: RouteRecordRaw[] = [
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', redirect: { name: 'meals' } },
+    { path: '/', redirect: { name: 'home' } },
     ...featureRoutes,
-    { path: '/:pathMatch(.*)*', redirect: { name: 'meals' } },
+    { path: '/:pathMatch(.*)*', redirect: { name: 'home' } },
   ],
   scrollBehavior: (_to, _from, saved) => saved ?? { top: 0 },
 })
@@ -37,7 +39,7 @@ export const router = createRouter({
 router.beforeEach((to) => {
   const { state } = usePreferences()
   if (!state.onboardingDone && to.name !== 'onboarding') return { name: 'onboarding' }
-  if (state.onboardingDone && to.name === 'onboarding') return { name: 'meals' }
+  if (state.onboardingDone && to.name === 'onboarding') return { name: 'home' }
 })
 
 export const tabs = featureRoutes

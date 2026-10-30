@@ -11,7 +11,7 @@ defineProps<{ icon: IconifyIcon; title: string; subtitle?: string; to?: RouteLoc
   <component
     :is="to ? RouterLink : 'div'"
     :to="to"
-    class="flex items-center gap-3 rounded-3xl bg-white px-4 py-3.5 shadow-card"
+    class="flex items-center gap-3 rounded-3xl bg-card px-4 py-3.5 shadow-card"
     :class="to ? 'transition active:scale-[0.99]' : ''"
   >
     <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl" :class="danger ? 'bg-red-50 text-red-600' : 'bg-brand-soft text-brand'">

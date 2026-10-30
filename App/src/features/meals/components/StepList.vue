@@ -27,7 +27,7 @@ function toggle(index: number) {
       <li v-for="(step, index) in steps" :key="index">
         <button
           type="button"
-          class="flex w-full items-start gap-3 rounded-2xl bg-white p-4 text-left shadow-card"
+          class="flex w-full items-start gap-3 rounded-2xl bg-card p-4 text-left shadow-card"
           :aria-pressed="done.includes(index)"
           @click="toggle(index)"
         >

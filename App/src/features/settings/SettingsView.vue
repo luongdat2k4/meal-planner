@@ -55,7 +55,7 @@ async function confirmReset() {
 <template>
   <section class="space-y-4">
     <!-- Account -->
-    <RouterLink :to="{ name: 'account' }" class="flex items-center gap-4 rounded-3xl bg-white p-4 shadow-card transition active:scale-[0.99]">
+    <RouterLink :to="{ name: 'account' }" class="flex items-center gap-4 rounded-3xl bg-card p-4 shadow-card transition active:scale-[0.99]">
       <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
         <span v-if="account.signedIn" class="text-2xl font-bold">{{ account.name.charAt(0) }}</span>
         <Icon v-else :icon="ICONS.accountCircle" class="text-4xl" />
@@ -70,7 +70,7 @@ async function confirmReset() {
     <!-- Premium -->
     <RouterLink
       :to="{ name: 'premium' }"
-      class="flex items-center gap-4 rounded-3xl bg-gradient-to-br from-brand to-orange-400 p-4 text-white shadow-lg shadow-brand/30 transition active:scale-[0.99]"
+      class="flex items-center gap-4 rounded-3xl bg-gradient-to-br from-brand to-violet-400 p-4 text-white shadow-lg shadow-brand/30 transition active:scale-[0.99]"
     >
       <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/20">
         <Icon :icon="ICONS.crown" class="text-3xl" />
@@ -98,7 +98,7 @@ async function confirmReset() {
 
     <!-- Stats -->
     <ul class="grid grid-cols-2 gap-3">
-      <li v-for="stat in stats" :key="stat.label" class="rounded-3xl bg-white p-4 shadow-card">
+      <li v-for="stat in stats" :key="stat.label" class="rounded-3xl bg-card p-4 shadow-card">
         <p class="text-2xl font-bold text-brand">{{ stat.value }}</p>
         <p class="text-xs text-gray-500">{{ stat.label }}</p>
       </li>

@@ -26,7 +26,7 @@ const onList = (name: string) => state.items.some((s) => s.label === name && !s.
     <p class="text-sm text-gray-500">{{ filtered.length }} nguyên liệu</p>
 
     <ul class="grid grid-cols-3 gap-3">
-      <li v-for="item in filtered" :key="item.id" class="flex flex-col items-center rounded-3xl bg-white p-3 text-center shadow-card">
+      <li v-for="item in filtered" :key="item.id" class="flex flex-col items-center rounded-3xl bg-card p-3 text-center shadow-card">
         <img :src="assetUrl(item.image)" :alt="item.name" loading="lazy" class="mb-2 h-16 w-16 object-contain" />
         <span class="mb-3 line-clamp-2 min-h-8 text-xs font-semibold leading-snug">{{ item.name }}</span>
         <button

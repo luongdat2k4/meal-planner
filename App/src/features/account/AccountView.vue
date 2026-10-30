@@ -50,7 +50,7 @@ async function deleteAccount() {
     </p>
 
     <template v-if="!state.signedIn">
-      <div class="rounded-3xl bg-white p-6 text-center shadow-card">
+      <div class="rounded-3xl bg-card p-6 text-center shadow-card">
         <span class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-soft text-brand">
           <Icon :icon="ICONS.cloudSync" class="text-4xl" />
         </span>
@@ -61,7 +61,7 @@ async function deleteAccount() {
       <div class="space-y-3">
         <button
           type="button"
-          class="flex w-full items-center justify-center gap-3 rounded-full bg-white py-3.5 font-semibold shadow-card transition active:scale-[0.98]"
+          class="flex w-full items-center justify-center gap-3 rounded-full bg-card py-3.5 font-semibold shadow-card transition active:scale-[0.98]"
           @click="login('google')"
         >
           <span class="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 text-sm font-bold text-blue-600">G</span>
@@ -79,7 +79,7 @@ async function deleteAccount() {
     </template>
 
     <template v-else>
-      <div class="flex items-center gap-4 rounded-3xl bg-white p-5 shadow-card">
+      <div class="flex items-center gap-4 rounded-3xl bg-card p-5 shadow-card">
         <span class="flex h-14 w-14 items-center justify-center rounded-full bg-brand text-2xl font-bold text-white">{{ state.name.charAt(0) }}</span>
         <div class="min-w-0 flex-1">
           <p class="font-bold">{{ state.name }}</p>
@@ -90,7 +90,7 @@ async function deleteAccount() {
         </div>
       </div>
 
-      <div class="space-y-3 rounded-3xl bg-white p-5 shadow-card">
+      <div class="space-y-3 rounded-3xl bg-card p-5 shadow-card">
         <div class="flex items-center gap-2 text-sm text-gray-600">
           <Icon :icon="ICONS.shieldCheck" class="text-xl text-emerald-600" />
           Đồng bộ lần cuối: {{ state.lastSyncAt ? formatDateTime(state.lastSyncAt) : 'chưa' }}
@@ -115,14 +115,14 @@ async function deleteAccount() {
         </div>
       </div>
 
-      <button type="button" class="flex w-full items-center gap-3 rounded-3xl bg-white px-4 py-4 text-left font-medium shadow-card" @click="logout">
+      <button type="button" class="flex w-full items-center gap-3 rounded-3xl bg-card px-4 py-4 text-left font-medium shadow-card" @click="logout">
         <Icon :icon="ICONS.logout" class="text-xl text-gray-500" /> Đăng xuất
       </button>
     </template>
 
     <button
       type="button"
-      class="flex w-full items-center gap-3 rounded-3xl bg-white px-4 py-4 text-left font-medium text-red-600 shadow-card"
+      class="flex w-full items-center gap-3 rounded-3xl bg-card px-4 py-4 text-left font-medium text-red-600 shadow-card"
       @click="deleteOpen = true"
     >
       <Icon :icon="ICONS.trash" class="text-xl" /> Xóa tài khoản và dữ liệu

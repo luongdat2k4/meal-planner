@@ -18,7 +18,7 @@ import IngredientList from './components/IngredientList.vue'
 import MacroCards from './components/MacroCards.vue'
 import StepList from './components/StepList.vue'
 import { getMeal } from './meals'
-import { METHOD_LABELS, getRecipe } from './recipe'
+import { METHOD_LABELS, getLevel, getRecipe } from './recipe'
 import type { CookMethod, RecipeIngredient } from './types'
 import { useFavorites } from './useFavorites'
 import { useMealActivity } from './useMealActivity'
@@ -44,6 +44,7 @@ const scale = computed(() => (recipe.value ? servings.value / recipe.value.baseS
 const methodOptions = computed(() => (recipe.value?.methods ?? []).map((m) => ({ id: m, label: METHOD_LABELS[m] })))
 const steps = computed(() => recipe.value?.steps[method.value as CookMethod] ?? [])
 const dayOptions = DAY_NAMES.map((name, index) => ({ id: String(index), label: name }))
+const level = computed(() => (recipe.value ? getLevel(recipe.value) : ''))
 const allergenLabels = computed(() =>
   (recipe.value?.allergens ?? []).map((id) => ALLERGENS.find((a) => a.id === id)?.label ?? id).join(', '),
 )
@@ -95,20 +96,15 @@ function addToPlan() {
 </script>
 
 <template>
-  <section v-if="meal && recipe" class="pb-36">
-    <div class="relative">
-      <img :src="assetUrl(meal.image)" :alt="meal.title" class="h-80 w-full object-cover" />
-      <RouterLink
-        :to="{ name: 'meals' }"
-        class="absolute left-4 top-[max(env(safe-area-inset-top),1rem)] flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow"
-        aria-label="Quay lại"
-      >
+  <section v-if="meal && recipe" class="px-5 pb-40 pt-[max(env(safe-area-inset-top),1rem)]">
+    <div class="flex items-center justify-between">
+      <RouterLink :to="{ name: 'meals' }" class="glass flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card" aria-label="Quay lại">
         <Icon :icon="ICONS.arrowLeft" class="text-2xl" />
       </RouterLink>
       <button
         type="button"
-        class="absolute right-4 top-[max(env(safe-area-inset-top),1rem)] flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow"
-        :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-500'"
+        class="glass flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
+        :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-700'"
         :aria-label="isFavorite(meal.id) ? 'Bỏ yêu thích' : 'Yêu thích'"
         :aria-pressed="isFavorite(meal.id)"
         @click="toggleFavorite(meal.id)"
@@ -117,49 +113,74 @@ function addToPlan() {
       </button>
     </div>
 
-    <div class="relative -mt-8 space-y-6 rounded-t-[32px] bg-surface px-5 pt-6">
-      <div>
-        <h1 class="text-2xl font-bold leading-snug">{{ meal.title }}</h1>
-        <ul class="mt-3 flex flex-wrap gap-2">
+    <div class="relative mt-4">
+      <img :src="assetUrl(meal.image)" :alt="meal.title" class="aspect-[4/3] w-full rounded-[32px] object-cover shadow-card" />
+      <span class="glass absolute left-4 top-4 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">Đạm: {{ recipe.macros.protein }} g</span>
+      <span class="glass absolute right-4 top-1/3 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">Tinh bột: {{ recipe.macros.carbs }} g</span>
+      <span class="glass absolute bottom-6 left-4 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">Béo: {{ recipe.macros.fat }} g</span>
+      <span
+        v-if="rating"
+        class="glass absolute -bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-card px-4 py-1.5 text-sm font-semibold shadow-card"
+      >
+        <Icon :icon="ICONS.star" class="text-amber-400" /> {{ rating }}
+      </span>
+    </div>
+
+    <div class="mt-8 space-y-6">
+      <div class="text-center">
+        <h1 class="text-2xl font-semibold leading-snug">{{ meal.title }}</h1>
+        <ul class="mt-3 flex flex-wrap justify-center gap-2">
           <li v-for="category in categories" :key="category.id" class="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
             {{ category.emoji }} {{ category.label }}
           </li>
-          <li v-for="id in recipe.dietary" :key="id" class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+          <li v-for="id in recipe.dietary" :key="id" class="rounded-full bg-tile-green px-3 py-1 text-xs font-semibold text-emerald-800">
             ✓ {{ DIET_LABELS[id] ?? id }}
           </li>
         </ul>
         <p v-if="allergenLabels" class="mt-2 text-xs text-amber-700">⚠️ Có thể chứa: {{ allergenLabels }}</p>
       </div>
 
-      <p class="rounded-2xl bg-amber-50 p-3 text-xs text-amber-800">
+      <p class="rounded-2xl bg-tile-yellow/60 p-3 text-xs text-amber-900">
         Công thức, dinh dưỡng và nguyên liệu bên dưới là dữ liệu mẫu để thiết kế giao diện, chưa phải dữ liệu thật.
       </p>
 
-      <div class="grid grid-cols-3 gap-2">
-        <div class="flex flex-col items-center justify-center gap-1 rounded-2xl bg-white p-3 text-center shadow-card">
-          <Icon :icon="ICONS.clockOutline" class="text-2xl text-brand" />
-          <span class="text-sm font-bold">{{ formatMinutes(recipe.prepMinutes + recipe.cookMinutes) }}</span>
-          <span class="text-[11px] text-gray-500">Tổng thời gian</span>
+      <ul class="grid grid-cols-3 gap-2 text-center">
+        <li class="rounded-3xl bg-tile-pink p-3">
+          <Icon :icon="ICONS.timerOutline" class="mx-auto text-2xl text-gray-700" />
+          <p class="mt-1 text-xs text-gray-600">Chuẩn bị</p>
+          <p class="font-semibold">{{ formatMinutes(recipe.prepMinutes) }}</p>
+        </li>
+        <li class="rounded-3xl bg-tile-blue p-3">
+          <Icon :icon="ICONS.fire" class="mx-auto text-2xl text-gray-700" />
+          <p class="mt-1 text-xs text-gray-600">Nấu</p>
+          <p class="font-semibold">{{ formatMinutes(recipe.cookMinutes) }}</p>
+        </li>
+        <li class="rounded-3xl bg-tile-yellow p-3">
+          <Icon :icon="ICONS.lightning" class="mx-auto text-2xl text-gray-700" />
+          <p class="mt-1 text-xs text-gray-600">Mức độ</p>
+          <p class="font-semibold">{{ level }}</p>
+        </li>
+      </ul>
+
+      <div class="glass flex items-center justify-between gap-3 rounded-3xl bg-tile-green/70 p-4">
+        <div>
+          <p class="text-xs text-gray-600">Khẩu phần</p>
+          <Stepper v-model="servings" :min="1" :max="12" class="mt-1" />
         </div>
-        <div class="flex flex-col items-center justify-center gap-1 rounded-2xl bg-white p-3 text-center shadow-card">
-          <Stepper v-model="servings" :min="1" :max="12" />
-          <span class="text-[11px] text-gray-500">Khẩu phần</span>
-        </div>
-        <div class="flex flex-col items-center justify-center gap-1 rounded-2xl bg-white p-3 text-center shadow-card">
-          <Icon :icon="ICONS.cashMultiple" class="text-2xl text-brand" />
-          <span class="text-sm font-bold">{{ formatVnd(recipe.pricePerServing * servings) }}</span>
-          <span class="text-[11px] text-gray-500">Chi phí ước tính</span>
+        <div class="text-right">
+          <p class="text-xs text-gray-600">Chi phí ước tính</p>
+          <p class="text-lg font-semibold">{{ formatVnd(recipe.pricePerServing * servings) }}</p>
         </div>
       </div>
 
       <section class="space-y-3">
-        <h2 class="font-bold">Dinh dưỡng mỗi khẩu phần</h2>
+        <h2 class="text-lg font-semibold">Dinh dưỡng mỗi khẩu phần</h2>
         <MacroCards :macros="recipe.macros" />
       </section>
 
       <section class="space-y-3">
         <div class="flex items-center justify-between">
-          <h2 class="font-bold">Nguyên liệu</h2>
+          <h2 class="text-lg font-semibold">Nguyên liệu</h2>
           <button type="button" class="flex items-center gap-1 text-sm font-semibold text-brand" @click="addAllIngredients">
             <Icon :icon="ICONS.cart" class="text-lg" /> Thêm tất cả
           </button>
@@ -168,13 +189,13 @@ function addToPlan() {
       </section>
 
       <section class="space-y-2">
-        <h2 class="font-bold">Cách nấu</h2>
+        <h2 class="text-lg font-semibold">Cách nấu</h2>
         <ChipTabs v-model="method" :options="methodOptions" />
         <StepList :steps="steps" />
       </section>
 
-      <section class="space-y-4 rounded-3xl bg-white p-5 shadow-card">
-        <h2 class="font-bold">Của bạn</h2>
+      <section class="glass space-y-4 rounded-[28px] bg-card p-5 shadow-card">
+        <h2 class="text-lg font-semibold">Của bạn</h2>
 
         <button
           type="button"
@@ -206,13 +227,13 @@ function addToPlan() {
             v-model="note"
             rows="3"
             placeholder="Ví dụ: giảm cay, thêm hành lá..."
-            class="w-full resize-none rounded-2xl bg-surface p-3 text-sm outline-none ring-1 ring-transparent focus:ring-brand/40"
+            class="w-full resize-none rounded-2xl bg-white/70 p-3 text-sm outline-none ring-1 ring-transparent focus:ring-brand/40"
           />
         </label>
       </section>
 
       <section>
-        <h2 class="mb-1 font-bold">Thêm vào kế hoạch</h2>
+        <h2 class="mb-1 text-lg font-semibold">Thêm vào kế hoạch</h2>
         <ChipTabs v-model="selectedDay" :options="dayOptions" />
         <p v-if="addedDay !== null" class="mt-2 flex items-center gap-2 rounded-2xl bg-brand-soft p-3 text-sm text-brand">
           <Icon :icon="ICONS.check" class="text-lg" />
@@ -224,7 +245,7 @@ function addToPlan() {
       </section>
     </div>
 
-    <div class="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-2xl bg-gradient-to-t from-surface via-surface to-transparent px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-8">
+    <div class="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-2xl bg-gradient-to-t from-[#e4ecff] via-[#e4ecff]/80 to-transparent px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-8">
       <button
         type="button"
         class="w-full rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98]"

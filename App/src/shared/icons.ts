@@ -21,6 +21,7 @@ import crown from '@iconify-icons/mdi/crown'
 import fire from '@iconify-icons/mdi/fire'
 import heart from '@iconify-icons/mdi/heart'
 import heartOutline from '@iconify-icons/mdi/heart-outline'
+import home from '@iconify-icons/mdi/home'
 import homeGroup from '@iconify-icons/mdi/home-group'
 import lightning from '@iconify-icons/mdi/lightning-bolt'
 import logout from '@iconify-icons/mdi/logout'
@@ -63,6 +64,7 @@ export const ICONS = {
   fire,
   heart,
   heartOutline,
+  home,
   homeGroup,
   lightning,
   logout,

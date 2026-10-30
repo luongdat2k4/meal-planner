@@ -38,7 +38,7 @@ function confirmCancel() {
 
 <template>
   <section class="min-h-dvh pb-48">
-    <div class="rounded-b-[40px] bg-gradient-to-br from-brand to-orange-400 px-5 pb-16 pt-[max(env(safe-area-inset-top),1rem)] text-white">
+    <div class="rounded-b-[40px] bg-gradient-to-br from-brand to-violet-400 px-5 pb-16 pt-[max(env(safe-area-inset-top),1rem)] text-white">
       <RouterLink :to="{ name: 'settings' }" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20" aria-label="Đóng">
         <Icon :icon="ICONS.close" class="text-2xl" />
       </RouterLink>
@@ -52,7 +52,7 @@ function confirmCancel() {
     </div>
 
     <div class="-mt-10 space-y-4 px-5">
-      <ul class="space-y-3 rounded-3xl bg-white p-5 shadow-card">
+      <ul class="space-y-3 rounded-3xl bg-card p-5 shadow-card">
         <li v-for="benefit in PREMIUM_BENEFITS" :key="benefit" class="flex items-start gap-3 text-sm font-medium">
           <Icon :icon="ICONS.checkCircle" class="mt-0.5 shrink-0 text-xl text-brand" />
           {{ benefit }}
@@ -60,7 +60,7 @@ function confirmCancel() {
       </ul>
 
       <!-- Active subscription -->
-      <div v-if="isPremium && currentPlan" class="space-y-3 rounded-3xl bg-white p-5 shadow-card">
+      <div v-if="isPremium && currentPlan" class="space-y-3 rounded-3xl bg-card p-5 shadow-card">
         <p class="text-sm text-gray-500">Gói hiện tại</p>
         <p class="text-xl font-bold">{{ currentPlan.name }}</p>
         <p class="text-sm text-gray-600">
@@ -68,7 +68,7 @@ function confirmCancel() {
         </p>
         <div class="flex gap-2">
           <button type="button" class="flex-1 rounded-full bg-brand-soft py-3 text-sm font-semibold text-brand" @click="manageOpen = true">Quản lý gói</button>
-          <button type="button" class="flex-1 rounded-full bg-white py-3 text-sm font-semibold text-gray-700 shadow-card" @click="restore">Khôi phục</button>
+          <button type="button" class="flex-1 rounded-full bg-card py-3 text-sm font-semibold text-gray-700 shadow-card" @click="restore">Khôi phục</button>
         </div>
       </div>
 
@@ -80,7 +80,7 @@ function confirmCancel() {
           type="button"
           role="radio"
           :aria-checked="selected === plan.id"
-          class="relative w-full rounded-3xl bg-white p-5 text-left shadow-card transition"
+          class="relative w-full rounded-3xl bg-card p-5 text-left shadow-card transition"
           :class="selected === plan.id ? 'ring-2 ring-brand' : ''"
           @click="selected = plan.id"
         >
@@ -101,7 +101,7 @@ function confirmCancel() {
 
     <div
       v-if="!isPremium"
-      class="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-2xl bg-gradient-to-t from-surface via-surface to-transparent px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-8"
+      class="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-2xl bg-gradient-to-t from-[#e4ecff] via-[#e4ecff]/80 to-transparent px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-8"
     >
       <button
         type="button"
@@ -123,7 +123,7 @@ function confirmCancel() {
           <button
             type="button"
             class="w-full rounded-2xl px-4 py-3 text-left text-sm font-medium"
-            :class="reason === item ? 'bg-brand-soft ring-2 ring-brand' : 'bg-white shadow-card'"
+            :class="reason === item ? 'bg-brand-soft ring-2 ring-brand' : 'bg-card shadow-card'"
             @click="reason = item"
           >
             {{ item }}

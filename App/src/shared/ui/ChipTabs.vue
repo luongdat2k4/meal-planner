@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { nextTick, onMounted, useTemplateRef, watch } from 'vue'
+import { useDragScroll } from '../dragScroll'
 import type { ChipOption } from './types'
 
 defineProps<{ options: ChipOption[] }>()
 
 const model = defineModel<string>({ required: true })
 const list = useTemplateRef<HTMLElement>('list')
+
+useDragScroll(list)
 
 // Keep the selected chip visible in the horizontal scroller.
 async function revealSelected() {
@@ -30,7 +33,7 @@ watch(model, revealSelected)
       role="tab"
       :aria-selected="model === option.id"
       class="shrink-0 rounded-full px-4 py-2 text-sm font-medium transition"
-      :class="model === option.id ? 'bg-brand text-white shadow-md shadow-brand/30' : 'bg-white text-gray-700 shadow-card'"
+      :class="model === option.id ? 'bg-ink text-white shadow-md shadow-black/20' : 'bg-card text-gray-700 shadow-card'"
       @click="model = option.id"
     >
       {{ option.label }}

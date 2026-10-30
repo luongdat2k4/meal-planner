@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
+import QuickSuggestSheet from '../features/planner/components/QuickSuggestSheet.vue'
 import { ICONS } from '../shared/icons'
 import ToastHost from '../shared/ui/ToastHost.vue'
 import { tabs } from './router'
@@ -17,23 +18,34 @@ router.isReady().then(() => {
   ready.value = true
 })
 const showChrome = computed(() => ready.value && !route.meta.fullscreen)
+const showHeader = computed(() => showChrome.value && !route.meta.hideHeader)
 
 const pendingCount = computed(() => shopping.items.filter((item) => !item.checked).length)
 
+// The suggestion button sits in the middle of the tab bar.
+const leftTabs = computed(() => tabs.slice(0, 2))
+const rightTabs = computed(() => tabs.slice(2))
+const suggestOpen = ref(false)
+
 // Tab screens keep their state (search text, scroll) while switching tabs.
-const cachedViews = ['MealsView', 'PlannerView', 'IngredientsView', 'ShoppingView', 'SettingsView']
+const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
 </script>
 
 <template>
   <div class="mx-auto flex min-h-dvh max-w-2xl flex-col">
-    <header v-if="showChrome" class="flex items-center gap-2 px-5 pb-2 pt-[max(env(safe-area-inset-top),1.25rem)]">
-      <RouterLink v-if="route.meta.backTo" :to="route.meta.backTo" class="-ml-2 rounded-full p-1.5 text-gray-700 hover:bg-gray-200" aria-label="Quay lại">
+    <header v-if="showHeader" class="flex items-center gap-2 px-5 pb-2 pt-[max(env(safe-area-inset-top),1.25rem)]">
+      <RouterLink
+        v-if="route.meta.backTo"
+        :to="route.meta.backTo"
+        class="glass -ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-card shadow-card"
+        aria-label="Quay lại"
+      >
         <Icon :icon="ICONS.arrowLeft" class="text-2xl" />
       </RouterLink>
-      <h1 class="text-2xl font-bold tracking-tight">{{ route.meta.title }}</h1>
+      <h1 class="text-2xl font-semibold tracking-tight">{{ route.meta.title }}</h1>
     </header>
 
-    <main class="flex-1" :class="showChrome ? 'px-5 pb-32 pt-2' : ''">
+    <main class="flex-1" :class="showChrome ? (showHeader ? 'px-5 pb-32 pt-2' : 'px-5 pb-32') : ''">
       <RouterView v-slot="{ Component }">
         <KeepAlive :include="cachedViews">
           <component :is="Component" />
@@ -41,46 +53,61 @@ const cachedViews = ['MealsView', 'PlannerView', 'IngredientsView', 'ShoppingVie
       </RouterView>
     </main>
 
-    <nav
-      v-if="showChrome"
-      class="fixed inset-x-0 bottom-0 z-30 mx-auto max-w-2xl px-4 pb-[max(env(safe-area-inset-bottom),0.75rem)]"
-    >
-      <ul class="grid grid-cols-5 items-end rounded-[28px] bg-white px-2 shadow-[0_10px_30px_rgb(0_0_0/0.12)]">
-        <li v-for="tab in tabs" :key="tab.name">
+    <nav v-if="showChrome" class="fixed inset-x-0 bottom-0 z-30 mx-auto max-w-2xl px-5 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
+      <ul class="flex items-center justify-between rounded-full bg-white p-2 shadow-[0_12px_36px_rgb(70_80_140/0.18)] ring-1 ring-white/70">
+        <li v-for="tab in leftTabs" :key="tab.name">
           <RouterLink :to="{ name: tab.name }" custom v-slot="{ href, navigate, isActive }">
             <a
-              v-if="tab.center"
               :href="href"
               :aria-label="tab.label"
+              :title="tab.label"
               :aria-current="isActive ? 'page' : undefined"
-              class="relative mx-auto -mt-6 flex h-14 w-14 items-center justify-center rounded-full bg-brand text-white shadow-lg shadow-brand/40 ring-4 ring-surface transition active:scale-95"
-              :class="isActive ? 'bg-brand-dark' : ''"
+              class="flex h-12 w-12 items-center justify-center rounded-full transition"
+              :class="isActive ? 'bg-brand text-white shadow-lg shadow-brand/40' : 'bg-slate-100 text-gray-700'"
+              @click="navigate"
+            >
+              <Icon :icon="tab.icon" class="text-2xl" />
+            </a>
+          </RouterLink>
+        </li>
+
+        <li>
+          <button
+            type="button"
+            aria-label="Gợi ý nhanh"
+            title="Gợi ý nhanh"
+            class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-rose-200 via-violet-200 to-sky-300 text-gray-900 shadow-md ring-2 ring-white/80 transition active:scale-95"
+            @click="suggestOpen = true"
+          >
+            <Icon :icon="ICONS.autoFix" class="text-2xl" />
+          </button>
+        </li>
+
+        <li v-for="tab in rightTabs" :key="tab.name">
+          <RouterLink :to="{ name: tab.name }" custom v-slot="{ href, navigate, isActive }">
+            <a
+              :href="href"
+              :aria-label="tab.label"
+              :title="tab.label"
+              :aria-current="isActive ? 'page' : undefined"
+              class="relative flex h-12 w-12 items-center justify-center rounded-full transition"
+              :class="isActive ? 'bg-brand text-white shadow-lg shadow-brand/40' : 'bg-slate-100 text-gray-700'"
               @click="navigate"
             >
               <Icon :icon="tab.icon" class="text-2xl" />
               <span
-                v-if="pendingCount"
-                class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-gray-900 px-1 text-[11px] font-semibold"
+                v-if="tab.name === 'shopping' && pendingCount"
+                class="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1 text-[11px] font-semibold text-white"
               >
                 {{ pendingCount > 99 ? '99+' : pendingCount }}
               </span>
-            </a>
-            <a
-              v-else
-              :href="href"
-              :aria-current="isActive ? 'page' : undefined"
-              class="flex flex-col items-center gap-0.5 py-3 text-[11px] font-medium transition"
-              :class="isActive ? 'text-brand' : 'text-gray-400'"
-              @click="navigate"
-            >
-              <Icon :icon="tab.icon" class="text-2xl" />
-              {{ tab.label }}
             </a>
           </RouterLink>
         </li>
       </ul>
     </nav>
 
+    <QuickSuggestSheet v-model="suggestOpen" />
     <ToastHost />
   </div>
 </template>

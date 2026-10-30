@@ -66,7 +66,7 @@ function confirmLeave() {
     </p>
 
     <!-- Members -->
-    <div class="rounded-3xl bg-white p-5 shadow-card">
+    <div class="rounded-3xl bg-card p-5 shadow-card">
       <div class="mb-4 flex items-center justify-between">
         <h2 class="flex items-center gap-2 font-bold"><Icon :icon="ICONS.homeGroup" class="text-xl text-brand" /> Thành viên</h2>
         <span class="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">{{ state.members.length }}/{{ MAX_MEMBERS }}</span>
@@ -97,7 +97,7 @@ function confirmLeave() {
     </div>
 
     <!-- Invite -->
-    <div v-if="isOwner" class="space-y-4 rounded-3xl bg-white p-5 shadow-card">
+    <div v-if="isOwner" class="space-y-4 rounded-3xl bg-card p-5 shadow-card">
       <h2 class="flex items-center gap-2 font-bold"><Icon :icon="ICONS.accountPlus" class="text-xl text-brand" /> Mời người thân</h2>
 
       <p v-if="isFull" class="rounded-2xl bg-red-50 p-3 text-sm text-red-700">
@@ -127,7 +127,7 @@ function confirmLeave() {
     </div>
 
     <!-- Join -->
-    <form v-if="isOwner && state.members.length === 1" class="space-y-3 rounded-3xl bg-white p-5 shadow-card" @submit.prevent="join">
+    <form v-if="isOwner && state.members.length === 1" class="space-y-3 rounded-3xl bg-card p-5 shadow-card" @submit.prevent="join">
       <h2 class="font-bold">Có mã mời?</h2>
       <div class="flex gap-2">
         <input
@@ -145,7 +145,7 @@ function confirmLeave() {
     <button
       v-if="!isOwner || state.members.length > 1"
       type="button"
-      class="w-full rounded-3xl bg-white px-4 py-4 text-left font-medium text-red-600 shadow-card"
+      class="w-full rounded-3xl bg-card px-4 py-4 text-left font-medium text-red-600 shadow-card"
       @click="confirmLeave"
     >
       {{ isOwner ? 'Giải tán hộ gia đình' : 'Rời hộ gia đình' }}

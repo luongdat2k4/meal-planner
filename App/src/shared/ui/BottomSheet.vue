@@ -23,7 +23,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
   <Teleport to="body">
     <div v-if="open" class="fixed inset-0 z-50 flex items-end justify-center bg-black/40" @click.self="open = false">
       <div
-        class="max-h-[85dvh] w-full max-w-2xl overflow-y-auto rounded-t-[32px] bg-surface p-5 pb-[max(env(safe-area-inset-bottom),1.25rem)]"
+        class="max-h-[85dvh] w-full max-w-2xl overflow-y-auto rounded-t-[32px] bg-surface/95 glass p-5 pb-[max(env(safe-area-inset-bottom),1.25rem)]"
         role="dialog"
         aria-modal="true"
         :aria-label="title"

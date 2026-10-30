@@ -57,7 +57,7 @@ async function next() {
 
 function skip() {
   completeOnboarding()
-  router.replace({ name: 'meals' })
+  router.replace({ name: 'home' })
 }
 </script>
 
@@ -87,7 +87,7 @@ function skip() {
         <h1 class="mb-2 text-3xl font-bold leading-tight">{{ current.title }}</h1>
         <p class="mb-8 text-gray-500">{{ current.subtitle }}</p>
         <ul class="w-full space-y-3 text-left">
-          <li v-for="benefit in benefits" :key="benefit.text" class="flex items-center gap-3 rounded-2xl bg-white p-4 shadow-card">
+          <li v-for="benefit in benefits" :key="benefit.text" class="flex items-center gap-3 rounded-2xl bg-card p-4 shadow-card">
             <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand">
               <Icon :icon="benefit.icon" class="text-2xl" />
             </span>

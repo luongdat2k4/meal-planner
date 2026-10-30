@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
+import { RouterLink } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
@@ -60,7 +61,7 @@ async function copyList() {
 <template>
   <section class="space-y-4">
     <!-- Store -->
-    <div class="rounded-3xl bg-white p-4 shadow-card">
+    <div class="rounded-3xl bg-card p-4 shadow-card">
       <button type="button" class="flex w-full items-center justify-between" @click="pickingStore = !pickingStore">
         <span class="flex items-center gap-3">
           <img v-if="currentStore" :src="assetUrl(currentStore.logo)" :alt="currentStore.name" class="h-10 w-10 rounded-xl object-contain" />
@@ -110,7 +111,7 @@ async function copyList() {
     </div>
 
     <!-- Add item -->
-    <form class="flex items-center gap-2 rounded-2xl bg-white p-1.5 pl-4 shadow-card" @submit.prevent="submit">
+    <form class="flex items-center gap-2 rounded-2xl bg-card p-1.5 pl-4 shadow-card" @submit.prevent="submit">
       <input v-model="newItem" type="text" placeholder="Thêm món cần mua..." class="min-w-0 flex-1 bg-transparent py-2 outline-none" />
       <button
         type="submit"
@@ -134,13 +135,21 @@ async function copyList() {
       </button>
       <button
         type="button"
-        class="flex flex-1 items-center justify-center gap-2 rounded-full bg-white py-2.5 text-sm font-semibold text-gray-700 shadow-card disabled:opacity-40"
+        class="flex flex-1 items-center justify-center gap-2 rounded-full bg-card py-2.5 text-sm font-semibold text-gray-700 shadow-card disabled:opacity-40"
         :disabled="!state.items.length"
         @click="copyList"
       >
         <Icon :icon="ICONS.contentCopy" class="text-lg" /> Sao chép
       </button>
     </div>
+
+    <RouterLink
+      :to="{ name: 'ingredients' }"
+      class="glass flex items-center justify-between rounded-2xl bg-card px-4 py-3 text-sm font-semibold shadow-card"
+    >
+      <span class="flex items-center gap-2"><Icon :icon="ICONS.carrot" class="text-xl text-brand" /> Chọn từ danh sách nguyên liệu</span>
+      <Icon :icon="ICONS.chevronRight" class="text-xl text-gray-300" />
+    </RouterLink>
 
     <!-- Progress -->
     <div v-if="state.items.length" class="space-y-2">
@@ -155,7 +164,7 @@ async function copyList() {
 
     <!-- List -->
     <ul v-if="state.items.length" class="space-y-2">
-      <li v-for="item in sortedItems" :key="item.id" class="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-card">
+      <li v-for="item in sortedItems" :key="item.id" class="flex items-center gap-3 rounded-2xl bg-card px-4 py-3 shadow-card">
         <button
           type="button"
           class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition"
@@ -171,7 +180,7 @@ async function copyList() {
         </button>
       </li>
     </ul>
-    <div v-else class="rounded-3xl bg-white px-6 py-10 text-center shadow-card">
+    <div v-else class="rounded-3xl bg-card px-6 py-10 text-center shadow-card">
       <Icon :icon="ICONS.cart" class="mx-auto mb-3 text-5xl text-gray-300" />
       <p class="text-gray-500">Danh sách đi chợ đang trống.</p>
     </div>

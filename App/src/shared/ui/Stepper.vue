@@ -15,7 +15,7 @@ function change(delta: number) {
   <div class="flex items-center gap-3">
     <button
       type="button"
-      class="flex h-9 w-9 items-center justify-center rounded-full bg-white text-brand shadow-card disabled:opacity-40"
+      class="flex h-9 w-9 items-center justify-center rounded-full bg-card text-brand shadow-card disabled:opacity-40"
       :disabled="model <= min"
       aria-label="Giảm"
       @click="change(-1)"

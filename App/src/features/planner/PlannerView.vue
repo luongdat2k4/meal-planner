@@ -92,7 +92,7 @@ function applySwap(newMealId: string) {
 <template>
   <section class="space-y-4">
     <!-- Week summary -->
-    <div class="space-y-4 rounded-3xl bg-white p-5 shadow-card">
+    <div class="space-y-4 rounded-3xl bg-card p-5 shadow-card">
       <template v-if="plannedMealCount">
         <div class="flex items-start justify-between">
           <div>
@@ -148,7 +148,7 @@ function applySwap(newMealId: string) {
     </div>
 
     <ul v-if="dayMeals.length" class="space-y-3">
-      <li v-for="item in dayMeals" :key="`${item.mealId}-${item.index}`" class="flex items-center gap-3 rounded-3xl bg-white p-3 shadow-card">
+      <li v-for="item in dayMeals" :key="`${item.mealId}-${item.index}`" class="flex items-center gap-3 rounded-3xl bg-card p-3 shadow-card">
         <RouterLink :to="{ name: 'meal-detail', params: { id: item.mealId } }" class="flex min-w-0 flex-1 items-center gap-3">
           <img
             v-if="item.meal"
@@ -181,7 +181,7 @@ function applySwap(newMealId: string) {
       </li>
     </ul>
 
-    <div v-else class="rounded-3xl bg-white px-6 py-10 text-center shadow-card">
+    <div v-else class="rounded-3xl bg-card px-6 py-10 text-center shadow-card">
       <Icon :icon="ICONS.calendarWeek" class="mx-auto mb-3 text-5xl text-gray-300" />
       <p class="mb-4 text-gray-500">Chưa có món nào cho {{ DAY_NAMES[dayIndex] }}.</p>
       <RouterLink :to="{ name: 'meals' }" class="inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white">
@@ -192,7 +192,7 @@ function applySwap(newMealId: string) {
     <div class="flex gap-2">
       <select
         v-model="pendingMeal"
-        class="min-w-0 flex-1 rounded-2xl bg-white px-4 py-3.5 text-sm shadow-card outline-none ring-1 ring-transparent focus:ring-brand/40"
+        class="min-w-0 flex-1 rounded-2xl bg-card px-4 py-3.5 text-sm shadow-card outline-none ring-1 ring-transparent focus:ring-brand/40"
       >
         <option value="" disabled>Thêm nhanh một món...</option>
         <option v-for="meal in MEALS" :key="meal.id" :value="meal.id">{{ meal.title }}</option>
@@ -214,7 +214,7 @@ function applySwap(newMealId: string) {
         <li v-for="option in swapOptions" :key="option.id">
           <button
             type="button"
-            class="flex w-full items-center gap-3 rounded-2xl bg-white p-3 text-left shadow-card transition active:scale-[0.99]"
+            class="flex w-full items-center gap-3 rounded-2xl bg-card p-3 text-left shadow-card transition active:scale-[0.99]"
             @click="applySwap(option.id)"
           >
             <img :src="assetUrl(option.image)" :alt="option.title" loading="lazy" class="h-14 w-14 shrink-0 rounded-xl object-cover" />

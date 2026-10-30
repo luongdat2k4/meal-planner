@@ -32,7 +32,7 @@ const day = computed({
         <h3 class="mb-1 text-sm font-semibold text-gray-700">Ngày nhắc</h3>
         <ChipTabs v-model="day" :options="dayOptions" />
       </div>
-      <label class="flex items-center justify-between gap-4 rounded-2xl bg-white px-4 py-3 shadow-card">
+      <label class="flex items-center justify-between gap-4 rounded-2xl bg-card px-4 py-3 shadow-card">
         <span class="text-sm font-semibold">Giờ nhắc</span>
         <input v-model="state.reminder.time" type="time" class="rounded-xl bg-surface px-3 py-1.5 outline-none" />
       </label>

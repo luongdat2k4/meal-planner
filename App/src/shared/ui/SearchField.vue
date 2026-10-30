@@ -14,7 +14,7 @@ const model = defineModel<string>({ required: true })
       v-model="model"
       type="search"
       :placeholder="placeholder"
-      class="w-full rounded-2xl bg-white py-3.5 pl-12 pr-4 shadow-card outline-none ring-1 ring-transparent focus:ring-brand/40"
+      class="w-full rounded-2xl bg-card py-3.5 pl-12 pr-4 shadow-card outline-none ring-1 ring-transparent focus:ring-brand/40"
     />
   </div>
 </template>
