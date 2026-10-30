@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { resetAllData } from '../../app/resetAll'
@@ -7,6 +7,7 @@ import { formatVnd } from '../../shared/format'
 import { flagSrc, lang, languages, t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
+import BottomSheet from '../../shared/ui/BottomSheet.vue'
 import ListRow from '../../shared/ui/ListRow.vue'
 import ToggleSwitch from '../../shared/ui/ToggleSwitch.vue'
 import { getIngredients } from '../ingredients'
@@ -32,8 +33,11 @@ const stats = computed(() => [
   { label: t('settings.stats.planned'), value: plannedMealCount.value },
 ])
 
+// The browser's own confirm() can be blocked (embedded browsers, "stop showing dialogs"), so ask in the app.
+const resetOpen = ref(false)
+
 async function confirmReset() {
-  if (!window.confirm(t('settings.resetConfirm'))) return
+  resetOpen.value = false
   resetAllData()
   showToast(t('settings.resetDone'))
   await router.replace({ name: 'onboarding' })
@@ -75,8 +79,20 @@ async function confirmReset() {
       class="cursor-pointer"
       role="button"
       tabindex="0"
-      @click="confirmReset"
-      @keydown.enter="confirmReset"
+      @click="resetOpen = true"
+      @keydown.enter="resetOpen = true"
     />
+
+    <BottomSheet v-model="resetOpen" :title="t('settings.reset')">
+      <p class="mb-5 text-gray-600">{{ t('settings.resetConfirm') }}</p>
+      <div class="flex gap-3">
+        <button type="button" class="flex-1 rounded-full bg-card py-3 font-semibold text-gray-700 shadow-card" @click="resetOpen = false">
+          {{ t('settings.cancel') }}
+        </button>
+        <button type="button" class="flex-1 rounded-full bg-red-600 py-3 font-semibold text-white shadow-md shadow-red-600/30" @click="confirmReset">
+          {{ t('settings.resetAction') }}
+        </button>
+      </div>
+    </BottomSheet>
   </section>
 </template>

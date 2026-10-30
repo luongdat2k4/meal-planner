@@ -96,16 +96,14 @@ export function usePreferences() {
     prefs.setupStep = 0
   }
 
-  // The runtime tables were already emptied by resetRuntime; this puts the form back to its defaults.
+  // The runtime tables were already emptied by resetRuntime; this puts the form back to its defaults and starts the
+  // first-run flow again from the welcome slides.
   function reset() {
     flow.onboardingSeen = false
     flow.setupDone = false
     flow.setupStep = 0
     flow.reminderDay = 6
     flow.reminderTime = '18:00'
-    prefs.onboardingSeen = false
-    prefs.setupDone = false
-    prefs.setupStep = 0
     Object.assign(prefs, defaults())
   }
 

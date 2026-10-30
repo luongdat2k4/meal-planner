@@ -331,6 +331,8 @@
     "languageSubtitle": "Interface, meal names, ingredients and cooking steps",
     "reminder": "Planning reminder",
     "reminderToggle": "Weekly planning reminder",
-    "reset": "Delete data on this device"
+    "reset": "Delete data on this device",
+    "cancel": "Cancel",
+    "resetAction": "Delete data"
   }
 }

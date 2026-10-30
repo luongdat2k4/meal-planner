@@ -331,6 +331,8 @@
     "languageSubtitle": "Giao diện, tên món, nguyên liệu và cách nấu",
     "reminder": "Nhắc lập kế hoạch",
     "reminderToggle": "Nhắc lập kế hoạch hằng tuần",
-    "reset": "Xóa dữ liệu trên thiết bị"
+    "reset": "Xóa dữ liệu trên thiết bị",
+    "cancel": "Hủy",
+    "resetAction": "Xóa dữ liệu"
   }
 }
