@@ -275,6 +275,45 @@ erDiagram
 
 Ba liên kết cũng chỉ là quy ước, không có FK: `meal.dietary[]`/`meal.allergens[]`/`meal.methods[]` → `language.key`, `ingredient.section` → `language.key`, `shopping_item.store_id` → `stores.json`.
 
+## Vai trò các bảng
+
+### Catalog
+
+| Bảng | Vai trò | Ai ghi | Ai đọc |
+|---|---|---|---|
+| `language` | Từ điển duy nhất của app: một dòng = một `key` + bản `en` + bản `vn`. Không chứa chữ ở bảng nào khác. | Chỉ lúc seed | Mọi màn hình hiển thị |
+| `category` | Danh mục món để lọc/tab (`chicken`, `seafood`, `pasta`…) và thiết bị nấu (`hob`, `oven`, `airfryer`, `microwave`) phân biệt bằng `kind`. | Chỉ lúc seed | Màn duyệt món, màn chi tiết món |
+| `ingredient` | Danh mục 177 nguyên liệu dùng chung. `section` quyết định nguyên liệu nằm ở nhóm nào trong danh sách đi chợ; `is_pantry` loại gia vị/dầu ra khỏi danh sách mua. | Chỉ lúc seed | Chi tiết món, danh sách đi chợ |
+| `meal` | Thông tin món: ảnh, thời gian, macro, giá, và các cột biến đổi (`dietary`, `allergens`, `methods`, `steps`). Đây là bảng trung tâm của toàn bộ app. | Chỉ lúc seed | Duyệt món, tạo kế hoạch, chi tiết món |
+| `meal_ingredient` | Công thức: nguyên liệu nào, bao nhiêu, đơn vị gì — cho `meal.base_servings` khẩu phần. Không có bảng này thì không có công thức và không gom được danh sách đi chợ. | Chỉ lúc seed | Chi tiết món, gom danh sách đi chợ |
+
+Trong `meal`, bốn cột biến đổi có vai trò riêng:
+
+- `dietary` / `allergens`: bộ lọc an toàn và khớp sở thích. `allergens` là cơ sở để loại món khỏi kế hoạch tự động.
+- `methods`: món nấu được bằng thiết bị nào → quyết định hiện tab thiết bị nào ở màn chi tiết.
+- `steps`: nội dung hướng dẫn, mỗi thiết bị một bộ. Chỉ là danh sách số bước; chữ lấy từ `language` qua `'<slug>.step.<method>.<n>'`.
+
+### Runtime
+
+| Bảng | Vai trò | Ghi khi nào |
+|---|---|---|
+| `preference` | Toàn bộ câu trả lời onboarding/sở thích của người dùng, đúng 1 dòng. Là đầu vào của thuật toán tạo kế hoạch: số người ăn → khẩu phần, `cooking_days` → chọn ngày, `max_cook_minutes` + `dietary_ids` + `allergen_ids` + `protein_likes` → lọc ứng viên, `weekly_budget` → chặn món quá đắt, `disliked_meal_ids` → loại hẳn. | Mỗi lần người dùng sửa sở thích |
+| `meal_activity` | Trạng thái riêng của người dùng với từng món, gộp 6 chức năng vào 1 dòng/món: lưu, không thích, chấm điểm, ghi chú, lần nấu cuối, lần xem cuối. `last_viewed_at` phục vụ "xem gần đây", `last_cooked_at` phục vụ "tránh lặp món". | Khi mở chi tiết món, chấm sao, viết ghi chú, đánh dấu đã nấu |
+| `plan` | Một tuần, khóa chính là `week_start` (thứ 2). Giữ khẩu phần và ngân sách ở cấp tuần; `week_start` lớn nhất = tuần hiện tại. | Khi tạo kế hoạch tuần hoặc đổi khẩu phần |
+| `plan_item` | Các món trong tuần: ngày nào, vị trí nào, khẩu phần riêng từng món. `position` giữ thứ tự để kéo thả và để "đổi món" biết thay đúng chỗ. | Khi thêm / xóa / đổi món |
+| `shopping_item` | Danh sách đi chợ. Hai nguồn: sinh tự động từ `plan_item` (có `ingredient_id`) và nhập tay (không có, dùng `label`). `checked` là tiến độ mua; `store_id` chỉ là lựa chọn hiển thị. Nhờ chỉ lưu món đã gom chứ không lưu kế hoạch, người dùng vẫn sửa tay được danh sách mà không bị sinh lại đè lên. | Khi mở danh sách tuần, tick mua, thêm tay |
+
+### Bảng nào dùng khi làm gì
+
+| Thao tác của người dùng | Bảng liên quan |
+|---|---|
+| Duyệt / tìm món, lọc danh mục, lọc chế độ ăn | `meal`, `category`, `language` |
+| Mở chi tiết món | `meal`, `meal_ingredient`, `ingredient`, `language`, `meal_activity` |
+| Trả lời sở thích | `preference`, `language` |
+| Tạo kế hoạch tự động | `preference`, `meal`, `plan`, `plan_item` |
+| Đổi món trong kế hoạch | `plan_item`, `meal`, `preference` |
+| Đi chợ | `plan_item` → `meal_ingredient` → `shopping_item`, `ingredient`, `language` |
+
 ## Những gì cố ý không đưa vào
 
 | Bỏ | Lý do |
