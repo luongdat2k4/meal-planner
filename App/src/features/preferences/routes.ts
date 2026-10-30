@@ -8,7 +8,7 @@ export const preferencesRoutes: RouteRecordRaw[] = [
     meta: { title: 'nav.setup', fullscreen: true },
   },
   {
-    path: '/preferences',
+    path: '/settings/preferences',
     name: 'preferences',
     component: () => import('./PreferencesView.vue'),
     meta: { title: 'nav.preferences', backTo: { name: 'settings' } },

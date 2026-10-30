@@ -92,84 +92,6 @@
       "backToList": "Back to meals"
     }
   },
-  "household": {
-    "you": "You",
-    "demoNotice": "Demo: members and invites are sample data on this device and are not really shared.",
-    "members": "Members",
-    "owner": "Owner",
-    "member": "Member",
-    "memberN": "Member {n}",
-    "removeMember": "Remove {name} from the household",
-    "sharedNote": "All members share the weekly plan and the shopping list.",
-    "invite": "Invite family",
-    "full": "Your family plan is full ({max}/{max} members). Remove someone to invite more.",
-    "yourCode": "Your invite code",
-    "copy": "Copy",
-    "share": "Share",
-    "newCode": "New code",
-    "addDemo": "Add sample member (demo)",
-    "haveCode": "Have an invite code?",
-    "join": "Join",
-    "disband": "Disband household",
-    "leave": "Leave household",
-    "shareText": "Join my household on Mise with code {code}",
-    "invalidCode": "Invalid code. Codes look like MISE-XXXXXX.",
-    "confirmLeave": "Leave this household?",
-    "toast": {
-      "codeCopied": "Invite code copied",
-      "copyFailed": "Can't copy on this device",
-      "inviteCopied": "Invite copied",
-      "joined": "Joined the household (demo)",
-      "left": "Left the household"
-    }
-  },
-  "premium": {
-    "tagline": "Plan smarter every week",
-    "currentPlan": "Current plan",
-    "trialLeft": "{days} days left in your free trial.",
-    "trialEnded": "Your trial has ended.",
-    "manage": "Manage plan",
-    "restore": "Restore",
-    "choosePlan": "Choose a plan",
-    "perMonth": "/month",
-    "maxUsers": "Up to {count} users",
-    "startTrial": "Start {days}-day free trial",
-    "demoNotice": "Demo: no real payments.",
-    "restorePurchase": "Restore purchases",
-    "cancelPrompt": "Want to cancel your plan? Tell us why so we can improve (optional).",
-    "cancelPlan": "Cancel plan",
-    "toast": {
-      "trialStarted": "{days}-day trial started (demo)",
-      "restored": "Your plan was restored",
-      "nothingToRestore": "No purchases found to restore",
-      "cancelled": "Plan cancelled (demo)"
-    },
-    "plans": {
-      "individual": {
-        "name": "Individual",
-        "perk1": "Unlimited plan creation",
-        "perk2": "Sync across devices"
-      },
-      "family": {
-        "name": "Family",
-        "badge": "Popular",
-        "perk1": "Everything in Individual",
-        "perk2": "Share plans with up to 5 people"
-      }
-    },
-    "benefits": {
-      "b1": "Unlimited automatic plan generation and regeneration",
-      "b2": "Swap meals to your taste anytime",
-      "b3": "Detailed nutrition for every meal",
-      "b4": "Sync and restore your data across devices"
-    },
-    "reasons": {
-      "r1": "Too expensive",
-      "r2": "Rarely use it",
-      "r3": "Missing meals I like",
-      "r4": "Other reason"
-    }
-  },
   "ui": {
     "close": "Close",
     "decrease": "Decrease",
@@ -187,7 +109,6 @@
   },
   "nav": {
     "home": "Home",
-    "household": "Household",
     "ingredients": "Ingredients",
     "meals": "Meals",
     "mealDetail": "Meal details",
@@ -196,13 +117,13 @@
     "plannerTab": "Plan",
     "setup": "Setup",
     "preferences": "Food preferences",
-    "premium": "Premium",
     "settings": "Settings",
     "shopping": "Shopping list",
     "shoppingTab": "Shopping",
     "back": "Back",
     "profile": "Profile and settings",
-    "quickSuggest": "Quick suggestions"
+    "quickSuggest": "Quick suggestions",
+    "language": "Language"
   },
   "planner": {
     "summary": {
@@ -396,9 +317,6 @@
     "preferenceSummary": "{people} people · {days} cooking days · {budget}/week",
     "reminderOn": "{day} at {time}",
     "reminderOff": "Off",
-    "premiumLocked": "Unlock all features",
-    "premiumPlan": "{plan} plan",
-    "trialLeft": " · {days} days of trial left",
     "stats": {
       "meals": "Meals",
       "ingredients": "Ingredients",
@@ -408,8 +326,6 @@
     "resetConfirm": "Delete all data on this device (plan, shopping, favorites, preferences)?",
     "resetDone": "Data deleted",
     "preferences": "Food preferences",
-    "household": "Household",
-    "members": "{count}/{max} members",
     "language": "Language",
     "languageSubtitle": "Interface, meal names, ingredients and cooking steps",
     "reminder": "Planning reminder",

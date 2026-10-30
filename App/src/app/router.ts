@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { homeRoutes } from '../features/home/routes'
-import { householdRoutes } from '../features/household/routes'
 import { ingredientsRoutes } from '../features/ingredients/routes'
 import { mealsRoutes } from '../features/meals/routes'
 import { onboardingRoutes } from '../features/onboarding/routes'
 import { plannerRoutes } from '../features/planner/routes'
 import { usePreferences } from '../features/preferences'
 import { preferencesRoutes } from '../features/preferences/routes'
-import { premiumRoutes } from '../features/premium/routes'
 import { settingsRoutes } from '../features/settings/routes'
 import { shoppingRoutes } from '../features/shopping/routes'
 
@@ -19,8 +17,6 @@ const featureRoutes: RouteRecordRaw[] = [
   ...shoppingRoutes,
   ...settingsRoutes,
   ...preferencesRoutes,
-  ...householdRoutes,
-  ...premiumRoutes,
   ...onboardingRoutes,
 ]
 

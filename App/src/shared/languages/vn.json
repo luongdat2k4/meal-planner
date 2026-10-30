@@ -92,84 +92,6 @@
       "backToList": "Về danh sách món"
     }
   },
-  "household": {
-    "you": "Bạn",
-    "demoNotice": "Bản demo: thành viên và lời mời chỉ là dữ liệu mẫu trên thiết bị này, chưa chia sẻ thật.",
-    "members": "Thành viên",
-    "owner": "Chủ hộ",
-    "member": "Thành viên",
-    "memberN": "Thành viên {n}",
-    "removeMember": "Xóa {name} khỏi hộ gia đình",
-    "sharedNote": "Mọi thành viên dùng chung kế hoạch tuần và danh sách đi chợ.",
-    "invite": "Mời người thân",
-    "full": "Gói gia đình đã đầy ({max}/{max} thành viên). Hãy xóa bớt một người để mời thêm.",
-    "yourCode": "Mã mời của bạn",
-    "copy": "Sao chép",
-    "share": "Chia sẻ",
-    "newCode": "Tạo mã mới",
-    "addDemo": "Thêm thành viên mẫu (demo)",
-    "haveCode": "Có mã mời?",
-    "join": "Tham gia",
-    "disband": "Giải tán hộ gia đình",
-    "leave": "Rời hộ gia đình",
-    "shareText": "Tham gia hộ gia đình của mình trên Mise bằng mã {code}",
-    "invalidCode": "Mã không hợp lệ. Mã có dạng MISE-XXXXXX.",
-    "confirmLeave": "Rời khỏi hộ gia đình này?",
-    "toast": {
-      "codeCopied": "Đã sao chép mã mời",
-      "copyFailed": "Không thể sao chép trên thiết bị này",
-      "inviteCopied": "Đã sao chép lời mời",
-      "joined": "Đã tham gia hộ gia đình (demo)",
-      "left": "Đã rời hộ gia đình"
-    }
-  },
-  "premium": {
-    "tagline": "Lên kế hoạch thông minh hơn mỗi tuần",
-    "currentPlan": "Gói hiện tại",
-    "trialLeft": "Còn {days} ngày dùng thử miễn phí.",
-    "trialEnded": "Thời gian dùng thử đã kết thúc.",
-    "manage": "Quản lý gói",
-    "restore": "Khôi phục",
-    "choosePlan": "Chọn gói",
-    "perMonth": "/tháng",
-    "maxUsers": "Tối đa {count} người dùng",
-    "startTrial": "Dùng thử {days} ngày miễn phí",
-    "demoNotice": "Bản demo: không có thanh toán thật.",
-    "restorePurchase": "Khôi phục giao dịch",
-    "cancelPrompt": "Bạn muốn hủy gói? Cho chúng tôi biết lý do để cải thiện (không bắt buộc).",
-    "cancelPlan": "Hủy gói",
-    "toast": {
-      "trialStarted": "Đã bắt đầu dùng thử {days} ngày (demo)",
-      "restored": "Đã khôi phục gói của bạn",
-      "nothingToRestore": "Không tìm thấy giao dịch để khôi phục",
-      "cancelled": "Đã hủy gói (demo)"
-    },
-    "plans": {
-      "individual": {
-        "name": "Cá nhân",
-        "perk1": "Tạo kế hoạch không giới hạn",
-        "perk2": "Đồng bộ trên nhiều thiết bị"
-      },
-      "family": {
-        "name": "Gia đình",
-        "badge": "Phổ biến",
-        "perk1": "Mọi quyền lợi gói Cá nhân",
-        "perk2": "Chia sẻ kế hoạch cho tối đa 5 người"
-      }
-    },
-    "benefits": {
-      "b1": "Tạo và tạo lại kế hoạch tự động không giới hạn",
-      "b2": "Đổi món theo sở thích bất cứ lúc nào",
-      "b3": "Dinh dưỡng chi tiết cho từng món",
-      "b4": "Đồng bộ và khôi phục dữ liệu trên nhiều thiết bị"
-    },
-    "reasons": {
-      "r1": "Quá đắt",
-      "r2": "Ít khi sử dụng",
-      "r3": "Thiếu món tôi thích",
-      "r4": "Lý do khác"
-    }
-  },
   "ui": {
     "close": "Đóng",
     "decrease": "Giảm",
@@ -187,7 +109,6 @@
   },
   "nav": {
     "home": "Trang chủ",
-    "household": "Gia đình",
     "ingredients": "Nguyên liệu",
     "meals": "Món ăn",
     "mealDetail": "Chi tiết món",
@@ -196,13 +117,13 @@
     "plannerTab": "Lịch",
     "setup": "Thiết lập",
     "preferences": "Sở thích ăn uống",
-    "premium": "Premium",
     "settings": "Cài đặt",
     "shopping": "Danh sách đi chợ",
     "shoppingTab": "Đi chợ",
     "back": "Quay lại",
     "profile": "Hồ sơ và cài đặt",
-    "quickSuggest": "Gợi ý nhanh"
+    "quickSuggest": "Gợi ý nhanh",
+    "language": "Ngôn ngữ"
   },
   "planner": {
     "summary": {
@@ -396,9 +317,6 @@
     "preferenceSummary": "{people} người · {days} ngày nấu · {budget}/tuần",
     "reminderOn": "{day} lúc {time}",
     "reminderOff": "Đang tắt",
-    "premiumLocked": "Mở khóa đầy đủ tính năng",
-    "premiumPlan": "Gói {plan}",
-    "trialLeft": " · còn {days} ngày dùng thử",
     "stats": {
       "meals": "Món ăn",
       "ingredients": "Nguyên liệu",
@@ -408,8 +326,6 @@
     "resetConfirm": "Xóa toàn bộ dữ liệu trên thiết bị này (kế hoạch, đi chợ, yêu thích, sở thích)?",
     "resetDone": "Đã xóa dữ liệu",
     "preferences": "Sở thích ăn uống",
-    "household": "Gia đình",
-    "members": "{count}/{max} thành viên",
     "language": "Ngôn ngữ",
     "languageSubtitle": "Giao diện, tên món, nguyên liệu và cách nấu",
     "reminder": "Nhắc lập kế hoạch",

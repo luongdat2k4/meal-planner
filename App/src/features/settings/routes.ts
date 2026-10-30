@@ -7,4 +7,10 @@ export const settingsRoutes: RouteRecordRaw[] = [
     component: () => import('./SettingsView.vue'),
     meta: { title: 'nav.settings', backTo: { name: 'home' } },
   },
+  {
+    path: '/settings/language',
+    name: 'settings-language',
+    component: () => import('./LanguageView.vue'),
+    meta: { title: 'nav.language', backTo: { name: 'settings' } },
+  },
 ]

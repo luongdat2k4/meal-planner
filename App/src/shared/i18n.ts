@@ -5,10 +5,14 @@ import vn from './languages/vn.json'
 // Catalog text exists in two languages (public/i18n/<lang>.json, columns of the `language` table).
 export type Lang = 'vn' | 'en'
 
-export const languages: { id: Lang; label: string }[] = [
-  { id: 'vn', label: 'Tiếng Việt' },
-  { id: 'en', label: 'English' },
+// `flag` is the file name (without .svg) in public/asset/flag.
+export const languages: { id: Lang; label: string; flag: string }[] = [
+  { id: 'vn', label: 'Tiếng Việt', flag: 'vi' },
+  { id: 'en', label: 'English', flag: 'en' },
 ]
+
+export const flagSrc = (id: Lang) =>
+  `${import.meta.env.BASE_URL}asset/flag/${languages.find((option) => option.id === id)?.flag ?? id}.svg`
 
 const KEY = 'meal-planner:lang'
 
