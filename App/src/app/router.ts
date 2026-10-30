@@ -31,12 +31,14 @@ export const router = createRouter({
   scrollBehavior: (_to, _from, saved) => saved ?? { top: 0 },
 })
 
-// First run: welcome slides (/onboarding), preference questions (/setup), then the app.
+// First run: language (/onboarding/language), welcome slides (/onboarding), preference questions (/setup),
+// then the app.
 router.beforeEach((to) => {
   const { state } = usePreferences()
   if (state.setupDone) {
-    return to.name === 'onboarding' || to.name === 'setup' ? { name: 'home' } : undefined
+    return to.name === 'welcome-language' || to.name === 'onboarding' || to.name === 'setup' ? { name: 'home' } : undefined
   }
+  if (!state.languageChosen) return to.name === 'welcome-language' ? undefined : { name: 'welcome-language' }
   if (!state.onboardingSeen) return to.name === 'onboarding' ? undefined : { name: 'onboarding' }
   return to.name === 'setup' ? undefined : { name: 'setup' }
 })

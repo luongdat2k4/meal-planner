@@ -312,7 +312,8 @@
         "text": "Nguyên liệu cả tuần được gom vào một danh sách. Chọn siêu thị và đánh dấu khi đã mua.",
         "chip": "Một danh sách duy nhất"
       }
-    }
+    },
+    "languageTitle": "Chọn ngôn ngữ"
   },
   "settings": {
     "preferenceSummary": "{people} người · {days} ngày nấu · {budget}/tuần",

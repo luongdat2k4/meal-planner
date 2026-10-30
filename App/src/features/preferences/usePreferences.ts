@@ -8,6 +8,7 @@ import type { Preferences } from './types'
 // so it stays in localStorage: which first-run screens were seen, and the reminder's day and time
 // (the table only has the weekly_reminder switch).
 interface Flow {
+  languageChosen: boolean
   onboardingSeen: boolean
   setupDone: boolean
   setupStep: number
@@ -16,6 +17,7 @@ interface Flow {
 }
 
 const flow = createPersistedState<Flow>('meal-planner:flow', () => ({
+  languageChosen: false,
   onboardingSeen: false,
   setupDone: false,
   setupStep: 0,
@@ -24,6 +26,7 @@ const flow = createPersistedState<Flow>('meal-planner:flow', () => ({
 }))
 
 const defaults = (): Preferences => ({
+  languageChosen: flow.languageChosen,
   onboardingSeen: flow.onboardingSeen,
   setupDone: flow.setupDone,
   setupStep: flow.setupStep,
@@ -56,6 +59,7 @@ function load(): Preferences {
 }
 
 function persist(state: Preferences) {
+  flow.languageChosen = state.languageChosen
   flow.onboardingSeen = state.onboardingSeen
   flow.setupDone = state.setupDone
   flow.setupStep = state.setupStep
@@ -87,6 +91,10 @@ function getState(): Preferences {
 export function usePreferences() {
   const prefs = getState()
 
+  function completeLanguage() {
+    prefs.languageChosen = true
+  }
+
   function completeOnboarding() {
     prefs.onboardingSeen = true
   }
@@ -97,8 +105,9 @@ export function usePreferences() {
   }
 
   // The runtime tables were already emptied by resetRuntime; this puts the form back to its defaults and starts the
-  // first-run flow again from the welcome slides.
+  // first-run flow again from the language step.
   function reset() {
+    flow.languageChosen = false
     flow.onboardingSeen = false
     flow.setupDone = false
     flow.setupStep = 0
@@ -107,5 +116,5 @@ export function usePreferences() {
     Object.assign(prefs, defaults())
   }
 
-  return { state: prefs, completeOnboarding, completeSetup, reset }
+  return { state: prefs, completeLanguage, completeOnboarding, completeSetup, reset }
 }

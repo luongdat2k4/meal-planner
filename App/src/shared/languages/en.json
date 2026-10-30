@@ -312,7 +312,8 @@
         "text": "The week's ingredients are gathered into one list. Pick a store and tick items off as you buy.",
         "chip": "One single list"
       }
-    }
+    },
+    "languageTitle": "Choose your language"
   },
   "settings": {
     "preferenceSummary": "{people} people · {days} cooking days · {budget}/week",

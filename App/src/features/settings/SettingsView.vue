@@ -40,7 +40,7 @@ async function confirmReset() {
   resetOpen.value = false
   resetAllData()
   showToast(t('settings.resetDone'))
-  await router.replace({ name: 'onboarding' })
+  await router.replace({ name: 'welcome-language' })
 }
 </script>
 

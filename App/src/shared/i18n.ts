@@ -23,18 +23,23 @@ function initialLang(): Lang {
   } catch {
     // Storage can be unavailable; use the default.
   }
-  return 'vn'
+  // No saved choice yet: Vietnamese for Vietnamese devices, English for any other language.
+  const device = typeof navigator !== 'undefined' ? navigator.language?.toLowerCase() : ''
+  return device && !device.startsWith('vi') ? 'en' : 'vn'
 }
 
 export const lang = ref<Lang>(initialLang())
 
-watch(lang, (value) => {
+// Saves the current language. Also called when the user confirms the language the app already shows.
+export function saveLang() {
   try {
-    localStorage.setItem(KEY, value)
+    localStorage.setItem(KEY, lang.value)
   } catch {
     // Keep working in memory.
   }
-})
+}
+
+watch(lang, saveLang)
 
 // ---- UI text. Catalog text (meals, ingredients, ...) comes from public/i18n through backend/catalogText.
 

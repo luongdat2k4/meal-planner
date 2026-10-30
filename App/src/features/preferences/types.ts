@@ -13,6 +13,8 @@ export interface Reminder {
 }
 
 export interface Preferences {
+  // The language step that comes before the welcome slides is done.
+  languageChosen: boolean
   // The welcome slides (/onboarding) shown before the preference questions.
   onboardingSeen: boolean
   // The preference questions (/setup) are finished or skipped.
