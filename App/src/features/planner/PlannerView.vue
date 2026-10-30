@@ -5,6 +5,7 @@ import { RouterLink } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
 import { formatMinutes, formatVnd } from '../../shared/format'
 import { ICONS } from '../../shared/icons'
+import { t } from '../../shared/i18n'
 import { showToast } from '../../shared/toast'
 import BottomSheet from '../../shared/ui/BottomSheet.vue'
 import ChipTabs from '../../shared/ui/ChipTabs.vue'
@@ -12,7 +13,7 @@ import { getMeal, getRecipe, type Meal } from '../meals'
 import { usePreferences } from '../preferences'
 import { useShopping } from '../shopping'
 import { planCost, regeneratePlan, swapCandidates } from './generatePlan'
-import { DAY_NAMES } from './types'
+import { dayNames } from './types'
 import { usePlanner } from './usePlanner'
 
 const { state, plannedMealCount, removeMealFromDay, replaceMeal, clearDay } = usePlanner()
@@ -24,7 +25,8 @@ const activeDay = ref(String((new Date().getDay() + 6) % 7))
 const generating = ref(false)
 
 const dayIndex = computed(() => Number(activeDay.value))
-const dayOptions = DAY_NAMES.map((name, index) => ({ id: String(index), label: name }))
+const dayOptions = computed(() => dayNames().map((name, index) => ({ id: String(index), label: name })))
+const dayLabel = computed(() => dayNames()[dayIndex.value])
 const dayMeals = computed(() =>
   state.items
     .filter((item) => item.weekday === dayIndex.value + 1)
@@ -48,12 +50,12 @@ async function generate() {
   generating.value = false
   const firstDay = Object.keys(state.plan)[0]
   if (firstDay !== undefined) activeDay.value = firstDay
-  showToast('Đã tạo kế hoạch mới')
+  showToast(t('planner.toast.generated'))
 }
 
 function addToShopping() {
   const added = importFromPlan()
-  showToast(added ? `Đã thêm ${added} nguyên liệu vào danh sách đi chợ` : 'Danh sách đi chợ đã có đủ nguyên liệu')
+  showToast(added ? t('planner.toast.addedToShopping', { count: added }) : t('planner.toast.shoppingUpToDate'))
 }
 
 const swapTarget = ref<{ day: number; index: number; mealId: string } | null>(null)
@@ -74,7 +76,7 @@ function applySwap(newMealId: string) {
   if (!swapTarget.value) return
   replaceMeal(swapTarget.value.day, swapTarget.value.index, newMealId)
   swapTarget.value = null
-  showToast('Đã đổi món')
+  showToast(t('planner.toast.swapped'))
 }
 </script>
 
@@ -85,24 +87,24 @@ function applySwap(newMealId: string) {
       <template v-if="plannedMealCount">
         <div class="flex items-start justify-between">
           <div>
-            <p class="text-sm text-gray-500">Chi phí ước tính</p>
+            <p class="text-sm text-gray-500">{{ t('planner.summary.cost') }}</p>
             <p class="text-2xl font-bold" :class="overBudget ? 'text-red-600' : ''">{{ formatVnd(cost) }}</p>
           </div>
           <div class="text-right">
-            <p class="text-sm text-gray-500">Ngân sách tuần</p>
+            <p class="text-sm text-gray-500">{{ t('planner.summary.budget') }}</p>
             <p class="font-semibold">{{ formatVnd(prefs.weeklyBudget) }}</p>
           </div>
         </div>
         <div class="h-2 overflow-hidden rounded-full bg-gray-200">
           <div class="h-full rounded-full transition-all" :class="overBudget ? 'bg-red-500' : 'bg-brand'" :style="{ width: `${budgetRatio * 100}%` }" />
         </div>
-        <p v-if="overBudget" class="text-sm text-red-600">Vượt ngân sách {{ formatVnd(cost - prefs.weeklyBudget) }}.</p>
+        <p v-if="overBudget" class="text-sm text-red-600">{{ t('planner.summary.over', { amount: formatVnd(cost - prefs.weeklyBudget) }) }}</p>
       </template>
       <div v-else>
-        <p class="font-semibold">Chưa có kế hoạch cho tuần này</p>
+        <p class="font-semibold">{{ t('planner.summary.emptyTitle') }}</p>
         <p class="text-sm text-gray-500">
-          Tạo tự động theo sở thích của bạn, hoặc
-          <RouterLink :to="{ name: 'preferences' }" class="font-medium text-brand">chỉnh sở thích</RouterLink>.
+          {{ t('planner.summary.emptyHintBefore') }}
+          <RouterLink :to="{ name: 'preferences' }" class="font-medium text-brand">{{ t('planner.summary.emptyHintLink') }}</RouterLink>.
         </p>
       </div>
 
@@ -114,7 +116,7 @@ function applySwap(newMealId: string) {
           @click="generate"
         >
           <Icon :icon="ICONS.autoFix" class="text-lg" />
-          {{ generating ? 'Đang tạo...' : plannedMealCount ? 'Tạo lại' : 'Tạo kế hoạch tự động' }}
+          {{ generating ? t('planner.generating') : plannedMealCount ? t('planner.regenerate') : t('planner.generate') }}
         </button>
         <button
           v-if="plannedMealCount"
@@ -122,7 +124,7 @@ function applySwap(newMealId: string) {
           class="flex items-center justify-center gap-2 rounded-full bg-brand-soft px-4 py-3 text-sm font-semibold text-brand transition active:scale-[0.98]"
           @click="addToShopping"
         >
-          <Icon :icon="ICONS.cart" class="text-lg" /> Đi chợ
+          <Icon :icon="ICONS.cart" class="text-lg" /> {{ t('planner.shop') }}
         </button>
       </div>
     </div>
@@ -130,9 +132,9 @@ function applySwap(newMealId: string) {
     <ChipTabs v-model="activeDay" :options="dayOptions" />
 
     <div class="flex items-center justify-between">
-      <h2 class="font-semibold">{{ DAY_NAMES[dayIndex] }}</h2>
+      <h2 class="font-semibold">{{ dayLabel }}</h2>
       <button v-if="dayMeals.length" type="button" class="text-sm text-gray-500 hover:text-red-600" @click="clearDay(dayIndex)">
-        Xóa ngày
+        {{ t('planner.clearDay') }}
       </button>
     </div>
 
@@ -154,7 +156,7 @@ function applySwap(newMealId: string) {
         <button
           type="button"
           class="shrink-0 rounded-full p-2 text-brand hover:bg-brand-soft"
-          aria-label="Đổi món"
+          :aria-label="t('planner.swap')"
           @click="openSwap(item.index, item.mealId)"
         >
           <Icon :icon="ICONS.swapHorizontal" class="text-xl" />
@@ -162,7 +164,7 @@ function applySwap(newMealId: string) {
         <button
           type="button"
           class="shrink-0 rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-red-600"
-          aria-label="Xóa khỏi kế hoạch"
+          :aria-label="t('planner.removeFromPlan')"
           @click="removeMealFromDay(dayIndex, item.index)"
         >
           <Icon :icon="ICONS.trash" class="text-xl" />
@@ -172,15 +174,15 @@ function applySwap(newMealId: string) {
 
     <div v-else class="rounded-3xl bg-card px-6 py-10 text-center shadow-card">
       <Icon :icon="ICONS.calendarWeek" class="mx-auto mb-3 text-5xl text-gray-300" />
-      <p class="mb-4 text-gray-500">Chưa có món nào cho {{ DAY_NAMES[dayIndex] }}.</p>
+      <p class="mb-4 text-gray-500">{{ t('planner.noMealsForDay', { day: dayLabel }) }}</p>
       <RouterLink :to="{ name: 'meals' }" class="inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white">
-        Chọn món
+        {{ t('planner.pickMeals') }}
       </RouterLink>
     </div>
 
     <!-- Swap sheet -->
-    <BottomSheet v-model="swapOpen" title="Đổi món">
-      <p v-if="!swapOptions.length" class="py-6 text-center text-gray-500">Không có món thay thế phù hợp với sở thích của bạn.</p>
+    <BottomSheet v-model="swapOpen" :title="t('planner.swap')">
+      <p v-if="!swapOptions.length" class="py-6 text-center text-gray-500">{{ t('planner.noSwapOptions') }}</p>
       <ul v-else class="space-y-2">
         <li v-for="option in swapOptions" :key="option.id">
           <button

@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
 import QuickSuggestSheet from '../features/planner/components/QuickSuggestSheet.vue'
+import { t } from '../shared/i18n'
 import { ICONS } from '../shared/icons'
 import ToastHost from '../shared/ui/ToastHost.vue'
 import { tabs } from './router'
@@ -38,11 +39,11 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
         v-if="route.meta.backTo"
         :to="route.meta.backTo"
         class="glass -ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-card shadow-card"
-        aria-label="Quay lại"
+        :aria-label="t('nav.back')"
       >
         <Icon :icon="ICONS.arrowLeft" class="text-2xl" />
       </RouterLink>
-      <h1 class="text-2xl font-semibold tracking-tight">{{ route.meta.title }}</h1>
+      <h1 class="text-2xl font-semibold tracking-tight">{{ route.meta.title ? t(route.meta.title) : '' }}</h1>
     </header>
 
     <!-- Profile and settings button: fixed, so it stays put while a tab screen scrolls. -->
@@ -53,7 +54,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       <RouterLink
         :to="{ name: 'settings' }"
         class="glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
-        aria-label="Hồ sơ và cài đặt"
+        :aria-label="t('nav.profile')"
       >
         <Icon :icon="ICONS.accountCircle" class="text-3xl text-gray-700" />
       </RouterLink>
@@ -73,8 +74,8 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
           <RouterLink :to="{ name: tab.name }" custom v-slot="{ href, navigate, isActive }">
             <a
               :href="href"
-              :aria-label="tab.label"
-              :title="tab.label"
+              :aria-label="t(tab.label)"
+              :title="t(tab.label)"
               :aria-current="isActive ? 'page' : undefined"
               class="flex h-12 w-12 items-center justify-center rounded-full transition"
               :class="isActive ? 'bg-brand text-white shadow-lg shadow-brand/40' : 'bg-slate-100 text-gray-700'"
@@ -88,8 +89,8 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
         <li>
           <button
             type="button"
-            aria-label="Gợi ý nhanh"
-            title="Gợi ý nhanh"
+            :aria-label="t('nav.quickSuggest')"
+            :title="t('nav.quickSuggest')"
             class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-rose-200 via-violet-200 to-sky-300 text-gray-900 shadow-md ring-2 ring-white/80 transition active:scale-95"
             @click="suggestOpen = true"
           >
@@ -101,8 +102,8 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
           <RouterLink :to="{ name: tab.name }" custom v-slot="{ href, navigate, isActive }">
             <a
               :href="href"
-              :aria-label="tab.label"
-              :title="tab.label"
+              :aria-label="t(tab.label)"
+              :title="t(tab.label)"
               :aria-current="isActive ? 'page' : undefined"
               class="relative flex h-12 w-12 items-center justify-center rounded-full transition"
               :class="isActive ? 'bg-brand text-white shadow-lg shadow-brand/40' : 'bg-slate-100 text-gray-700'"

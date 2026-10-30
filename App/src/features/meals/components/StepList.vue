@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
+import { t } from '../../../shared/i18n'
 import { ICONS } from '../../../shared/icons'
 
 const props = defineProps<{ steps: string[] }>()
@@ -22,7 +23,7 @@ function toggle(index: number) {
 
 <template>
   <div class="space-y-3">
-    <p class="text-sm text-gray-500">Đã làm {{ done.length }}/{{ steps.length }} bước</p>
+    <p class="text-sm text-gray-500">{{ t('meal.steps.progress', { done: done.length, total: steps.length }) }}</p>
     <ol class="space-y-2">
       <li v-for="(step, index) in steps" :key="index">
         <button

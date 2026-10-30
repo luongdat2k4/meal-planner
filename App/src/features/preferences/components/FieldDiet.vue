@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { assetUrl } from '../../../shared/assets'
+import { t } from '../../../shared/i18n'
 import ChipGroup from '../../../shared/ui/ChipGroup.vue'
 import { DIETARY } from '../dietary'
 import { ALLERGENS } from '../options'
@@ -18,7 +19,7 @@ function toggleDiet(id: string) {
 <template>
   <div class="space-y-5">
     <div>
-      <h3 class="mb-2 font-semibold">Chế độ ăn</h3>
+      <h3 class="mb-2 font-semibold">{{ t('preferences.fieldDiet.diet') }}</h3>
       <div class="grid grid-cols-2 gap-3">
         <button
           v-for="diet in DIETARY"
@@ -36,7 +37,7 @@ function toggleDiet(id: string) {
     </div>
 
     <div>
-      <h3 class="mb-2 font-semibold">Dị ứng</h3>
+      <h3 class="mb-2 font-semibold">{{ t('preferences.fieldDiet.allergy') }}</h3>
       <ChipGroup v-model="state.allergenIds" :options="allergenOptions" />
     </div>
   </div>

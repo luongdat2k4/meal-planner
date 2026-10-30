@@ -5,6 +5,6 @@ export const premiumRoutes: RouteRecordRaw[] = [
     path: '/premium',
     name: 'premium',
     component: () => import('./PremiumView.vue'),
-    meta: { title: 'Premium', fullscreen: true },
+    meta: { title: 'nav.premium', fullscreen: true },
   },
 ]

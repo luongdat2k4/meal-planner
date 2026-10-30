@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
+import { t } from '../../shared/i18n'
 import { regeneratePlan } from '../planner'
 import FieldDiet from './components/FieldDiet.vue'
 import FieldHousehold from './components/FieldHousehold.vue'
@@ -15,13 +16,7 @@ import { usePreferences } from './usePreferences'
 const router = useRouter()
 const { state, completeSetup } = usePreferences()
 
-const steps = [
-  { key: 'household', title: 'Bạn nấu cho mấy người?', subtitle: 'Dùng để tính khẩu phần và chi phí.' },
-  { key: 'diet', title: 'Chế độ ăn và dị ứng', subtitle: 'Món không phù hợp sẽ không được gợi ý.' },
-  { key: 'taste', title: 'Khẩu vị của bạn', subtitle: 'Chọn đạm yêu thích và thời gian nấu tối đa.' },
-  { key: 'schedule', title: 'Lịch nấu và ngân sách', subtitle: 'Chọn những ngày bạn muốn nấu trong tuần.' },
-  { key: 'reminder', title: 'Nhắc lập kế hoạch', subtitle: 'Nhận lời nhắc mỗi tuần để không bỏ lỡ.' },
-] as const
+const steps = [{ key: 'household' }, { key: 'diet' }, { key: 'taste' }, { key: 'schedule' }, { key: 'reminder' }] as const
 
 const step = ref(Math.min(state.setupStep, steps.length - 1))
 const generating = ref(false)
@@ -44,7 +39,7 @@ async function next() {
   await new Promise((resolve) => setTimeout(resolve, 1100))
   regeneratePlan()
   completeSetup()
-  showToast('Kế hoạch tuần của bạn đã sẵn sàng')
+  showToast(t('setup.ready'))
   await router.replace({ name: 'planner' })
 }
 
@@ -61,7 +56,7 @@ function skip() {
         v-if="step > 0"
         type="button"
         class="-ml-1 rounded-full p-1 text-gray-600 hover:bg-gray-200"
-        aria-label="Quay lại"
+        :aria-label="t('setup.back')"
         @click="step--"
       >
         <Icon :icon="ICONS.arrowLeft" class="text-2xl" />
@@ -69,12 +64,12 @@ function skip() {
       <div class="flex flex-1 gap-1.5" role="progressbar" :aria-valuenow="step + 1" :aria-valuemax="steps.length">
         <span v-for="(item, index) in steps" :key="item.key" class="h-1.5 flex-1 rounded-full" :class="index <= step ? 'bg-brand' : 'bg-gray-200'" />
       </div>
-      <button type="button" class="text-sm font-medium text-gray-500" @click="skip">Bỏ qua</button>
+      <button type="button" class="text-sm font-medium text-gray-500" @click="skip">{{ t('setup.skip') }}</button>
     </header>
 
     <main class="flex-1 py-8">
-      <h1 class="mb-1 text-2xl font-bold leading-tight">{{ current.title }}</h1>
-      <p class="mb-6 text-gray-500">{{ current.subtitle }}</p>
+      <h1 class="mb-1 text-2xl font-bold leading-tight">{{ t(`setup.steps.${current.key}.title`) }}</h1>
+      <p class="mb-6 text-gray-500">{{ t(`setup.steps.${current.key}.subtitle`) }}</p>
       <FieldHousehold v-if="current.key === 'household'" />
       <FieldDiet v-else-if="current.key === 'diet'" />
       <FieldTaste v-else-if="current.key === 'taste'" />
@@ -88,12 +83,12 @@ function skip() {
       :disabled="!canContinue || generating"
       @click="next"
     >
-      {{ isLast ? 'Tạo kế hoạch của tôi' : 'Tiếp tục' }}
+      {{ isLast ? t('setup.create') : t('setup.continue') }}
     </button>
 
     <div v-if="generating" class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-surface">
       <div class="h-12 w-12 animate-spin rounded-full border-4 border-brand-soft border-t-brand" />
-      <p class="font-semibold">Đang tạo kế hoạch cho bạn...</p>
+      <p class="font-semibold">{{ t('setup.generating') }}</p>
     </div>
   </section>
 </template>

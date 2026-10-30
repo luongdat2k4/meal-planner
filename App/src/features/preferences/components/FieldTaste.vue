@@ -2,7 +2,8 @@
 import { computed } from 'vue'
 import ChipGroup from '../../../shared/ui/ChipGroup.vue'
 import ChipTabs from '../../../shared/ui/ChipTabs.vue'
-import { COOK_TIME_OPTIONS, getProteinOptions } from '../options'
+import { t } from '../../../shared/i18n'
+import { getCookTimeOptions, getProteinOptions } from '../options'
 import { usePreferences } from '../usePreferences'
 
 const { state } = usePreferences()
@@ -20,14 +21,14 @@ const cookTime = computed({
 <template>
   <div class="space-y-5">
     <div>
-      <h3 class="mb-2 font-semibold">Bạn thích đạm nào?</h3>
+      <h3 class="mb-2 font-semibold">{{ t('preferences.fieldTaste.protein') }}</h3>
       <ChipGroup v-model="state.proteinLikes" :options="proteinOptions" />
-      <p class="mt-2 text-xs text-gray-500">Không chọn gì nghĩa là món nào cũng được.</p>
+      <p class="mt-2 text-xs text-gray-500">{{ t('preferences.fieldTaste.anyNote') }}</p>
     </div>
 
     <div>
-      <h3 class="mb-1 font-semibold">Thời gian nấu tối đa</h3>
-      <ChipTabs v-model="cookTime" :options="COOK_TIME_OPTIONS" />
+      <h3 class="mb-1 font-semibold">{{ t('preferences.fieldTaste.maxTime') }}</h3>
+      <ChipTabs v-model="cookTime" :options="getCookTimeOptions()" />
     </div>
   </div>
 </template>

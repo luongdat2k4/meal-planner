@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
 import { formatMinutes } from '../../shared/format'
+import { t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
 import ChipTabs from '../../shared/ui/ChipTabs.vue'
 import SearchField from '../../shared/ui/SearchField.vue'
@@ -41,8 +42,8 @@ onMounted(() => {
 const FILTER_METHODS = ['airfryer', 'microwave']
 
 const chips = computed(() => [
-  { id: 'all', label: 'Tất cả' },
-  { id: 'favorites', label: '♥ Yêu thích' },
+  { id: 'all', label: t('meal.chips.all') },
+  { id: 'favorites', label: t('meal.chips.favorites') },
   ...[...getMealCategories(), ...getMethodCategories().filter((c) => FILTER_METHODS.includes(c.id))].map((c) => ({
     id: c.id,
     label: `${c.emoji} ${c.label}`,
@@ -72,19 +73,19 @@ function minutesOf(mealId: string): number {
 
 function levelOf(mealId: string): string {
   const recipe = getRecipe(mealId)
-  return recipe ? getLevel(recipe) : ''
+  return recipe ? t(`meal.level.${getLevel(recipe)}`) : ''
 }
 </script>
 
 <template>
   <section class="space-y-5">
-    <SearchField v-model="query" placeholder="Tìm món ăn..." />
+    <SearchField v-model="query" :placeholder="t('meal.search.placeholder')" />
     <ChipTabs v-model="category" :options="chips" />
 
     <!-- Featured -->
     <div v-if="isBrowsing && featured" class="space-y-3">
       <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold">Gợi ý cho bạn</h2>
+        <h2 class="text-lg font-semibold">{{ t('meal.list.suggested') }}</h2>
       </div>
       <article class="relative">
         <RouterLink
@@ -103,7 +104,7 @@ function levelOf(mealId: string): string {
           type="button"
           class="glass absolute left-7 top-7 flex h-10 w-10 items-center justify-center rounded-full bg-card shadow"
           :class="isFavorite(featured.id) ? 'text-brand' : 'text-gray-600'"
-          :aria-label="isFavorite(featured.id) ? 'Bỏ yêu thích' : 'Yêu thích'"
+          :aria-label="isFavorite(featured.id) ? t('meal.unfavorite') : t('meal.favorite')"
           :aria-pressed="isFavorite(featured.id)"
           @click="toggleFavorite(featured.id)"
         >
@@ -117,7 +118,7 @@ function levelOf(mealId: string): string {
 
     <!-- Recently viewed -->
     <div v-if="showRecent" class="space-y-2">
-      <h2 class="text-lg font-semibold">Xem gần đây</h2>
+      <h2 class="text-lg font-semibold">{{ t('meal.list.recent') }}</h2>
       <ul class="-mx-5 flex gap-3 overflow-x-auto px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <li v-for="meal in recentMeals" :key="meal.id" class="w-28 shrink-0">
           <RouterLink :to="{ name: 'meal-detail', params: { id: meal.id } }" class="block">
@@ -131,8 +132,8 @@ function levelOf(mealId: string): string {
     <!-- Grid -->
     <div class="space-y-3">
       <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold">{{ isBrowsing ? 'Món phổ biến' : 'Kết quả' }}</h2>
-        <span class="text-sm text-gray-500">{{ filtered.length }} món</span>
+        <h2 class="text-lg font-semibold">{{ isBrowsing ? t('meal.list.popular') : t('meal.list.results') }}</h2>
+        <span class="text-sm text-gray-500">{{ t('meal.list.count', { count: filtered.length }) }}</span>
       </div>
 
       <div class="grid grid-cols-2 gap-4">
@@ -162,7 +163,7 @@ function levelOf(mealId: string): string {
             type="button"
             class="glass absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-card shadow"
             :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-600'"
-            :aria-label="isFavorite(meal.id) ? 'Bỏ yêu thích' : 'Yêu thích'"
+            :aria-label="isFavorite(meal.id) ? t('meal.unfavorite') : t('meal.favorite')"
             :aria-pressed="isFavorite(meal.id)"
             @click="toggleFavorite(meal.id)"
           >
@@ -171,7 +172,7 @@ function levelOf(mealId: string): string {
         </article>
       </div>
 
-      <p v-if="filtered.length === 0" class="py-10 text-center text-gray-500">Không tìm thấy món phù hợp.</p>
+      <p v-if="filtered.length === 0" class="py-10 text-center text-gray-500">{{ t('meal.list.empty') }}</p>
     </div>
   </section>
 </template>

@@ -5,6 +5,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import { CANCEL_REASONS, PLAN_OPTIONS, PREMIUM_BENEFITS, TRIAL_DAYS, type PlanId } from '../../mock-data/plans'
 import { formatVnd } from '../../shared/format'
 import { ICONS } from '../../shared/icons'
+import { t } from '../../shared/i18n'
 import { showToast } from '../../shared/toast'
 import BottomSheet from '../../shared/ui/BottomSheet.vue'
 import { usePremium } from './usePremium'
@@ -20,26 +21,26 @@ const currentPlan = computed(() => PLAN_OPTIONS.find((plan) => plan.id === state
 
 async function start() {
   startTrial(selected.value)
-  showToast(`Đã bắt đầu dùng thử ${TRIAL_DAYS} ngày (demo)`)
+  showToast(t('premium.toast.trialStarted', { days: TRIAL_DAYS }))
   await router.replace({ name: 'settings' })
 }
 
 function restore() {
-  showToast(isPremium.value ? 'Đã khôi phục gói của bạn' : 'Không tìm thấy giao dịch để khôi phục')
+  showToast(isPremium.value ? t('premium.toast.restored') : t('premium.toast.nothingToRestore'))
 }
 
 function confirmCancel() {
   cancel()
   manageOpen.value = false
   reason.value = ''
-  showToast('Đã hủy gói (demo)')
+  showToast(t('premium.toast.cancelled'))
 }
 </script>
 
 <template>
   <section class="min-h-dvh pb-48">
     <div class="rounded-b-[40px] bg-gradient-to-br from-brand to-violet-400 px-5 pb-16 pt-[max(env(safe-area-inset-top),1rem)] text-white">
-      <RouterLink :to="{ name: 'settings' }" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20" aria-label="Đóng">
+      <RouterLink :to="{ name: 'settings' }" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20" :aria-label="t('ui.close')">
         <Icon :icon="ICONS.close" class="text-2xl" />
       </RouterLink>
       <div class="mt-4 flex flex-col items-center text-center">
@@ -47,7 +48,7 @@ function confirmCancel() {
           <Icon :icon="ICONS.crown" class="text-5xl" />
         </span>
         <h1 class="text-3xl font-bold">Mise Premium</h1>
-        <p class="mt-1 text-white/90">Lên kế hoạch thông minh hơn mỗi tuần</p>
+        <p class="mt-1 text-white/90">{{ t('premium.tagline') }}</p>
       </div>
     </div>
 
@@ -55,25 +56,25 @@ function confirmCancel() {
       <ul class="space-y-3 rounded-3xl bg-card p-5 shadow-card">
         <li v-for="benefit in PREMIUM_BENEFITS" :key="benefit" class="flex items-start gap-3 text-sm font-medium">
           <Icon :icon="ICONS.checkCircle" class="mt-0.5 shrink-0 text-xl text-brand" />
-          {{ benefit }}
+          {{ t(benefit) }}
         </li>
       </ul>
 
       <!-- Active subscription -->
       <div v-if="isPremium && currentPlan" class="space-y-3 rounded-3xl bg-card p-5 shadow-card">
-        <p class="text-sm text-gray-500">Gói hiện tại</p>
+        <p class="text-sm text-gray-500">{{ t('premium.currentPlan') }}</p>
         <p class="text-xl font-bold">{{ currentPlan.name }}</p>
         <p class="text-sm text-gray-600">
-          {{ trialDaysLeft > 0 ? `Còn ${trialDaysLeft} ngày dùng thử miễn phí.` : 'Thời gian dùng thử đã kết thúc.' }}
+          {{ trialDaysLeft > 0 ? t('premium.trialLeft', { days: trialDaysLeft }) : t('premium.trialEnded') }}
         </p>
         <div class="flex gap-2">
-          <button type="button" class="flex-1 rounded-full bg-brand-soft py-3 text-sm font-semibold text-brand" @click="manageOpen = true">Quản lý gói</button>
-          <button type="button" class="flex-1 rounded-full bg-card py-3 text-sm font-semibold text-gray-700 shadow-card" @click="restore">Khôi phục</button>
+          <button type="button" class="flex-1 rounded-full bg-brand-soft py-3 text-sm font-semibold text-brand" @click="manageOpen = true">{{ t('premium.manage') }}</button>
+          <button type="button" class="flex-1 rounded-full bg-card py-3 text-sm font-semibold text-gray-700 shadow-card" @click="restore">{{ t('premium.restore') }}</button>
         </div>
       </div>
 
       <!-- Plan picker -->
-      <div v-else class="space-y-3" role="radiogroup" aria-label="Chọn gói">
+      <div v-else class="space-y-3" role="radiogroup" :aria-label="t('premium.choosePlan')">
         <button
           v-for="plan in PLAN_OPTIONS"
           :key="plan.id"
@@ -87,9 +88,9 @@ function confirmCancel() {
           <span v-if="plan.badge" class="absolute -top-2 right-5 rounded-full bg-brand px-3 py-0.5 text-xs font-semibold text-white">{{ plan.badge }}</span>
           <span class="flex items-center justify-between">
             <span class="text-lg font-bold">{{ plan.name }}</span>
-            <span class="font-bold text-brand">{{ formatVnd(plan.price) }}<span class="text-xs font-medium text-gray-500">/tháng</span></span>
+            <span class="font-bold text-brand">{{ formatVnd(plan.price) }}<span class="text-xs font-medium text-gray-500">{{ t('premium.perMonth') }}</span></span>
           </span>
-          <span class="mt-1 block text-xs text-gray-500">Tối đa {{ plan.members }} người dùng</span>
+          <span class="mt-1 block text-xs text-gray-500">{{ t('premium.maxUsers', { count: plan.members }) }}</span>
           <ul class="mt-3 space-y-1">
             <li v-for="perk in plan.perks" :key="perk" class="flex items-center gap-2 text-sm text-gray-600">
               <Icon :icon="ICONS.check" class="text-brand" /> {{ perk }}
@@ -108,16 +109,16 @@ function confirmCancel() {
         class="w-full rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98]"
         @click="start"
       >
-        Dùng thử {{ TRIAL_DAYS }} ngày miễn phí
+        {{ t('premium.startTrial', { days: TRIAL_DAYS }) }}
       </button>
       <div class="mt-2 flex items-center justify-between px-2 text-xs text-gray-500">
-        <span>Bản demo: không có thanh toán thật.</span>
-        <button type="button" class="font-medium text-gray-600 underline" @click="restore">Khôi phục giao dịch</button>
+        <span>{{ t('premium.demoNotice') }}</span>
+        <button type="button" class="font-medium text-gray-600 underline" @click="restore">{{ t('premium.restorePurchase') }}</button>
       </div>
     </div>
 
-    <BottomSheet v-model="manageOpen" title="Quản lý gói">
-      <p class="mb-3 text-sm text-gray-600">Bạn muốn hủy gói? Cho chúng tôi biết lý do để cải thiện (không bắt buộc).</p>
+    <BottomSheet v-model="manageOpen" :title="t('premium.manage')">
+      <p class="mb-3 text-sm text-gray-600">{{ t('premium.cancelPrompt') }}</p>
       <ul class="mb-4 space-y-2">
         <li v-for="item in CANCEL_REASONS" :key="item">
           <button
@@ -126,11 +127,11 @@ function confirmCancel() {
             :class="reason === item ? 'bg-brand-soft ring-2 ring-brand' : 'bg-card shadow-card'"
             @click="reason = item"
           >
-            {{ item }}
+            {{ t(item) }}
           </button>
         </li>
       </ul>
-      <button type="button" class="w-full rounded-full bg-red-600 py-3.5 font-semibold text-white" @click="confirmCancel">Hủy gói</button>
+      <button type="button" class="w-full rounded-full bg-red-600 py-3.5 font-semibold text-white" @click="confirmCancel">{{ t('premium.cancelPlan') }}</button>
     </BottomSheet>
   </section>
 </template>

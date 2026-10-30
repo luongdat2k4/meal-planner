@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
+import { t } from '../../shared/i18n'
 import { showToast } from '../../shared/toast'
 import { usePlanner } from '../planner'
 import { STORES } from './stores'
@@ -39,21 +40,21 @@ function pickStore(id: string | null) {
 
 function importFromPlan() {
   const added = importPlan()
-  showToast(added ? `Đã thêm ${added} nguyên liệu từ kế hoạch tuần` : 'Danh sách đã có đủ nguyên liệu của kế hoạch')
+  showToast(added ? t('shopping.toast.importedFromPlan', { count: added }) : t('shopping.toast.planUpToDate'))
 }
 
 async function copyList() {
   const lines = state.items.filter((item) => !item.checked).map((item) => `- ${item.label}`)
   if (!lines.length) {
-    showToast('Không còn món nào cần mua')
+    showToast(t('shopping.toast.nothingToBuy'))
     return
   }
-  const header = `Danh sách đi chợ${currentStore.value ? ` - ${currentStore.value.name}` : ''}`
+  const header = `${t('shopping.copyHeader')}${currentStore.value ? ` - ${currentStore.value.name}` : ''}`
   try {
     await navigator.clipboard.writeText([header, ...lines].join('\n'))
-    showToast('Đã sao chép danh sách')
+    showToast(t('shopping.toast.copied'))
   } catch {
-    showToast('Không thể sao chép trên thiết bị này')
+    showToast(t('shopping.toast.copyFailed'))
   }
 }
 </script>
@@ -69,8 +70,8 @@ async function copyList() {
             <Icon :icon="ICONS.storefront" class="text-2xl" />
           </span>
           <span class="text-left">
-            <span class="block text-xs text-gray-500">Siêu thị</span>
-            <span class="font-semibold">{{ currentStore?.name ?? 'Chưa chọn' }}</span>
+            <span class="block text-xs text-gray-500">{{ t('shopping.store') }}</span>
+            <span class="font-semibold">{{ currentStore?.name ?? t('shopping.noStore') }}</span>
           </span>
         </span>
         <Icon :icon="ICONS.chevronDown" class="text-xl text-gray-400 transition" :class="pickingStore ? 'rotate-180' : ''" />
@@ -80,7 +81,7 @@ async function copyList() {
         <input
           v-model="storeQuery"
           type="search"
-          placeholder="Tìm siêu thị..."
+          :placeholder="t('shopping.searchStore')"
           class="w-full rounded-2xl bg-surface px-4 py-2.5 text-sm outline-none ring-1 ring-transparent focus:ring-brand/40"
         />
         <div class="grid max-h-64 grid-cols-4 gap-2 overflow-y-auto sm:grid-cols-6">
@@ -92,7 +93,7 @@ async function copyList() {
             <span class="mb-1 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
               <Icon :icon="ICONS.close" class="text-lg" />
             </span>
-            Bỏ chọn
+            {{ t('shopping.clearStore') }}
           </button>
           <button
             v-for="store in visibleStores"
@@ -106,18 +107,18 @@ async function copyList() {
             {{ store.name }}
           </button>
         </div>
-        <p v-if="!visibleStores.length" class="py-2 text-center text-sm text-gray-500">Không có siêu thị phù hợp.</p>
+        <p v-if="!visibleStores.length" class="py-2 text-center text-sm text-gray-500">{{ t('shopping.noStoreMatch') }}</p>
       </div>
     </div>
 
     <!-- Add item -->
     <form class="flex items-center gap-2 rounded-2xl bg-card p-1.5 pl-4 shadow-card" @submit.prevent="submit">
-      <input v-model="newItem" type="text" placeholder="Thêm món cần mua..." class="min-w-0 flex-1 bg-transparent py-2 outline-none" />
+      <input v-model="newItem" type="text" :placeholder="t('shopping.addPlaceholder')" class="min-w-0 flex-1 bg-transparent py-2 outline-none" />
       <button
         type="submit"
         class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand text-white disabled:opacity-40"
         :disabled="!newItem.trim()"
-        aria-label="Thêm"
+        :aria-label="t('shopping.add')"
       >
         <Icon :icon="ICONS.plus" class="text-2xl" />
       </button>
@@ -131,7 +132,7 @@ async function copyList() {
         :disabled="!plannedMealCount"
         @click="importFromPlan"
       >
-        <Icon :icon="ICONS.calendarWeek" class="text-lg" /> Lấy từ kế hoạch
+        <Icon :icon="ICONS.calendarWeek" class="text-lg" /> {{ t('shopping.fromPlan') }}
       </button>
       <button
         type="button"
@@ -139,7 +140,7 @@ async function copyList() {
         :disabled="!state.items.length"
         @click="copyList"
       >
-        <Icon :icon="ICONS.contentCopy" class="text-lg" /> Sao chép
+        <Icon :icon="ICONS.contentCopy" class="text-lg" /> {{ t('shopping.copy') }}
       </button>
     </div>
 
@@ -147,15 +148,15 @@ async function copyList() {
       :to="{ name: 'ingredients' }"
       class="glass flex items-center justify-between rounded-2xl bg-card px-4 py-3 text-sm font-semibold shadow-card"
     >
-      <span class="flex items-center gap-2"><Icon :icon="ICONS.carrot" class="text-xl text-brand" /> Chọn từ danh sách nguyên liệu</span>
+      <span class="flex items-center gap-2"><Icon :icon="ICONS.carrot" class="text-xl text-brand" /> {{ t('shopping.pickFromIngredients') }}</span>
       <Icon :icon="ICONS.chevronRight" class="text-xl text-gray-300" />
     </RouterLink>
 
     <!-- Progress -->
     <div v-if="state.items.length" class="space-y-2">
       <div class="flex items-center justify-between text-sm">
-        <span class="font-semibold">Đã mua {{ checkedCount }}/{{ state.items.length }}</span>
-        <button v-if="checkedCount" type="button" class="font-medium text-brand" @click="clearCheckedItems">Xóa đã mua</button>
+        <span class="font-semibold">{{ t('shopping.bought', { checked: checkedCount, total: state.items.length }) }}</span>
+        <button v-if="checkedCount" type="button" class="font-medium text-brand" @click="clearCheckedItems">{{ t('shopping.clearBought') }}</button>
       </div>
       <div class="h-2 overflow-hidden rounded-full bg-gray-200">
         <div class="h-full rounded-full bg-brand transition-all" :style="{ width: `${progress}%` }" />
@@ -169,7 +170,7 @@ async function copyList() {
           type="button"
           class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition"
           :class="item.checked ? 'border-brand bg-brand text-white' : 'border-gray-300'"
-          :aria-label="item.checked ? 'Bỏ đánh dấu' : 'Đánh dấu đã mua'"
+          :aria-label="item.checked ? t('shopping.uncheck') : t('shopping.check')"
           @click="toggleShoppingItem(item.id)"
         >
           <Icon v-if="item.checked" :icon="ICONS.check" class="text-sm" />
@@ -179,14 +180,14 @@ async function copyList() {
           <Icon :icon="ICONS.carrot" class="text-xl" />
         </span>
         <span class="min-w-0 flex-1 truncate" :class="item.checked ? 'text-gray-400 line-through' : 'font-medium'">{{ item.label }}</span>
-        <button type="button" class="rounded-full p-1.5 text-gray-400 hover:bg-gray-100 hover:text-red-600" aria-label="Xóa" @click="removeShoppingItem(item.id)">
+        <button type="button" class="rounded-full p-1.5 text-gray-400 hover:bg-gray-100 hover:text-red-600" :aria-label="t('shopping.remove')" @click="removeShoppingItem(item.id)">
           <Icon :icon="ICONS.trash" class="text-xl" />
         </button>
       </li>
     </ul>
     <div v-else class="rounded-3xl bg-card px-6 py-10 text-center shadow-card">
       <Icon :icon="ICONS.cart" class="mx-auto mb-3 text-5xl text-gray-300" />
-      <p class="text-gray-500">Danh sách đi chợ đang trống.</p>
+      <p class="text-gray-500">{{ t('shopping.empty') }}</p>
     </div>
   </section>
 </template>

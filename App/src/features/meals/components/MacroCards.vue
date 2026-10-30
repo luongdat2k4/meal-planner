@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { t } from '../../../shared/i18n'
 import type { Macros } from '../types'
 
 const props = defineProps<{ macros: Macros }>()
 
 const tiles = computed(() => [
-  { label: 'Năng lượng', value: props.macros.calories, unit: 'kcal', emoji: '🔥', color: 'bg-tile-pink' },
-  { label: 'Đạm', value: props.macros.protein, unit: 'g', emoji: '💪', color: 'bg-tile-blue' },
-  { label: 'Tinh bột', value: props.macros.carbs, unit: 'g', emoji: '🍚', color: 'bg-tile-yellow' },
-  { label: 'Chất béo', value: props.macros.fat, unit: 'g', emoji: '🥑', color: 'bg-tile-green' },
+  { label: t('meal.macro.energy'), value: props.macros.calories, unit: 'kcal', emoji: '🔥', color: 'bg-tile-pink' },
+  { label: t('meal.macro.protein'), value: props.macros.protein, unit: 'g', emoji: '💪', color: 'bg-tile-blue' },
+  { label: t('meal.macro.carbs'), value: props.macros.carbs, unit: 'g', emoji: '🍚', color: 'bg-tile-yellow' },
+  { label: t('meal.macro.fat'), value: props.macros.fat, unit: 'g', emoji: '🥑', color: 'bg-tile-green' },
 ])
 </script>
 

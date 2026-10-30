@@ -1,0 +1,419 @@
+{
+  "day": {
+    "long": [
+      "Thứ 2",
+      "Thứ 3",
+      "Thứ 4",
+      "Thứ 5",
+      "Thứ 6",
+      "Thứ 7",
+      "Chủ nhật"
+    ],
+    "short": [
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "CN"
+    ]
+  },
+  "meal": {
+    "favorite": "Yêu thích",
+    "unfavorite": "Bỏ yêu thích",
+    "back": "Quay lại",
+    "level": {
+      "easy": "Dễ",
+      "medium": "Vừa",
+      "hard": "Khó"
+    },
+    "macro": {
+      "energy": "Năng lượng",
+      "protein": "Đạm",
+      "carbs": "Tinh bột",
+      "fat": "Chất béo"
+    },
+    "steps": {
+      "progress": "Đã làm {done}/{total} bước"
+    },
+    "ingredients": {
+      "addAria": "Thêm {name} vào danh sách đi chợ"
+    },
+    "chips": {
+      "all": "Tất cả",
+      "favorites": "♥ Yêu thích"
+    },
+    "search": {
+      "placeholder": "Tìm món ăn..."
+    },
+    "list": {
+      "suggested": "Gợi ý cho bạn",
+      "recent": "Xem gần đây",
+      "popular": "Món phổ biến",
+      "results": "Kết quả",
+      "count": "{count} món",
+      "empty": "Không tìm thấy món phù hợp."
+    },
+    "toast": {
+      "added": "Đã thêm {name} vào danh sách đi chợ",
+      "exists": "{name} đã có trong danh sách",
+      "addedMany": "Đã thêm {count} nguyên liệu vào danh sách đi chợ",
+      "existsMany": "Các nguyên liệu này đã có trong danh sách",
+      "addedToDay": "Đã thêm vào {day}",
+      "viewPlan": "Xem kế hoạch"
+    },
+    "detail": {
+      "protein": "Đạm: {value} g",
+      "carbs": "Tinh bột: {value} g",
+      "fat": "Béo: {value} g",
+      "mayContain": "⚠️ Có thể chứa: {list}",
+      "sampleNotice": "Công thức, dinh dưỡng và nguyên liệu bên dưới là dữ liệu mẫu, chưa phải dữ liệu thật.",
+      "prep": "Chuẩn bị",
+      "cook": "Nấu",
+      "level": "Mức độ",
+      "servings": "Khẩu phần",
+      "estCost": "Chi phí ước tính",
+      "nutrition": "Dinh dưỡng mỗi khẩu phần",
+      "ingredients": "Nguyên liệu",
+      "addAll": "Thêm tất cả",
+      "method": "Cách nấu",
+      "yours": "Của bạn",
+      "cooked": "Đã nấu món này",
+      "markCooked": "Đánh dấu đã nấu",
+      "rating": "Đánh giá",
+      "dislike": "Không thích món này",
+      "dislikeHint": "Sẽ không được gợi ý trong kế hoạch tự động.",
+      "note": "Ghi chú",
+      "notePlaceholder": "Ví dụ: giảm cay, thêm hành lá...",
+      "addToPlan": "Thêm vào kế hoạch",
+      "addToDay": "Thêm vào {day}",
+      "notFound": "Không tìm thấy món này.",
+      "backToList": "Về danh sách món"
+    }
+  },
+  "household": {
+    "you": "Bạn",
+    "demoNotice": "Bản demo: thành viên và lời mời chỉ là dữ liệu mẫu trên thiết bị này, chưa chia sẻ thật.",
+    "members": "Thành viên",
+    "owner": "Chủ hộ",
+    "member": "Thành viên",
+    "memberN": "Thành viên {n}",
+    "removeMember": "Xóa {name} khỏi hộ gia đình",
+    "sharedNote": "Mọi thành viên dùng chung kế hoạch tuần và danh sách đi chợ.",
+    "invite": "Mời người thân",
+    "full": "Gói gia đình đã đầy ({max}/{max} thành viên). Hãy xóa bớt một người để mời thêm.",
+    "yourCode": "Mã mời của bạn",
+    "copy": "Sao chép",
+    "share": "Chia sẻ",
+    "newCode": "Tạo mã mới",
+    "addDemo": "Thêm thành viên mẫu (demo)",
+    "haveCode": "Có mã mời?",
+    "join": "Tham gia",
+    "disband": "Giải tán hộ gia đình",
+    "leave": "Rời hộ gia đình",
+    "shareText": "Tham gia hộ gia đình của mình trên Mise bằng mã {code}",
+    "invalidCode": "Mã không hợp lệ. Mã có dạng MISE-XXXXXX.",
+    "confirmLeave": "Rời khỏi hộ gia đình này?",
+    "toast": {
+      "codeCopied": "Đã sao chép mã mời",
+      "copyFailed": "Không thể sao chép trên thiết bị này",
+      "inviteCopied": "Đã sao chép lời mời",
+      "joined": "Đã tham gia hộ gia đình (demo)",
+      "left": "Đã rời hộ gia đình"
+    }
+  },
+  "premium": {
+    "tagline": "Lên kế hoạch thông minh hơn mỗi tuần",
+    "currentPlan": "Gói hiện tại",
+    "trialLeft": "Còn {days} ngày dùng thử miễn phí.",
+    "trialEnded": "Thời gian dùng thử đã kết thúc.",
+    "manage": "Quản lý gói",
+    "restore": "Khôi phục",
+    "choosePlan": "Chọn gói",
+    "perMonth": "/tháng",
+    "maxUsers": "Tối đa {count} người dùng",
+    "startTrial": "Dùng thử {days} ngày miễn phí",
+    "demoNotice": "Bản demo: không có thanh toán thật.",
+    "restorePurchase": "Khôi phục giao dịch",
+    "cancelPrompt": "Bạn muốn hủy gói? Cho chúng tôi biết lý do để cải thiện (không bắt buộc).",
+    "cancelPlan": "Hủy gói",
+    "toast": {
+      "trialStarted": "Đã bắt đầu dùng thử {days} ngày (demo)",
+      "restored": "Đã khôi phục gói của bạn",
+      "nothingToRestore": "Không tìm thấy giao dịch để khôi phục",
+      "cancelled": "Đã hủy gói (demo)"
+    },
+    "plans": {
+      "individual": {
+        "name": "Cá nhân",
+        "perk1": "Tạo kế hoạch không giới hạn",
+        "perk2": "Đồng bộ trên nhiều thiết bị"
+      },
+      "family": {
+        "name": "Gia đình",
+        "badge": "Phổ biến",
+        "perk1": "Mọi quyền lợi gói Cá nhân",
+        "perk2": "Chia sẻ kế hoạch cho tối đa 5 người"
+      }
+    },
+    "benefits": {
+      "b1": "Tạo và tạo lại kế hoạch tự động không giới hạn",
+      "b2": "Đổi món theo sở thích bất cứ lúc nào",
+      "b3": "Dinh dưỡng chi tiết cho từng món",
+      "b4": "Đồng bộ và khôi phục dữ liệu trên nhiều thiết bị"
+    },
+    "reasons": {
+      "r1": "Quá đắt",
+      "r2": "Ít khi sử dụng",
+      "r3": "Thiếu món tôi thích",
+      "r4": "Lý do khác"
+    }
+  },
+  "ui": {
+    "close": "Đóng",
+    "decrease": "Giảm",
+    "increase": "Tăng",
+    "rating": "Đánh giá",
+    "stars": "{n} sao"
+  },
+  "format": {
+    "minutes": "{count} phút",
+    "hours": "{count} giờ",
+    "hoursMinutes": "{hours} giờ {minutes} phút"
+  },
+  "app": {
+    "dbError": "Không mở được dữ liệu của ứng dụng. Hãy tải lại trang."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "household": "Gia đình",
+    "ingredients": "Nguyên liệu",
+    "meals": "Món ăn",
+    "mealDetail": "Chi tiết món",
+    "onboarding": "Giới thiệu",
+    "planner": "Kế hoạch tuần",
+    "plannerTab": "Lịch",
+    "setup": "Thiết lập",
+    "preferences": "Sở thích ăn uống",
+    "premium": "Premium",
+    "settings": "Cài đặt",
+    "shopping": "Danh sách đi chợ",
+    "shoppingTab": "Đi chợ",
+    "back": "Quay lại",
+    "profile": "Hồ sơ và cài đặt",
+    "quickSuggest": "Gợi ý nhanh"
+  },
+  "planner": {
+    "summary": {
+      "cost": "Chi phí ước tính",
+      "budget": "Ngân sách tuần",
+      "over": "Vượt ngân sách {amount}.",
+      "emptyTitle": "Chưa có kế hoạch cho tuần này",
+      "emptyHintBefore": "Tạo tự động theo sở thích của bạn, hoặc",
+      "emptyHintLink": "chỉnh sở thích"
+    },
+    "generating": "Đang tạo...",
+    "regenerate": "Tạo lại",
+    "generate": "Tạo kế hoạch tự động",
+    "shop": "Đi chợ",
+    "clearDay": "Xóa ngày",
+    "swap": "Đổi món",
+    "removeFromPlan": "Xóa khỏi kế hoạch",
+    "noMealsForDay": "Chưa có món nào cho {day}.",
+    "pickMeals": "Chọn món",
+    "noSwapOptions": "Không có món thay thế phù hợp với sở thích của bạn.",
+    "toast": {
+      "generated": "Đã tạo kế hoạch mới",
+      "addedToShopping": "Đã thêm {count} nguyên liệu vào danh sách đi chợ",
+      "shoppingUpToDate": "Danh sách đi chợ đã có đủ nguyên liệu",
+      "swapped": "Đã đổi món"
+    },
+    "quick": {
+      "title": "Gợi ý nhanh",
+      "intro": "Dựa trên chế độ ăn, dị ứng, ngân sách và thời gian nấu bạn đã chọn.",
+      "regenerateWeek": "Tạo lại kế hoạch tuần",
+      "generateWeek": "Tạo kế hoạch tuần",
+      "confirmReplace": "Kế hoạch hiện tại sẽ bị thay. Bấm lần nữa để xác nhận.",
+      "pickDays": "Chọn món cho các ngày bạn nấu",
+      "suggestOne": "Gợi ý một món",
+      "suggestOneHint": "Xem một món hợp với bạn ngay bây giờ",
+      "editPrefs": "Chỉnh sở thích",
+      "editPrefsHint": "Số người, ăn kiêng, ngân sách...",
+      "weekGenerated": "Đã tạo kế hoạch tuần mới",
+      "noSuggestion": "Chưa tìm được món phù hợp với sở thích của bạn"
+    }
+  },
+  "shopping": {
+    "store": "Siêu thị",
+    "noStore": "Chưa chọn",
+    "searchStore": "Tìm siêu thị...",
+    "clearStore": "Bỏ chọn",
+    "noStoreMatch": "Không có siêu thị phù hợp.",
+    "addPlaceholder": "Thêm món cần mua...",
+    "add": "Thêm",
+    "fromPlan": "Lấy từ kế hoạch",
+    "copy": "Sao chép",
+    "pickFromIngredients": "Chọn từ danh sách nguyên liệu",
+    "bought": "Đã mua {checked}/{total}",
+    "clearBought": "Xóa đã mua",
+    "uncheck": "Bỏ đánh dấu",
+    "check": "Đánh dấu đã mua",
+    "remove": "Xóa",
+    "empty": "Danh sách đi chợ đang trống.",
+    "copyHeader": "Danh sách đi chợ",
+    "toast": {
+      "importedFromPlan": "Đã thêm {count} nguyên liệu từ kế hoạch tuần",
+      "planUpToDate": "Danh sách đã có đủ nguyên liệu của kế hoạch",
+      "nothingToBuy": "Không còn món nào cần mua",
+      "copied": "Đã sao chép danh sách",
+      "copyFailed": "Không thể sao chép trên thiết bị này"
+    }
+  },
+  "ingredients": {
+    "search": "Tìm nguyên liệu...",
+    "count": "{count} nguyên liệu",
+    "inList": "Đã có trong danh sách đi chợ",
+    "addToList": "Thêm {name} vào danh sách đi chợ",
+    "notFound": "Không tìm thấy nguyên liệu phù hợp."
+  },
+  "home": {
+    "greeting": "Xin chào bạn 👋",
+    "titleLine1": "Hôm nay",
+    "titleLine2": "ăn gì?",
+    "search": "Tìm món ăn...",
+    "weekGlance": "Tuần này nhìn nhanh",
+    "tilePlan": "Kế hoạch",
+    "tilePlanHint": "món trong tuần",
+    "tileFavorites": "Yêu thích",
+    "tileFavoritesHint": "món đã lưu",
+    "tileShopping": "Đi chợ",
+    "tileShoppingHint": "món cần mua",
+    "todayPlan": "Kế hoạch hôm nay",
+    "viewAll": "Xem tất cả",
+    "noMealsToday": "Hôm nay bạn chưa có món nào trong kế hoạch.",
+    "makePlan": "Lên kế hoạch"
+  },
+  "setup": {
+    "back": "Quay lại",
+    "skip": "Bỏ qua",
+    "continue": "Tiếp tục",
+    "create": "Tạo kế hoạch của tôi",
+    "generating": "Đang tạo kế hoạch cho bạn...",
+    "ready": "Kế hoạch tuần của bạn đã sẵn sàng",
+    "steps": {
+      "household": {
+        "title": "Bạn nấu cho mấy người?",
+        "subtitle": "Dùng để tính khẩu phần và chi phí."
+      },
+      "diet": {
+        "title": "Chế độ ăn và dị ứng",
+        "subtitle": "Món không phù hợp sẽ không được gợi ý."
+      },
+      "taste": {
+        "title": "Khẩu vị của bạn",
+        "subtitle": "Chọn đạm yêu thích và thời gian nấu tối đa."
+      },
+      "schedule": {
+        "title": "Lịch nấu và ngân sách",
+        "subtitle": "Chọn những ngày bạn muốn nấu trong tuần."
+      },
+      "reminder": {
+        "title": "Nhắc lập kế hoạch",
+        "subtitle": "Nhận lời nhắc mỗi tuần để không bỏ lỡ."
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "Đã tạo lại kế hoạch theo sở thích mới",
+    "intro": "Thay đổi được lưu tự động. Tạo lại kế hoạch để áp dụng sở thích mới.",
+    "household": "Số người ăn",
+    "diet": "Ăn uống",
+    "taste": "Khẩu vị",
+    "schedule": "Lịch nấu và ngân sách",
+    "reminder": "Nhắc nhở",
+    "generating": "Đang tạo...",
+    "save": "Lưu và tạo lại kế hoạch",
+    "cookTime": {
+      "15": "≤ 15 phút",
+      "30": "≤ 30 phút",
+      "45": "≤ 45 phút",
+      "60": "≤ 1 giờ",
+      "90": "Không giới hạn"
+    },
+    "fieldDiet": {
+      "diet": "Chế độ ăn",
+      "allergy": "Dị ứng"
+    },
+    "fieldHousehold": {
+      "note": "{people} người ăn mỗi bữa. Khẩu phần và chi phí được nhân theo số này."
+    },
+    "fieldReminder": {
+      "title": "Nhắc tôi lập kế hoạch mỗi tuần",
+      "subtitle": "Một lời nhắc đúng ngày và giờ bạn chọn.",
+      "toggle": "Nhắc lập kế hoạch hằng tuần",
+      "day": "Ngày nhắc",
+      "time": "Giờ nhắc",
+      "demo": "Bản demo: lời nhắc chưa được gửi thật trên thiết bị."
+    },
+    "fieldSchedule": {
+      "days": "Những ngày bạn nấu",
+      "minDay": "Hãy chọn ít nhất một ngày.",
+      "budget": "Ngân sách mỗi tuần",
+      "perPerson": "Khoảng {amount} cho mỗi người mỗi bữa."
+    },
+    "fieldTaste": {
+      "protein": "Bạn thích đạm nào?",
+      "anyNote": "Không chọn gì nghĩa là món nào cũng được.",
+      "maxTime": "Thời gian nấu tối đa"
+    }
+  },
+  "onboarding": {
+    "skip": "Bỏ qua",
+    "continue": "Tiếp tục",
+    "start": "Bắt đầu",
+    "pages": "Các trang giới thiệu",
+    "page": "Trang {n}",
+    "slides": {
+      "suggest": {
+        "title": "Gợi ý món hợp khẩu vị",
+        "text": "Chọn chế độ ăn, dị ứng và đạm yêu thích. App chọn những món phù hợp cho bạn.",
+        "chip": "Hợp với bạn"
+      },
+      "plan": {
+        "title": "Kế hoạch tuần trong vài giây",
+        "text": "Tạo kế hoạch theo ngân sách và thời gian nấu, đổi món chỉ với một chạm.",
+        "chip": "Cả tuần đã sẵn sàng"
+      },
+      "shop": {
+        "title": "Đi chợ gọn gàng",
+        "text": "Nguyên liệu cả tuần được gom vào một danh sách. Chọn siêu thị và đánh dấu khi đã mua.",
+        "chip": "Một danh sách duy nhất"
+      }
+    }
+  },
+  "settings": {
+    "preferenceSummary": "{people} người · {days} ngày nấu · {budget}/tuần",
+    "reminderOn": "{day} lúc {time}",
+    "reminderOff": "Đang tắt",
+    "premiumLocked": "Mở khóa đầy đủ tính năng",
+    "premiumPlan": "Gói {plan}",
+    "trialLeft": " · còn {days} ngày dùng thử",
+    "stats": {
+      "meals": "Món ăn",
+      "ingredients": "Nguyên liệu",
+      "stores": "Siêu thị",
+      "planned": "Món đã lên lịch"
+    },
+    "resetConfirm": "Xóa toàn bộ dữ liệu trên thiết bị này (kế hoạch, đi chợ, yêu thích, sở thích)?",
+    "resetDone": "Đã xóa dữ liệu",
+    "preferences": "Sở thích ăn uống",
+    "household": "Gia đình",
+    "members": "{count}/{max} thành viên",
+    "language": "Ngôn ngữ",
+    "languageSubtitle": "Giao diện, tên món, nguyên liệu và cách nấu",
+    "reminder": "Nhắc lập kế hoạch",
+    "reminderToggle": "Nhắc lập kế hoạch hằng tuần",
+    "reset": "Xóa dữ liệu trên thiết bị"
+  }
+}

@@ -5,7 +5,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import { resetAllData } from '../../app/resetAll'
 import { PLAN_OPTIONS } from '../../mock-data/plans'
 import { formatVnd } from '../../shared/format'
-import { lang, languages } from '../../shared/i18n'
+import { lang, languages, t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import ListRow from '../../shared/ui/ListRow.vue'
@@ -13,7 +13,7 @@ import ToggleSwitch from '../../shared/ui/ToggleSwitch.vue'
 import { MAX_MEMBERS, useHousehold } from '../household'
 import { getIngredients } from '../ingredients'
 import { getMeals } from '../meals'
-import { DAY_NAMES, usePlanner } from '../planner'
+import { dayNames, usePlanner } from '../planner'
 import { usePreferences } from '../preferences'
 import { usePremium } from '../premium'
 import { STORES } from '../shopping'
@@ -25,28 +25,28 @@ const { plannedMealCount } = usePlanner()
 const { state: premium, isPremium, trialDaysLeft } = usePremium()
 
 const preferenceSummary = computed(
-  () => `${prefs.householdSize} người · ${prefs.cookingDays.length} ngày nấu · ${formatVnd(prefs.weeklyBudget)}/tuần`,
+  () => t('settings.preferenceSummary', { people: prefs.householdSize, days: prefs.cookingDays.length, budget: formatVnd(prefs.weeklyBudget) }),
 )
 const reminderSummary = computed(() =>
-  prefs.reminder.enabled ? `${DAY_NAMES[prefs.reminder.day]} lúc ${prefs.reminder.time}` : 'Đang tắt',
+  prefs.reminder.enabled ? t('settings.reminderOn', { day: dayNames()[prefs.reminder.day], time: prefs.reminder.time }) : t('settings.reminderOff'),
 )
 const premiumSummary = computed(() => {
   const plan = PLAN_OPTIONS.find((option) => option.id === premium.plan)
-  if (!isPremium.value || !plan) return 'Mở khóa đầy đủ tính năng'
-  return `Gói ${plan.name}${trialDaysLeft.value > 0 ? ` · còn ${trialDaysLeft.value} ngày dùng thử` : ''}`
+  if (!isPremium.value || !plan) return t('settings.premiumLocked')
+  return t('settings.premiumPlan', { plan: plan.name }) + (trialDaysLeft.value > 0 ? t('settings.trialLeft', { days: trialDaysLeft.value }) : '')
 })
 
 const stats = computed(() => [
-  { label: 'Món ăn', value: getMeals().length },
-  { label: 'Nguyên liệu', value: getIngredients().length },
-  { label: 'Siêu thị', value: STORES.length },
-  { label: 'Món đã lên lịch', value: plannedMealCount.value },
+  { label: t('settings.stats.meals'), value: getMeals().length },
+  { label: t('settings.stats.ingredients'), value: getIngredients().length },
+  { label: t('settings.stats.stores'), value: STORES.length },
+  { label: t('settings.stats.planned'), value: plannedMealCount.value },
 ])
 
 async function confirmReset() {
-  if (!window.confirm('Xóa toàn bộ dữ liệu trên thiết bị này (kế hoạch, đi chợ, yêu thích, sở thích, tài khoản)?')) return
+  if (!window.confirm(t('settings.resetConfirm'))) return
   resetAllData()
-  showToast('Đã xóa dữ liệu')
+  showToast(t('settings.resetDone'))
   await router.replace({ name: 'onboarding' })
 }
 </script>
@@ -70,20 +70,20 @@ async function confirmReset() {
 
     <!-- Planning -->
     <div class="space-y-3">
-      <ListRow :icon="ICONS.tuneVariant" title="Sở thích ăn uống" :subtitle="preferenceSummary" :to="{ name: 'preferences' }" />
+      <ListRow :icon="ICONS.tuneVariant" :title="t('settings.preferences')" :subtitle="preferenceSummary" :to="{ name: 'preferences' }" />
       <ListRow
         :icon="ICONS.homeGroup"
-        title="Gia đình"
-        :subtitle="`${household.members.length}/${MAX_MEMBERS} thành viên`"
+        :title="t('settings.household')"
+        :subtitle="t('settings.members', { count: household.members.length, max: MAX_MEMBERS })"
         :to="{ name: 'household' }"
       />
-      <ListRow :icon="ICONS.translate" title="Ngôn ngữ món ăn" subtitle="Tên món, nguyên liệu và cách nấu">
-        <select v-model="lang" class="rounded-xl bg-surface px-3 py-1.5 text-sm outline-none" aria-label="Ngôn ngữ món ăn">
+      <ListRow :icon="ICONS.translate" :title="t('settings.language')" :subtitle="t('settings.languageSubtitle')">
+        <select v-model="lang" class="rounded-xl bg-surface px-3 py-1.5 text-sm outline-none" :aria-label="t('settings.language')">
           <option v-for="option in languages" :key="option.id" :value="option.id">{{ option.label }}</option>
         </select>
       </ListRow>
-      <ListRow :icon="ICONS.bellOutline" title="Nhắc lập kế hoạch" :subtitle="reminderSummary">
-        <ToggleSwitch v-model="prefs.reminder.enabled" label="Nhắc lập kế hoạch hằng tuần" />
+      <ListRow :icon="ICONS.bellOutline" :title="t('settings.reminder')" :subtitle="reminderSummary">
+        <ToggleSwitch v-model="prefs.reminder.enabled" :label="t('settings.reminderToggle')" />
       </ListRow>
     </div>
 
@@ -98,7 +98,7 @@ async function confirmReset() {
     <!-- Danger zone -->
     <ListRow
       :icon="ICONS.trash"
-      title="Xóa dữ liệu trên thiết bị"
+      :title="t('settings.reset')"
       danger
       class="cursor-pointer"
       role="button"

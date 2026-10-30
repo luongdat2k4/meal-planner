@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { t } from '../i18n'
 import { ICONS } from '../icons'
 
 const props = withDefaults(defineProps<{ min?: number; max?: number }>(), { min: 1, max: 99 })
@@ -17,7 +18,7 @@ function change(delta: number) {
       type="button"
       class="flex h-9 w-9 items-center justify-center rounded-full bg-card text-brand shadow-card disabled:opacity-40"
       :disabled="model <= min"
-      aria-label="Giảm"
+      :aria-label="t('ui.decrease')"
       @click="change(-1)"
     >
       <Icon :icon="ICONS.minus" class="text-xl" />
@@ -27,7 +28,7 @@ function change(delta: number) {
       type="button"
       class="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-white shadow shadow-brand/30 disabled:opacity-40"
       :disabled="model >= max"
-      aria-label="Tăng"
+      :aria-label="t('ui.increase')"
       @click="change(1)"
     >
       <Icon :icon="ICONS.plus" class="text-xl" />

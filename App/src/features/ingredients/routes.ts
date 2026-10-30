@@ -5,6 +5,6 @@ export const ingredientsRoutes: RouteRecordRaw[] = [
     path: '/ingredients',
     name: 'ingredients',
     component: () => import('./IngredientsView.vue'),
-    meta: { title: 'Nguyên liệu', backTo: { name: 'shopping' } },
+    meta: { title: 'nav.ingredients', backTo: { name: 'shopping' } },
   },
 ]

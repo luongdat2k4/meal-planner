@@ -2,12 +2,13 @@
 import { computed } from 'vue'
 import ChipTabs from '../../../shared/ui/ChipTabs.vue'
 import ToggleSwitch from '../../../shared/ui/ToggleSwitch.vue'
-import { DAY_NAMES } from '../../planner'
+import { t } from '../../../shared/i18n'
+import { dayNames } from '../../planner'
 import { usePreferences } from '../usePreferences'
 
 const { state } = usePreferences()
 
-const dayOptions = DAY_NAMES.map((name, index) => ({ id: String(index), label: name }))
+const dayOptions = computed(() => dayNames().map((name, index) => ({ id: String(index), label: name })))
 
 const day = computed({
   get: () => String(state.reminder.day),
@@ -21,22 +22,22 @@ const day = computed({
   <div class="space-y-4">
     <div class="flex items-center justify-between gap-4">
       <div>
-        <p class="font-semibold">Nhắc tôi lập kế hoạch mỗi tuần</p>
-        <p class="text-sm text-gray-500">Một lời nhắc đúng ngày và giờ bạn chọn.</p>
+        <p class="font-semibold">{{ t('preferences.fieldReminder.title') }}</p>
+        <p class="text-sm text-gray-500">{{ t('preferences.fieldReminder.subtitle') }}</p>
       </div>
-      <ToggleSwitch v-model="state.reminder.enabled" label="Nhắc lập kế hoạch hằng tuần" />
+      <ToggleSwitch v-model="state.reminder.enabled" :label="t('preferences.fieldReminder.toggle')" />
     </div>
 
     <template v-if="state.reminder.enabled">
       <div>
-        <h3 class="mb-1 text-sm font-semibold text-gray-700">Ngày nhắc</h3>
+        <h3 class="mb-1 text-sm font-semibold text-gray-700">{{ t('preferences.fieldReminder.day') }}</h3>
         <ChipTabs v-model="day" :options="dayOptions" />
       </div>
       <label class="flex items-center justify-between gap-4 rounded-2xl bg-card px-4 py-3 shadow-card">
-        <span class="text-sm font-semibold">Giờ nhắc</span>
+        <span class="text-sm font-semibold">{{ t('preferences.fieldReminder.time') }}</span>
         <input v-model="state.reminder.time" type="time" class="rounded-xl bg-surface px-3 py-1.5 outline-none" />
       </label>
-      <p class="text-xs text-gray-500">Bản demo: lời nhắc chưa được gửi thật trên thiết bị.</p>
+      <p class="text-xs text-gray-500">{{ t('preferences.fieldReminder.demo') }}</p>
     </template>
   </div>
 </template>

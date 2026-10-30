@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { formatVnd } from '../../../shared/format'
-import { DAY_NAMES } from '../../planner'
+import { t } from '../../../shared/i18n'
+import { dayNames, shortDayNames } from '../../planner'
 import { BUDGET } from '../options'
 import { usePreferences } from '../usePreferences'
 
 const { state } = usePreferences()
-
-const shortDays = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
 
 function toggleDay(index: number) {
   const next = state.cookingDays.includes(index) ? state.cookingDays.filter((day) => day !== index) : [...state.cookingDays, index]
@@ -22,13 +21,13 @@ const perPersonMeal = computed(() =>
 <template>
   <div class="space-y-6">
     <div>
-      <h3 class="mb-3 font-semibold">Những ngày bạn nấu</h3>
+      <h3 class="mb-3 font-semibold">{{ t('preferences.fieldSchedule.days') }}</h3>
       <div class="flex justify-between gap-1">
         <button
-          v-for="(label, index) in shortDays"
+          v-for="(label, index) in shortDayNames()"
           :key="label"
           type="button"
-          :aria-label="DAY_NAMES[index]"
+          :aria-label="dayNames()[index]"
           :aria-pressed="state.cookingDays.includes(index)"
           class="flex h-11 w-11 items-center justify-center rounded-full text-sm font-semibold transition"
           :class="state.cookingDays.includes(index) ? 'bg-brand text-white shadow-md shadow-brand/30' : 'bg-card text-gray-600 shadow-card'"
@@ -37,12 +36,12 @@ const perPersonMeal = computed(() =>
           {{ label }}
         </button>
       </div>
-      <p v-if="!state.cookingDays.length" class="mt-2 text-xs text-red-600">Hãy chọn ít nhất một ngày.</p>
+      <p v-if="!state.cookingDays.length" class="mt-2 text-xs text-red-600">{{ t('preferences.fieldSchedule.minDay') }}</p>
     </div>
 
     <div>
       <div class="mb-3 flex items-baseline justify-between">
-        <h3 class="font-semibold">Ngân sách mỗi tuần</h3>
+        <h3 class="font-semibold">{{ t('preferences.fieldSchedule.budget') }}</h3>
         <span class="text-lg font-bold text-brand">{{ formatVnd(state.weeklyBudget) }}</span>
       </div>
       <input
@@ -52,10 +51,10 @@ const perPersonMeal = computed(() =>
         :max="BUDGET.max"
         :step="BUDGET.step"
         class="w-full accent-brand"
-        aria-label="Ngân sách mỗi tuần"
+        :aria-label="t('preferences.fieldSchedule.budget')"
       />
       <p class="mt-2 text-xs text-gray-500">
-        Khoảng {{ formatVnd(perPersonMeal) }} cho mỗi người mỗi bữa.
+        {{ t('preferences.fieldSchedule.perPerson', { amount: formatVnd(perPersonMeal) }) }}
       </p>
     </div>
   </div>

@@ -2,6 +2,7 @@
 import { Icon } from '@iconify/vue'
 import { assetUrl } from '../../../shared/assets'
 import { formatAmount } from '../../../shared/format'
+import { t } from '../../../shared/i18n'
 import { ICONS } from '../../../shared/icons'
 import type { RecipeIngredient } from '../types'
 
@@ -19,7 +20,7 @@ const emit = defineEmits<{ add: [item: RecipeIngredient] }>()
       <button
         type="button"
         class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand transition active:scale-90"
-        :aria-label="`Thêm ${item.name} vào danh sách đi chợ`"
+        :aria-label="t('meal.ingredients.addAria', { name: item.name })"
         @click="emit('add', item)"
       >
         <Icon :icon="ICONS.cart" class="text-lg" />

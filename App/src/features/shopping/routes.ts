@@ -6,6 +6,6 @@ export const shoppingRoutes: RouteRecordRaw[] = [
     path: '/shopping',
     name: 'shopping',
     component: () => import('./ShoppingView.vue'),
-    meta: { title: 'Danh sách đi chợ', tab: { label: 'Đi chợ', icon: ICONS.cart, order: 4 } },
+    meta: { title: 'nav.shopping', tab: { label: 'nav.shoppingTab', icon: ICONS.cart, order: 4 } },
   },
 ]

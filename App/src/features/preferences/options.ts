@@ -1,4 +1,5 @@
 import { text } from '../../backend/catalogText'
+import { t } from '../../shared/i18n'
 import { getMealCategories, type MealCategory } from '../meals'
 
 export interface Allergen {
@@ -31,12 +32,12 @@ export const ALLERGENS: Allergen[] = [
 const PROTEIN_IDS = ['chicken', 'beef', 'pork', 'seafood', 'veg']
 export const getProteinOptions = (): MealCategory[] => getMealCategories().filter((category) => PROTEIN_IDS.includes(category.id))
 
-export const COOK_TIME_OPTIONS = [
-  { id: '15', label: '≤ 15 phút' },
-  { id: '30', label: '≤ 30 phút' },
-  { id: '45', label: '≤ 45 phút' },
-  { id: '60', label: '≤ 1 giờ' },
-  { id: '90', label: 'Không giới hạn' },
+export const getCookTimeOptions = () => [
+  { id: '15', label: t('preferences.cookTime.15') },
+  { id: '30', label: t('preferences.cookTime.30') },
+  { id: '45', label: t('preferences.cookTime.45') },
+  { id: '60', label: t('preferences.cookTime.60') },
+  { id: '90', label: t('preferences.cookTime.90') },
 ]
 
 export const BUDGET = { min: 300_000, max: 3_000_000, step: 100_000 }

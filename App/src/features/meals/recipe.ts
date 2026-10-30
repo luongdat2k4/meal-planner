@@ -3,9 +3,9 @@ import { stepText, text } from '../../backend/catalogText'
 import type { CookMethod, Recipe } from './types'
 
 // Rough difficulty derived from total time (the catalog has no level column).
-export function getLevel(recipe: Recipe): 'Dễ' | 'Vừa' | 'Khó' {
+export function getLevel(recipe: Recipe): 'easy' | 'medium' | 'hard' {
   const total = recipe.prepMinutes + recipe.cookMinutes
-  return total <= 25 ? 'Dễ' : total <= 45 ? 'Vừa' : 'Khó'
+  return total <= 25 ? 'easy' : total <= 45 ? 'medium' : 'hard'
 }
 
 const cache = new Map<string, Recipe>()

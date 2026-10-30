@@ -6,6 +6,6 @@ export const homeRoutes: RouteRecordRaw[] = [
     path: '/home',
     name: 'home',
     component: () => import('./HomeView.vue'),
-    meta: { title: 'Trang chủ', hideHeader: true, tab: { label: 'Trang chủ', icon: ICONS.home, order: 1 } },
+    meta: { title: 'nav.home', hideHeader: true, tab: { label: 'nav.home', icon: ICONS.home, order: 1 } },
   },
 ]

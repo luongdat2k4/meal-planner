@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
+import { t } from '../../shared/i18n'
 import { regeneratePlan } from '../planner'
 import FieldDiet from './components/FieldDiet.vue'
 import FieldHousehold from './components/FieldHousehold.vue'
@@ -22,37 +23,37 @@ async function regenerate() {
   await new Promise((resolve) => setTimeout(resolve, 600))
   regeneratePlan()
   generating.value = false
-  showToast('Đã tạo lại kế hoạch theo sở thích mới')
+  showToast(t('preferences.regenerated'))
   await router.push({ name: 'planner' })
 }
 </script>
 
 <template>
   <section class="space-y-4">
-    <p class="text-sm text-gray-500">Thay đổi được lưu tự động. Tạo lại kế hoạch để áp dụng sở thích mới.</p>
+    <p class="text-sm text-gray-500">{{ t('preferences.intro') }}</p>
 
     <article class="rounded-3xl bg-card p-5 shadow-card">
-      <h2 class="mb-3 font-bold">Số người ăn</h2>
+      <h2 class="mb-3 font-bold">{{ t('preferences.household') }}</h2>
       <FieldHousehold />
     </article>
 
     <article class="rounded-3xl bg-card p-5 shadow-card">
-      <h2 class="mb-4 font-bold">Ăn uống</h2>
+      <h2 class="mb-4 font-bold">{{ t('preferences.diet') }}</h2>
       <FieldDiet />
     </article>
 
     <article class="rounded-3xl bg-card p-5 shadow-card">
-      <h2 class="mb-4 font-bold">Khẩu vị</h2>
+      <h2 class="mb-4 font-bold">{{ t('preferences.taste') }}</h2>
       <FieldTaste />
     </article>
 
     <article class="rounded-3xl bg-card p-5 shadow-card">
-      <h2 class="mb-4 font-bold">Lịch nấu và ngân sách</h2>
+      <h2 class="mb-4 font-bold">{{ t('preferences.schedule') }}</h2>
       <FieldSchedule />
     </article>
 
     <article class="rounded-3xl bg-card p-5 shadow-card">
-      <h2 class="mb-4 font-bold">Nhắc nhở</h2>
+      <h2 class="mb-4 font-bold">{{ t('preferences.reminder') }}</h2>
       <FieldReminder />
     </article>
 
@@ -63,7 +64,7 @@ async function regenerate() {
       @click="regenerate"
     >
       <Icon :icon="ICONS.autoFix" class="text-xl" />
-      {{ generating ? 'Đang tạo...' : 'Lưu và tạo lại kế hoạch' }}
+      {{ generating ? t('preferences.generating') : t('preferences.save') }}
     </button>
   </section>
 </template>

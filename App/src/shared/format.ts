@@ -1,3 +1,4 @@
+import { t } from './i18n'
 import { text } from '../backend/catalogText'
 
 export function formatVnd(value: number): string {
@@ -5,10 +6,10 @@ export function formatVnd(value: number): string {
 }
 
 export function formatMinutes(minutes: number): string {
-  if (minutes < 60) return `${minutes} phút`
+  if (minutes < 60) return t('format.minutes', { count: minutes })
   const hours = Math.floor(minutes / 60)
   const rest = minutes % 60
-  return rest ? `${hours} giờ ${rest} phút` : `${hours} giờ`
+  return rest ? t('format.hoursMinutes', { hours, minutes: rest }) : t('format.hours', { count: hours })
 }
 
 // Grams round to 10, other units (slugs such as tbsp, tsp, piece) to the nearest half.

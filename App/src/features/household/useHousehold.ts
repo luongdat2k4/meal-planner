@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { MOCK_MEMBER_NAMES, generateInviteCode } from '../../mock-data/household'
+import { t } from '../../shared/i18n'
 import { createPersistedState } from '../../shared/persisted'
 
 export interface HouseholdMember {
@@ -33,7 +34,7 @@ export function useHousehold() {
   function addDemoMember(): boolean {
     if (isFull.value) return false
     const used = new Set(state.members.map((member) => member.name))
-    const name = MOCK_MEMBER_NAMES.find((candidate) => !used.has(candidate)) ?? `Thành viên ${state.members.length + 1}`
+    const name = MOCK_MEMBER_NAMES.find((candidate) => !used.has(candidate)) ?? t('household.memberN', { n: state.members.length + 1 })
     state.members.push({ id: crypto.randomUUID(), name, role: 'member' })
     return true
   }

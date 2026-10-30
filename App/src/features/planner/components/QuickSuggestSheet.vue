@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { ICONS } from '../../../shared/icons'
+import { t } from '../../../shared/i18n'
 import { showToast } from '../../../shared/toast'
 import BottomSheet from '../../../shared/ui/BottomSheet.vue'
 import { regeneratePlan, swapCandidates } from '../generatePlan'
@@ -27,14 +28,14 @@ async function newPlan() {
   }
   regeneratePlan()
   open.value = false
-  showToast('Đã tạo kế hoạch tuần mới')
+  showToast(t('planner.quick.weekGenerated'))
   await router.push({ name: 'planner' })
 }
 
 async function suggestToday() {
   const meal = swapCandidates('', 1)[0]
   if (!meal) {
-    showToast('Chưa tìm được món phù hợp với sở thích của bạn')
+    showToast(t('planner.quick.noSuggestion'))
     return
   }
   open.value = false
@@ -48,8 +49,8 @@ async function openPreferences() {
 </script>
 
 <template>
-  <BottomSheet v-model="open" title="Gợi ý nhanh">
-    <p class="mb-4 text-sm text-gray-500">Dựa trên chế độ ăn, dị ứng, ngân sách và thời gian nấu bạn đã chọn.</p>
+  <BottomSheet v-model="open" :title="t('planner.quick.title')">
+    <p class="mb-4 text-sm text-gray-500">{{ t('planner.quick.intro') }}</p>
 
     <ul class="space-y-3">
       <li>
@@ -63,9 +64,9 @@ async function openPreferences() {
             <Icon :icon="ICONS.autoFix" class="text-2xl" />
           </span>
           <span class="min-w-0">
-            <span class="block font-semibold">{{ plannedMealCount ? 'Tạo lại kế hoạch tuần' : 'Tạo kế hoạch tuần' }}</span>
+            <span class="block font-semibold">{{ plannedMealCount ? t('planner.quick.regenerateWeek') : t('planner.quick.generateWeek') }}</span>
             <span class="block text-sm" :class="armed ? 'text-brand' : 'text-gray-500'">
-              {{ armed ? 'Kế hoạch hiện tại sẽ bị thay. Bấm lần nữa để xác nhận.' : 'Chọn món cho các ngày bạn nấu' }}
+              {{ armed ? t('planner.quick.confirmReplace') : t('planner.quick.pickDays') }}
             </span>
           </span>
         </button>
@@ -76,8 +77,8 @@ async function openPreferences() {
             <Icon :icon="ICONS.silverware" class="text-2xl" />
           </span>
           <span>
-            <span class="block font-semibold">Gợi ý một món</span>
-            <span class="block text-sm text-gray-500">Xem một món hợp với bạn ngay bây giờ</span>
+            <span class="block font-semibold">{{ t('planner.quick.suggestOne') }}</span>
+            <span class="block text-sm text-gray-500">{{ t('planner.quick.suggestOneHint') }}</span>
           </span>
         </button>
       </li>
@@ -87,8 +88,8 @@ async function openPreferences() {
             <Icon :icon="ICONS.tuneVariant" class="text-2xl" />
           </span>
           <span>
-            <span class="block font-semibold">Chỉnh sở thích</span>
-            <span class="block text-sm text-gray-500">Số người, ăn kiêng, ngân sách...</span>
+            <span class="block font-semibold">{{ t('planner.quick.editPrefs') }}</span>
+            <span class="block text-sm text-gray-500">{{ t('planner.quick.editPrefsHint') }}</span>
           </span>
         </button>
       </li>

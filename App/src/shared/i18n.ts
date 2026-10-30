@@ -1,4 +1,6 @@
 import { ref, watch } from 'vue'
+import en from './languages/en.json'
+import vn from './languages/vn.json'
 
 // Catalog text exists in two languages (public/i18n/<lang>.json, columns of the `language` table).
 export type Lang = 'vn' | 'en'
@@ -29,3 +31,28 @@ watch(lang, (value) => {
     // Keep working in memory.
   }
 })
+
+// ---- UI text. Catalog text (meals, ingredients, ...) comes from public/i18n through backend/catalogText.
+
+
+const dictionaries: Record<Lang, unknown> = { vn, en }
+
+function lookup(source: unknown, key: string): string | undefined {
+  let node = source
+  for (const part of key.split('.')) {
+    if (!node || typeof node !== 'object') return undefined
+    node = (node as Record<string, unknown>)[part]
+  }
+  return typeof node === 'string' ? node : undefined
+}
+
+/**
+ * Text of the interface in the current language, from shared/languages/<lang>.json.
+ * Keys are dotted paths ("settings.title"); `{name}` placeholders are filled from `params`.
+ * Falls back to the other language, then to the key itself. Reading `lang` keeps templates reactive.
+ */
+export function t(key: string, params?: Record<string, string | number>): string {
+  const other: Lang = lang.value === 'vn' ? 'en' : 'vn'
+  const text = lookup(dictionaries[lang.value], key) ?? lookup(dictionaries[other], key) ?? key
+  return params ? text.replace(/\{(\w+)\}/g, (_, name: string) => String(params[name] ?? `{${name}}`)) : text
+}

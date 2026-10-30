@@ -6,6 +6,6 @@ export const plannerRoutes: RouteRecordRaw[] = [
     path: '/planner',
     name: 'planner',
     component: () => import('./PlannerView.vue'),
-    meta: { title: 'Kế hoạch tuần', tab: { label: 'Lịch', icon: ICONS.calendarWeek, order: 2 } },
+    meta: { title: 'nav.planner', tab: { label: 'nav.plannerTab', icon: ICONS.calendarWeek, order: 2 } },
   },
 ]

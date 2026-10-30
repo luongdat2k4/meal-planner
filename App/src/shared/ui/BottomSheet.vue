@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, watch } from 'vue'
 import { Icon } from '@iconify/vue'
+import { t } from '../i18n'
 import { ICONS } from '../icons'
 
 defineProps<{ title: string }>()
@@ -30,7 +31,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
       >
         <div class="mb-4 flex items-center justify-between">
           <h2 class="text-lg font-bold">{{ title }}</h2>
-          <button type="button" class="rounded-full p-1 text-gray-500 hover:bg-gray-200" aria-label="Đóng" @click="open = false">
+          <button type="button" class="rounded-full p-1 text-gray-500 hover:bg-gray-200" :aria-label="t('ui.close')" @click="open = false">
             <Icon :icon="ICONS.close" class="text-2xl" />
           </button>
         </div>

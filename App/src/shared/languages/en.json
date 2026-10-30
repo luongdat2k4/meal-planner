@@ -1,0 +1,419 @@
+{
+  "day": {
+    "long": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ],
+    "short": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ]
+  },
+  "meal": {
+    "favorite": "Favorite",
+    "unfavorite": "Remove from favorites",
+    "back": "Back",
+    "level": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "macro": {
+      "energy": "Energy",
+      "protein": "Protein",
+      "carbs": "Carbs",
+      "fat": "Fat"
+    },
+    "steps": {
+      "progress": "{done}/{total} steps done"
+    },
+    "ingredients": {
+      "addAria": "Add {name} to shopping list"
+    },
+    "chips": {
+      "all": "All",
+      "favorites": "♥ Favorites"
+    },
+    "search": {
+      "placeholder": "Search meals..."
+    },
+    "list": {
+      "suggested": "Suggested for you",
+      "recent": "Recently viewed",
+      "popular": "Popular meals",
+      "results": "Results",
+      "count": "{count} meals",
+      "empty": "No matching meals found."
+    },
+    "toast": {
+      "added": "Added {name} to your shopping list",
+      "exists": "{name} is already on the list",
+      "addedMany": "Added {count} ingredients to your shopping list",
+      "existsMany": "These ingredients are already on the list",
+      "addedToDay": "Added to {day}",
+      "viewPlan": "View plan"
+    },
+    "detail": {
+      "protein": "Protein: {value} g",
+      "carbs": "Carbs: {value} g",
+      "fat": "Fat: {value} g",
+      "mayContain": "⚠️ May contain: {list}",
+      "sampleNotice": "The recipe, nutrition and ingredients below are sample data, not real data.",
+      "prep": "Prep",
+      "cook": "Cook",
+      "level": "Level",
+      "servings": "Servings",
+      "estCost": "Estimated cost",
+      "nutrition": "Nutrition per serving",
+      "ingredients": "Ingredients",
+      "addAll": "Add all",
+      "method": "Method",
+      "yours": "Yours",
+      "cooked": "Cooked this meal",
+      "markCooked": "Mark as cooked",
+      "rating": "Rating",
+      "dislike": "Dislike this meal",
+      "dislikeHint": "It won't be suggested in automatic plans.",
+      "note": "Notes",
+      "notePlaceholder": "e.g. less spicy, add spring onion...",
+      "addToPlan": "Add to plan",
+      "addToDay": "Add to {day}",
+      "notFound": "Meal not found.",
+      "backToList": "Back to meals"
+    }
+  },
+  "household": {
+    "you": "You",
+    "demoNotice": "Demo: members and invites are sample data on this device and are not really shared.",
+    "members": "Members",
+    "owner": "Owner",
+    "member": "Member",
+    "memberN": "Member {n}",
+    "removeMember": "Remove {name} from the household",
+    "sharedNote": "All members share the weekly plan and the shopping list.",
+    "invite": "Invite family",
+    "full": "Your family plan is full ({max}/{max} members). Remove someone to invite more.",
+    "yourCode": "Your invite code",
+    "copy": "Copy",
+    "share": "Share",
+    "newCode": "New code",
+    "addDemo": "Add sample member (demo)",
+    "haveCode": "Have an invite code?",
+    "join": "Join",
+    "disband": "Disband household",
+    "leave": "Leave household",
+    "shareText": "Join my household on Mise with code {code}",
+    "invalidCode": "Invalid code. Codes look like MISE-XXXXXX.",
+    "confirmLeave": "Leave this household?",
+    "toast": {
+      "codeCopied": "Invite code copied",
+      "copyFailed": "Can't copy on this device",
+      "inviteCopied": "Invite copied",
+      "joined": "Joined the household (demo)",
+      "left": "Left the household"
+    }
+  },
+  "premium": {
+    "tagline": "Plan smarter every week",
+    "currentPlan": "Current plan",
+    "trialLeft": "{days} days left in your free trial.",
+    "trialEnded": "Your trial has ended.",
+    "manage": "Manage plan",
+    "restore": "Restore",
+    "choosePlan": "Choose a plan",
+    "perMonth": "/month",
+    "maxUsers": "Up to {count} users",
+    "startTrial": "Start {days}-day free trial",
+    "demoNotice": "Demo: no real payments.",
+    "restorePurchase": "Restore purchases",
+    "cancelPrompt": "Want to cancel your plan? Tell us why so we can improve (optional).",
+    "cancelPlan": "Cancel plan",
+    "toast": {
+      "trialStarted": "{days}-day trial started (demo)",
+      "restored": "Your plan was restored",
+      "nothingToRestore": "No purchases found to restore",
+      "cancelled": "Plan cancelled (demo)"
+    },
+    "plans": {
+      "individual": {
+        "name": "Individual",
+        "perk1": "Unlimited plan creation",
+        "perk2": "Sync across devices"
+      },
+      "family": {
+        "name": "Family",
+        "badge": "Popular",
+        "perk1": "Everything in Individual",
+        "perk2": "Share plans with up to 5 people"
+      }
+    },
+    "benefits": {
+      "b1": "Unlimited automatic plan generation and regeneration",
+      "b2": "Swap meals to your taste anytime",
+      "b3": "Detailed nutrition for every meal",
+      "b4": "Sync and restore your data across devices"
+    },
+    "reasons": {
+      "r1": "Too expensive",
+      "r2": "Rarely use it",
+      "r3": "Missing meals I like",
+      "r4": "Other reason"
+    }
+  },
+  "ui": {
+    "close": "Close",
+    "decrease": "Decrease",
+    "increase": "Increase",
+    "rating": "Rating",
+    "stars": "{n} stars"
+  },
+  "format": {
+    "minutes": "{count} min",
+    "hours": "{count} h",
+    "hoursMinutes": "{hours} h {minutes} min"
+  },
+  "app": {
+    "dbError": "Could not open the app's data. Please reload the page."
+  },
+  "nav": {
+    "home": "Home",
+    "household": "Household",
+    "ingredients": "Ingredients",
+    "meals": "Meals",
+    "mealDetail": "Meal details",
+    "onboarding": "Welcome",
+    "planner": "Weekly plan",
+    "plannerTab": "Plan",
+    "setup": "Setup",
+    "preferences": "Food preferences",
+    "premium": "Premium",
+    "settings": "Settings",
+    "shopping": "Shopping list",
+    "shoppingTab": "Shopping",
+    "back": "Back",
+    "profile": "Profile and settings",
+    "quickSuggest": "Quick suggestions"
+  },
+  "planner": {
+    "summary": {
+      "cost": "Estimated cost",
+      "budget": "Weekly budget",
+      "over": "Over budget by {amount}.",
+      "emptyTitle": "No plan for this week yet",
+      "emptyHintBefore": "Generate one from your preferences, or",
+      "emptyHintLink": "edit preferences"
+    },
+    "generating": "Generating...",
+    "regenerate": "Regenerate",
+    "generate": "Auto-generate plan",
+    "shop": "Shop",
+    "clearDay": "Clear day",
+    "swap": "Swap meal",
+    "removeFromPlan": "Remove from plan",
+    "noMealsForDay": "No meals planned for {day}.",
+    "pickMeals": "Pick meals",
+    "noSwapOptions": "No replacement meals match your preferences.",
+    "toast": {
+      "generated": "New plan created",
+      "addedToShopping": "Added {count} ingredients to your shopping list",
+      "shoppingUpToDate": "Your shopping list already has all ingredients",
+      "swapped": "Meal swapped"
+    },
+    "quick": {
+      "title": "Quick suggestions",
+      "intro": "Based on your diet, allergies, budget and cooking time.",
+      "regenerateWeek": "Regenerate weekly plan",
+      "generateWeek": "Generate weekly plan",
+      "confirmReplace": "This will replace your current plan. Tap again to confirm.",
+      "pickDays": "Pick meals for the days you cook",
+      "suggestOne": "Suggest a meal",
+      "suggestOneHint": "See a meal that suits you right now",
+      "editPrefs": "Edit preferences",
+      "editPrefsHint": "Household size, diet, budget...",
+      "weekGenerated": "New weekly plan created",
+      "noSuggestion": "Couldn't find a meal that matches your preferences"
+    }
+  },
+  "shopping": {
+    "store": "Supermarket",
+    "noStore": "Not selected",
+    "searchStore": "Search supermarkets...",
+    "clearStore": "Clear",
+    "noStoreMatch": "No matching supermarkets.",
+    "addPlaceholder": "Add an item to buy...",
+    "add": "Add",
+    "fromPlan": "Import from plan",
+    "copy": "Copy",
+    "pickFromIngredients": "Pick from ingredients",
+    "bought": "Bought {checked}/{total}",
+    "clearBought": "Clear bought",
+    "uncheck": "Unmark",
+    "check": "Mark as bought",
+    "remove": "Remove",
+    "empty": "Your shopping list is empty.",
+    "copyHeader": "Shopping list",
+    "toast": {
+      "importedFromPlan": "Added {count} ingredients from your weekly plan",
+      "planUpToDate": "Your list already has all plan ingredients",
+      "nothingToBuy": "Nothing left to buy",
+      "copied": "List copied",
+      "copyFailed": "Can't copy on this device"
+    }
+  },
+  "ingredients": {
+    "search": "Search ingredients...",
+    "count": "{count} ingredients",
+    "inList": "Already on your shopping list",
+    "addToList": "Add {name} to shopping list",
+    "notFound": "No matching ingredients found."
+  },
+  "home": {
+    "greeting": "Hello there 👋",
+    "titleLine1": "What to eat",
+    "titleLine2": "today?",
+    "search": "Search meals...",
+    "weekGlance": "This week at a glance",
+    "tilePlan": "Plan",
+    "tilePlanHint": "meals this week",
+    "tileFavorites": "Favorites",
+    "tileFavoritesHint": "saved meals",
+    "tileShopping": "Shopping",
+    "tileShoppingHint": "items to buy",
+    "todayPlan": "Today's plan",
+    "viewAll": "View all",
+    "noMealsToday": "You have no meals planned for today.",
+    "makePlan": "Make a plan"
+  },
+  "setup": {
+    "back": "Back",
+    "skip": "Skip",
+    "continue": "Continue",
+    "create": "Create my plan",
+    "generating": "Creating your plan...",
+    "ready": "Your weekly plan is ready",
+    "steps": {
+      "household": {
+        "title": "How many people are you cooking for?",
+        "subtitle": "Used to calculate portions and cost."
+      },
+      "diet": {
+        "title": "Diet and allergies",
+        "subtitle": "Unsuitable meals won't be suggested."
+      },
+      "taste": {
+        "title": "Your taste",
+        "subtitle": "Pick your favorite proteins and the longest cooking time."
+      },
+      "schedule": {
+        "title": "Cooking schedule and budget",
+        "subtitle": "Choose the days you want to cook this week."
+      },
+      "reminder": {
+        "title": "Planning reminder",
+        "subtitle": "Get a weekly reminder so you never miss it."
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "Plan regenerated with your new preferences",
+    "intro": "Changes are saved automatically. Regenerate your plan to apply new preferences.",
+    "household": "Household size",
+    "diet": "Diet",
+    "taste": "Taste",
+    "schedule": "Cooking schedule and budget",
+    "reminder": "Reminder",
+    "generating": "Creating...",
+    "save": "Save and regenerate plan",
+    "cookTime": {
+      "15": "≤ 15 min",
+      "30": "≤ 30 min",
+      "45": "≤ 45 min",
+      "60": "≤ 1 hour",
+      "90": "No limit"
+    },
+    "fieldDiet": {
+      "diet": "Diet",
+      "allergy": "Allergies"
+    },
+    "fieldHousehold": {
+      "note": "{people} people eat each meal. Portions and cost are multiplied by this number."
+    },
+    "fieldReminder": {
+      "title": "Remind me to plan every week",
+      "subtitle": "One reminder on the day and time you choose.",
+      "toggle": "Weekly planning reminder",
+      "day": "Reminder day",
+      "time": "Reminder time",
+      "demo": "Demo: reminders are not actually sent to your device."
+    },
+    "fieldSchedule": {
+      "days": "Days you cook",
+      "minDay": "Please select at least one day.",
+      "budget": "Weekly budget",
+      "perPerson": "About {amount} per person per meal."
+    },
+    "fieldTaste": {
+      "protein": "Which proteins do you like?",
+      "anyNote": "Selecting nothing means any meal is fine.",
+      "maxTime": "Maximum cooking time"
+    }
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "continue": "Continue",
+    "start": "Get started",
+    "pages": "Intro pages",
+    "page": "Page {n}",
+    "slides": {
+      "suggest": {
+        "title": "Meals that match your taste",
+        "text": "Choose your diet, allergies and favorite proteins. The app picks the meals that suit you.",
+        "chip": "Made for you"
+      },
+      "plan": {
+        "title": "A weekly plan in seconds",
+        "text": "Build a plan around your budget and cooking time, and swap meals with one tap.",
+        "chip": "Whole week ready"
+      },
+      "shop": {
+        "title": "Tidy grocery shopping",
+        "text": "The week's ingredients are gathered into one list. Pick a store and tick items off as you buy.",
+        "chip": "One single list"
+      }
+    }
+  },
+  "settings": {
+    "preferenceSummary": "{people} people · {days} cooking days · {budget}/week",
+    "reminderOn": "{day} at {time}",
+    "reminderOff": "Off",
+    "premiumLocked": "Unlock all features",
+    "premiumPlan": "{plan} plan",
+    "trialLeft": " · {days} days of trial left",
+    "stats": {
+      "meals": "Meals",
+      "ingredients": "Ingredients",
+      "stores": "Stores",
+      "planned": "Planned meals"
+    },
+    "resetConfirm": "Delete all data on this device (plan, shopping, favorites, preferences)?",
+    "resetDone": "Data deleted",
+    "preferences": "Food preferences",
+    "household": "Household",
+    "members": "{count}/{max} members",
+    "language": "Language",
+    "languageSubtitle": "Interface, meal names, ingredients and cooking steps",
+    "reminder": "Planning reminder",
+    "reminderToggle": "Weekly planning reminder",
+    "reset": "Delete data on this device"
+  }
+}

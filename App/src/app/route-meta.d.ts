@@ -3,6 +3,7 @@ import type { RouteLocationRaw } from 'vue-router'
 
 declare module 'vue-router' {
   interface RouteMeta {
+    // Translation key (shared/languages) of the page title.
     title?: string
     // Present on routes shown in the bottom tab bar.
     tab?: { label: string; icon: IconifyIcon; order: number }
