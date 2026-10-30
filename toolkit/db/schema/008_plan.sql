@@ -10,7 +10,7 @@ CREATE TABLE plan_item (
   week_start TEXT NOT NULL REFERENCES plan(week_start) ON DELETE CASCADE,
   weekday    INTEGER NOT NULL CHECK (weekday BETWEEN 1 AND 7),
   position   INTEGER NOT NULL DEFAULT 0,
-  meal_id    TEXT NOT NULL REFERENCES meal(id),
+  meal_slug    TEXT NOT NULL REFERENCES meal(slug) ON UPDATE CASCADE,
   servings   REAL NOT NULL
 );
 CREATE INDEX idx_plan_item_week ON plan_item(week_start, weekday, position);

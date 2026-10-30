@@ -12,7 +12,7 @@ Chia hai tầng:
 
 1. **Catalog không có cột chữ nào.** Không bảng nào có `title`, `name`, `label`. Mọi chuỗi hiển thị nằm trong `language`.
 2. **`slug` của bảng catalog chính là `language.key`.** Không có cột `title_key`, không có tiền tố `meal.`/`ingredient.`. Ví dụ món `steak` → dòng `language` có `key = 'steak'`.
-3. Mỗi bảng catalog giữ `id uuid` làm khóa chính kỹ thuật để join nội bộ; `slug` unique là danh tính nghiệp vụ và là khóa dịch.
+3. Mỗi bảng catalog giữ `id uuid` chỉ để định danh dòng trong chính bảng đó. **Mọi khóa ngoại trỏ bằng `slug`** (`meal.category_slug`, `meal_ingredient.meal_slug`, `plan_item.meal_slug`...), không bằng `id`: đọc dữ liệu là biết món nào, nguyên liệu nào, dễ debug và khớp với file mock-data. `slug` unique là danh tính nghiệp vụ và là khóa dịch; FK khai `on update cascade` để đổi slug thì các bảng con đi theo.
 4. Quy tắc suy ra khóa:
 
 | Nội dung | Khóa trong `language` | Ví dụ |
@@ -31,9 +31,10 @@ Chỉ bước nấu có hậu tố — vì một món có nhiều bước, khôn
 ## Catalog — 5 bảng
 
 ```sql
--- Bảng duy nhất chứa chữ hiển thị. `key` là khóa chính, không có uuid.
+-- Bảng duy nhất chứa chữ hiển thị. `key` unique là danh tính; `id` chỉ định danh dòng.
 create table language (
-  key text primary key,
+  id  uuid primary key default gen_random_uuid(),
+  key text not null unique,
   en  text,
   vn  text
 );
@@ -57,7 +58,7 @@ create table ingredient (
 create table meal (
   id            uuid primary key default gen_random_uuid(),
   slug          text not null unique,   -- 'steak', '15minutecheeseburgerpasta'
-  category_id   uuid references category(id),
+  category_slug   text references category(slug) on update cascade,
   image         text,
   base_servings smallint not null default 2,
   prep_minutes  smallint not null,
@@ -77,11 +78,11 @@ create table meal (
 );
 
 create table meal_ingredient (
-  meal_id       uuid not null references meal(id) on delete cascade,
-  ingredient_id uuid not null references ingredient(id),
+  meal_slug       text not null references meal(slug) on delete cascade on update cascade,
+  ingredient_slug text not null references ingredient(slug) on update cascade,
   amount        numeric(10,3) not null,   -- cho meal.base_servings
   unit          text not null,            -- 'g','ml','tbsp','piece'
-  primary key (meal_id, ingredient_id)
+  primary key (meal_slug, ingredient_slug)
 );
 ```
 
@@ -96,7 +97,7 @@ create table preference (              -- đúng 1 dòng duy nhất
   dietary_ids       text[] not null default '{}',   -- slug: {'dairyfree'}
   allergen_ids      text[] not null default '{}',   -- slug: {'milk'}
   protein_likes     text[] not null default '{}',   -- slug
-  disliked_meal_ids uuid[] not null default '{}',
+  disliked_meal_slugs text[] not null default '{}',
   cooking_days      smallint[] not null default '{1,2,3,4,5}',
   max_cook_minutes  smallint,
   weekly_budget     numeric(10,2),
@@ -104,7 +105,7 @@ create table preference (              -- đúng 1 dòng duy nhất
 );
 
 create table meal_activity (           -- lưu / chấm điểm / ghi chú / đã nấu / xem gần đây
-  meal_id        uuid primary key references meal(id) on delete cascade,
+  meal_slug        text primary key references meal(id) on delete cascade,
   is_saved       boolean not null default false,
   is_disliked    boolean not null default false,
   rating         smallint check (rating between 1 and 5),
@@ -124,14 +125,14 @@ create table plan_item (
   week_start date not null references plan(week_start) on delete cascade,
   weekday    smallint not null check (weekday between 1 and 7),
   position   smallint not null default 0,
-  meal_id    uuid not null references meal(id),
+  meal_slug    text not null references meal(slug) on update cascade,
   servings   numeric(4,1) not null
 );
 
 create table shopping_item (
   id            uuid primary key default gen_random_uuid(),
   week_start    date,
-  ingredient_id uuid references ingredient(id),   -- null = nhập tay
+  ingredient_slug text references ingredient(slug) on update cascade,   -- null = nhập tay
   label         text not null,                    -- chữ nhập tay; dòng từ plan để trống, đọc qua slug
   quantity      numeric(12,3),
   unit          text,
@@ -155,7 +156,7 @@ join plan_item → meal_ingredient
 quantity = meal_ingredient.amount × (plan_item.servings / meal.base_servings)
 ```
 
-Bỏ qua `ingredient.is_pantry = true`, rồi upsert theo `(week_start, ingredient_id, unit)`.
+Bỏ qua `ingredient.is_pantry = true`, rồi upsert theo `(week_start, ingredient_slug, unit)`.
 
 ## Thứ tự seed
 
@@ -165,16 +166,17 @@ Bỏ qua `ingredient.is_pantry = true`, rồi upsert theo `(week_start, ingredie
 
 ```mermaid
 erDiagram
-  category ||--o{ meal : "category_id"
-  meal ||--o{ meal_ingredient : "meal_id"
-  ingredient ||--o{ meal_ingredient : "ingredient_id"
-  meal ||--o| meal_activity : "meal_id"
-  meal ||--o{ plan_item : "meal_id"
+  category ||--o{ meal : "category_slug"
+  meal ||--o{ meal_ingredient : "meal_slug"
+  ingredient ||--o{ meal_ingredient : "ingredient_slug"
+  meal ||--o| meal_activity : "meal_slug"
+  meal ||--o{ plan_item : "meal_slug"
   plan ||--o{ plan_item : "week_start"
-  ingredient ||--o{ shopping_item : "ingredient_id"
+  ingredient ||--o{ shopping_item : "ingredient_slug"
 
   language {
-    text key PK
+    uuid id PK
+    text key UK
     text en
     text vn
   }
@@ -198,7 +200,7 @@ erDiagram
   meal {
     uuid id PK
     text slug UK
-    uuid category_id FK
+    text category_slug FK
     text image
     smallint base_servings
     smallint prep_minutes
@@ -215,8 +217,8 @@ erDiagram
   }
 
   meal_ingredient {
-    uuid meal_id PK
-    uuid ingredient_id PK
+    text meal_slug PK
+    text ingredient_slug PK
     numeric amount
     text unit
   }
@@ -227,7 +229,7 @@ erDiagram
     text_array dietary_ids
     text_array allergen_ids
     text_array protein_likes
-    uuid_array disliked_meal_ids
+    text_array disliked_meal_slugs
     smallint_array cooking_days
     smallint max_cook_minutes
     numeric weekly_budget
@@ -235,7 +237,7 @@ erDiagram
   }
 
   meal_activity {
-    uuid meal_id PK
+    text meal_slug PK
     boolean is_saved
     boolean is_disliked
     smallint rating
@@ -255,14 +257,14 @@ erDiagram
     date week_start FK
     smallint weekday
     smallint position
-    uuid meal_id FK
+    text meal_slug FK
     numeric servings
   }
 
   shopping_item {
     uuid id PK
     date week_start
-    uuid ingredient_id FK
+    text ingredient_slug FK
     text label
     numeric quantity
     text unit
@@ -297,11 +299,11 @@ Trong `meal`, bốn cột biến đổi có vai trò riêng:
 
 | Bảng | Vai trò | Ghi khi nào |
 |---|---|---|
-| `preference` | Toàn bộ câu trả lời onboarding/sở thích của người dùng, đúng 1 dòng. Là đầu vào của thuật toán tạo kế hoạch: số người ăn → khẩu phần, `cooking_days` → chọn ngày, `max_cook_minutes` + `dietary_ids` + `allergen_ids` + `protein_likes` → lọc ứng viên, `weekly_budget` → chặn món quá đắt, `disliked_meal_ids` → loại hẳn. | Mỗi lần người dùng sửa sở thích |
+| `preference` | Toàn bộ câu trả lời onboarding/sở thích của người dùng, đúng 1 dòng. Là đầu vào của thuật toán tạo kế hoạch: số người ăn → khẩu phần, `cooking_days` → chọn ngày, `max_cook_minutes` + `dietary_ids` + `allergen_ids` + `protein_likes` → lọc ứng viên, `weekly_budget` → chặn món quá đắt, `disliked_meal_slugs` → loại hẳn. | Mỗi lần người dùng sửa sở thích |
 | `meal_activity` | Trạng thái riêng của người dùng với từng món, gộp 6 chức năng vào 1 dòng/món: lưu, không thích, chấm điểm, ghi chú, lần nấu cuối, lần xem cuối. `last_viewed_at` phục vụ "xem gần đây", `last_cooked_at` phục vụ "tránh lặp món". | Khi mở chi tiết món, chấm sao, viết ghi chú, đánh dấu đã nấu |
 | `plan` | Một tuần, khóa chính là `week_start` (thứ 2). Giữ khẩu phần và ngân sách ở cấp tuần; `week_start` lớn nhất = tuần hiện tại. | Khi tạo kế hoạch tuần hoặc đổi khẩu phần |
 | `plan_item` | Các món trong tuần: ngày nào, vị trí nào, khẩu phần riêng từng món. `position` giữ thứ tự để kéo thả và để "đổi món" biết thay đúng chỗ. | Khi thêm / xóa / đổi món |
-| `shopping_item` | Danh sách đi chợ. Hai nguồn: sinh tự động từ `plan_item` (có `ingredient_id`) và nhập tay (không có, dùng `label`). `checked` là tiến độ mua; `store_id` chỉ là lựa chọn hiển thị. Nhờ chỉ lưu món đã gom chứ không lưu kế hoạch, người dùng vẫn sửa tay được danh sách mà không bị sinh lại đè lên. | Khi mở danh sách tuần, tick mua, thêm tay |
+| `shopping_item` | Danh sách đi chợ. Hai nguồn: sinh tự động từ `plan_item` (có `ingredient_slug`) và nhập tay (không có, dùng `label`). `checked` là tiến độ mua; `store_id` chỉ là lựa chọn hiển thị. Nhờ chỉ lưu món đã gom chứ không lưu kế hoạch, người dùng vẫn sửa tay được danh sách mà không bị sinh lại đè lên. | Khi mở danh sách tuần, tick mua, thêm tay |
 
 ### Bảng nào dùng khi làm gì
 
@@ -318,7 +320,6 @@ Trong `meal`, bốn cột biến đổi có vai trò riêng:
 
 | Bỏ | Lý do |
 |---|---|
-| `language.id` uuid | `key` đã là khóa chính; thêm uuid không ai tham chiếu |
 | Cột `title` / `name` / `label` ở mọi bảng | Chữ nằm trong `language`, tra bằng `slug` |
 | Bảng `user`, `household`, `subscription`, `push_token` | Một tài khoản, không có backend chia sẻ/thu phí |
 | Bảng `store` | 129 siêu thị chỉ để hiển thị → giữ JSON tĩnh ở `App/src/features/shopping/data/stores.json` |

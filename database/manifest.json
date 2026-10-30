@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
-  "catalogVersion": "2026-10-30.2",
-  "generatedAt": "2026-10-30T09:50:17.582Z",
+  "catalogVersion": "2026-10-30.5",
+  "generatedAt": "2026-10-30T10:26:28.612Z",
   "dbFiles": [
     {
       "name": "catalog/catalog.db",
@@ -13,8 +13,8 @@
         "meal",
         "meal_ingredient"
       ],
-      "sha256": "52131e1ca17221e84801b6bfef4f3e407ca870081c955d1c1cb61161d9612547",
-      "sizeBytes": 69632
+      "sha256": "25263edd7d1d14bd08238709af912b824b08ea2758942580d45a30d0483ef454",
+      "sizeBytes": 2023424
     },
     {
       "name": "runtime-template.db",
@@ -26,7 +26,7 @@
         "plan_item",
         "shopping_item"
       ],
-      "sha256": "d85b44b9b429e437b3d71ca45eaf6e401e8983a0a7d684227ba8578c0ead3f47",
+      "sha256": "f509b47d20a69df50b92ad6d4b59991264487c340efea19082225abbe5eb3cd8",
       "sizeBytes": 53248
     }
   ],
