@@ -2,8 +2,7 @@ import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
-// Relative base so the built bundle also loads inside the Capacitor WebView.
+// Absolute base: assets must resolve from nested routes like /meals/:id.
 export default defineConfig({
-  base: './',
   plugins: [vue(), tailwindcss()],
 })

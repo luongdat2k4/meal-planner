@@ -13,7 +13,8 @@
     "@capacitor/core": "^8.6.0",
     "@iconify-icons/mdi": "^2.0.0",
     "@iconify/vue": "^5.0.4",
-    "vue": "^3.5.44"
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.6.0",
