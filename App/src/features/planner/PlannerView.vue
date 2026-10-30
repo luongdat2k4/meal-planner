@@ -3,17 +3,27 @@ import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
 import { assetUrl } from '../../shared/assets'
+import { formatMinutes, formatVnd } from '../../shared/format'
 import { ICONS } from '../../shared/icons'
+import { showToast } from '../../shared/toast'
+import BottomSheet from '../../shared/ui/BottomSheet.vue'
 import ChipTabs from '../../shared/ui/ChipTabs.vue'
-import { MEALS, getMeal } from '../meals'
+import { MEALS, getMeal, getRecipe, type Meal } from '../meals'
+import { usePreferences } from '../preferences'
+import { useShopping } from '../shopping'
+import { planCost, regeneratePlan, swapCandidates } from './generatePlan'
+import { planIngredientLabels } from './planIngredients'
 import { DAY_NAMES } from './types'
 import { usePlanner } from './usePlanner'
 
-const { state, addMealToDay, removeMealFromDay, clearDay } = usePlanner()
+const { state, plannedMealCount, addMealToDay, removeMealFromDay, replaceMeal, clearDay } = usePlanner()
+const { state: prefs } = usePreferences()
+const { addManyShoppingItems } = useShopping()
 
 // Open on today (Monday = 0).
 const activeDay = ref(String((new Date().getDay() + 6) % 7))
 const pendingMeal = ref('')
+const generating = ref(false)
 
 const dayIndex = computed(() => Number(activeDay.value))
 const dayOptions = computed(() =>
@@ -26,15 +36,108 @@ const dayMeals = computed(() =>
   (state.plan[dayIndex.value] ?? []).map((mealId, index) => ({ index, mealId, meal: getMeal(mealId) })),
 )
 
-function add() {
+const cost = computed(() => planCost(state.plan, prefs.householdSize))
+const budgetRatio = computed(() => (prefs.weeklyBudget ? Math.min(cost.value / prefs.weeklyBudget, 1) : 0))
+const overBudget = computed(() => cost.value > prefs.weeklyBudget)
+
+const priceOf = (mealId: string) => (getRecipe(mealId)?.pricePerServing ?? 0) * prefs.householdSize
+const minutesOf = (mealId: string) => {
+  const recipe = getRecipe(mealId)
+  return recipe ? recipe.prepMinutes + recipe.cookMinutes : 0
+}
+
+async function generate() {
+  generating.value = true
+  await new Promise((resolve) => setTimeout(resolve, 600))
+  regeneratePlan()
+  generating.value = false
+  const firstDay = Object.keys(state.plan)[0]
+  if (firstDay !== undefined) activeDay.value = firstDay
+  showToast('Đã tạo kế hoạch mới')
+}
+
+function addToShopping() {
+  const added = addManyShoppingItems(planIngredientLabels())
+  showToast(added ? `Đã thêm ${added} nguyên liệu vào danh sách đi chợ` : 'Danh sách đi chợ đã có đủ nguyên liệu')
+}
+
+function addQuick() {
   if (!pendingMeal.value) return
   addMealToDay(dayIndex.value, pendingMeal.value)
   pendingMeal.value = ''
+}
+
+const swapTarget = ref<{ day: number; index: number; mealId: string } | null>(null)
+const swapOptions = ref<Meal[]>([])
+const swapOpen = computed({
+  get: () => swapTarget.value !== null,
+  set: (open: boolean) => {
+    if (!open) swapTarget.value = null
+  },
+})
+
+function openSwap(index: number, mealId: string) {
+  swapOptions.value = swapCandidates(mealId)
+  swapTarget.value = { day: dayIndex.value, index, mealId }
+}
+
+function applySwap(newMealId: string) {
+  if (!swapTarget.value) return
+  replaceMeal(swapTarget.value.day, swapTarget.value.index, newMealId)
+  swapTarget.value = null
+  showToast('Đã đổi món')
 }
 </script>
 
 <template>
   <section class="space-y-4">
+    <!-- Week summary -->
+    <div class="space-y-4 rounded-3xl bg-white p-5 shadow-card">
+      <template v-if="plannedMealCount">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-gray-500">Chi phí ước tính</p>
+            <p class="text-2xl font-bold" :class="overBudget ? 'text-red-600' : ''">{{ formatVnd(cost) }}</p>
+          </div>
+          <div class="text-right">
+            <p class="text-sm text-gray-500">Ngân sách tuần</p>
+            <p class="font-semibold">{{ formatVnd(prefs.weeklyBudget) }}</p>
+          </div>
+        </div>
+        <div class="h-2 overflow-hidden rounded-full bg-gray-200">
+          <div class="h-full rounded-full transition-all" :class="overBudget ? 'bg-red-500' : 'bg-brand'" :style="{ width: `${budgetRatio * 100}%` }" />
+        </div>
+        <p v-if="overBudget" class="text-sm text-red-600">Vượt ngân sách {{ formatVnd(cost - prefs.weeklyBudget) }}.</p>
+      </template>
+      <div v-else>
+        <p class="font-semibold">Chưa có kế hoạch cho tuần này</p>
+        <p class="text-sm text-gray-500">
+          Tạo tự động theo sở thích của bạn, hoặc
+          <RouterLink :to="{ name: 'preferences' }" class="font-medium text-brand">chỉnh sở thích</RouterLink>.
+        </p>
+      </div>
+
+      <div class="flex gap-2">
+        <button
+          type="button"
+          class="flex flex-1 items-center justify-center gap-2 rounded-full bg-brand py-3 text-sm font-semibold text-white shadow-md shadow-brand/30 transition active:scale-[0.98] disabled:opacity-50"
+          :disabled="generating || !prefs.cookingDays.length"
+          @click="generate"
+        >
+          <Icon :icon="ICONS.autoFix" class="text-lg" />
+          {{ generating ? 'Đang tạo...' : plannedMealCount ? 'Tạo lại' : 'Tạo kế hoạch tự động' }}
+        </button>
+        <button
+          v-if="plannedMealCount"
+          type="button"
+          class="flex items-center justify-center gap-2 rounded-full bg-brand-soft px-4 py-3 text-sm font-semibold text-brand transition active:scale-[0.98]"
+          @click="addToShopping"
+        >
+          <Icon :icon="ICONS.cart" class="text-lg" /> Đi chợ
+        </button>
+      </div>
+    </div>
+
     <ChipTabs v-model="activeDay" :options="dayOptions" />
 
     <div class="flex items-center justify-between">
@@ -45,15 +148,8 @@ function add() {
     </div>
 
     <ul v-if="dayMeals.length" class="space-y-3">
-      <li
-        v-for="item in dayMeals"
-        :key="`${item.mealId}-${item.index}`"
-        class="flex items-center gap-3 rounded-3xl bg-white p-3 shadow-card"
-      >
-        <RouterLink
-          :to="{ name: 'meal-detail', params: { id: item.mealId } }"
-          class="flex min-w-0 flex-1 items-center gap-3"
-        >
+      <li v-for="item in dayMeals" :key="`${item.mealId}-${item.index}`" class="flex items-center gap-3 rounded-3xl bg-white p-3 shadow-card">
+        <RouterLink :to="{ name: 'meal-detail', params: { id: item.mealId } }" class="flex min-w-0 flex-1 items-center gap-3">
           <img
             v-if="item.meal"
             :src="assetUrl(item.meal.image)"
@@ -61,8 +157,19 @@ function add() {
             loading="lazy"
             class="h-16 w-16 shrink-0 rounded-2xl object-cover"
           />
-          <span class="line-clamp-2 text-sm font-semibold leading-snug">{{ item.meal?.title ?? item.mealId }}</span>
+          <span class="min-w-0">
+            <span class="line-clamp-2 block text-sm font-semibold leading-snug">{{ item.meal?.title ?? item.mealId }}</span>
+            <span class="text-xs text-gray-500">{{ formatMinutes(minutesOf(item.mealId)) }} · {{ formatVnd(priceOf(item.mealId)) }}</span>
+          </span>
         </RouterLink>
+        <button
+          type="button"
+          class="shrink-0 rounded-full p-2 text-brand hover:bg-brand-soft"
+          aria-label="Đổi món"
+          @click="openSwap(item.index, item.mealId)"
+        >
+          <Icon :icon="ICONS.swapHorizontal" class="text-xl" />
+        </button>
         <button
           type="button"
           class="shrink-0 rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-red-600"
@@ -94,10 +201,31 @@ function add() {
         type="button"
         class="flex shrink-0 items-center gap-1 rounded-2xl bg-brand px-4 text-sm font-semibold text-white disabled:opacity-40"
         :disabled="!pendingMeal"
-        @click="add"
+        @click="addQuick"
       >
         <Icon :icon="ICONS.plus" /> Thêm
       </button>
     </div>
+
+    <!-- Swap sheet -->
+    <BottomSheet v-model="swapOpen" title="Đổi món">
+      <p v-if="!swapOptions.length" class="py-6 text-center text-gray-500">Không có món thay thế phù hợp với sở thích của bạn.</p>
+      <ul v-else class="space-y-2">
+        <li v-for="option in swapOptions" :key="option.id">
+          <button
+            type="button"
+            class="flex w-full items-center gap-3 rounded-2xl bg-white p-3 text-left shadow-card transition active:scale-[0.99]"
+            @click="applySwap(option.id)"
+          >
+            <img :src="assetUrl(option.image)" :alt="option.title" loading="lazy" class="h-14 w-14 shrink-0 rounded-xl object-cover" />
+            <span class="min-w-0 flex-1">
+              <span class="line-clamp-2 block text-sm font-semibold leading-snug">{{ option.title }}</span>
+              <span class="text-xs text-gray-500">{{ formatMinutes(minutesOf(option.id)) }} · {{ formatVnd(priceOf(option.id)) }}</span>
+            </span>
+            <Icon :icon="ICONS.swapHorizontal" class="text-xl text-brand" />
+          </button>
+        </li>
+      </ul>
+    </BottomSheet>
   </section>
 </template>

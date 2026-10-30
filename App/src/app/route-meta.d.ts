@@ -1,4 +1,5 @@
 import type { IconifyIcon } from '@iconify/vue'
+import type { RouteLocationRaw } from 'vue-router'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -7,5 +8,7 @@ declare module 'vue-router' {
     tab?: { label: string; icon: IconifyIcon; order: number; center?: boolean }
     // Hides the page header and tab bar; the screen draws its own chrome.
     fullscreen?: boolean
+    // Shows a back button in the header that links here.
+    backTo?: RouteLocationRaw
   }
 }

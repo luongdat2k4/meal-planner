@@ -1,4 +1,7 @@
 export { MEALS, getMeal } from './meals'
 export { MEAL_CATEGORIES, mealCategories } from './categories'
 export { useFavorites } from './useFavorites'
+export { useMealActivity } from './useMealActivity'
+export { METHOD_LABELS, getRecipe } from './recipe'
+export type { CookMethod, Macros, Recipe, RecipeIngredient } from './types'
 export type { Meal } from './types'

@@ -15,6 +15,20 @@ export function useShopping() {
     state.items.push({ id: crypto.randomUUID(), label: trimmed, checked: false })
   }
 
+  // Adds labels that are not already on the list; returns how many were new.
+  function addManyShoppingItems(labels: string[]): number {
+    const existing = new Set(state.items.filter((item) => !item.checked).map((item) => item.label.toLowerCase()))
+    let added = 0
+    for (const label of labels) {
+      const trimmed = label.trim()
+      if (!trimmed || existing.has(trimmed.toLowerCase())) continue
+      existing.add(trimmed.toLowerCase())
+      state.items.push({ id: crypto.randomUUID(), label: trimmed, checked: false })
+      added++
+    }
+    return added
+  }
+
   function toggleShoppingItem(id: string) {
     const item = state.items.find((i) => i.id === id)
     if (item) item.checked = !item.checked
@@ -37,5 +51,5 @@ export function useShopping() {
     state.storeId = null
   }
 
-  return { state, addShoppingItem, toggleShoppingItem, removeShoppingItem, clearCheckedItems, setStore, reset }
+  return { state, addShoppingItem, addManyShoppingItems, toggleShoppingItem, removeShoppingItem, clearCheckedItems, setStore, reset }
 }

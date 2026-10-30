@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import { RouterLink, RouterView, useRoute } from 'vue-router'
+import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
+import { ICONS } from '../shared/icons'
+import ToastHost from '../shared/ui/ToastHost.vue'
 import { tabs } from './router'
 
 const route = useRoute()
+const router = useRouter()
 const { state: shopping } = useShopping()
+
+// Until the first navigation resolves, route.meta is empty; hold the chrome back to avoid a flash.
+const ready = ref(false)
+router.isReady().then(() => {
+  ready.value = true
+})
+const showChrome = computed(() => ready.value && !route.meta.fullscreen)
 
 const pendingCount = computed(() => shopping.items.filter((item) => !item.checked).length)
 
@@ -16,11 +26,14 @@ const cachedViews = ['MealsView', 'PlannerView', 'IngredientsView', 'ShoppingVie
 
 <template>
   <div class="mx-auto flex min-h-dvh max-w-2xl flex-col">
-    <header v-if="!route.meta.fullscreen" class="px-5 pb-2 pt-[max(env(safe-area-inset-top),1.25rem)]">
+    <header v-if="showChrome" class="flex items-center gap-2 px-5 pb-2 pt-[max(env(safe-area-inset-top),1.25rem)]">
+      <RouterLink v-if="route.meta.backTo" :to="route.meta.backTo" class="-ml-2 rounded-full p-1.5 text-gray-700 hover:bg-gray-200" aria-label="Quay lại">
+        <Icon :icon="ICONS.arrowLeft" class="text-2xl" />
+      </RouterLink>
       <h1 class="text-2xl font-bold tracking-tight">{{ route.meta.title }}</h1>
     </header>
 
-    <main class="flex-1" :class="route.meta.fullscreen ? '' : 'px-5 pb-32 pt-2'">
+    <main class="flex-1" :class="showChrome ? 'px-5 pb-32 pt-2' : ''">
       <RouterView v-slot="{ Component }">
         <KeepAlive :include="cachedViews">
           <component :is="Component" />
@@ -29,7 +42,7 @@ const cachedViews = ['MealsView', 'PlannerView', 'IngredientsView', 'ShoppingVie
     </main>
 
     <nav
-      v-if="!route.meta.fullscreen"
+      v-if="showChrome"
       class="fixed inset-x-0 bottom-0 z-30 mx-auto max-w-2xl px-4 pb-[max(env(safe-area-inset-bottom),0.75rem)]"
     >
       <ul class="grid grid-cols-5 items-end rounded-[28px] bg-white px-2 shadow-[0_10px_30px_rgb(0_0_0/0.12)]">
@@ -67,5 +80,7 @@ const cachedViews = ['MealsView', 'PlannerView', 'IngredientsView', 'ShoppingVie
         </li>
       </ul>
     </nav>
+
+    <ToastHost />
   </div>
 </template>

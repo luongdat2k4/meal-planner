@@ -3,15 +3,23 @@ import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
 import { assetUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
+import { showToast } from '../../shared/toast'
+import { planIngredientLabels, usePlanner } from '../planner'
 import { STORES } from './stores'
 import { useShopping } from './useShopping'
 
-const { state, addShoppingItem, toggleShoppingItem, removeShoppingItem, clearCheckedItems, setStore } = useShopping()
+const { state, addShoppingItem, addManyShoppingItems, toggleShoppingItem, removeShoppingItem, clearCheckedItems, setStore } = useShopping()
+const { plannedMealCount } = usePlanner()
 
 const newItem = ref('')
 const pickingStore = ref(false)
+const storeQuery = ref('')
 
 const currentStore = computed(() => STORES.find((s) => s.id === state.storeId) ?? null)
+const visibleStores = computed(() => {
+  const q = storeQuery.value.trim().toLowerCase()
+  return q ? STORES.filter((store) => store.name.toLowerCase().includes(q)) : STORES
+})
 const checkedCount = computed(() => state.items.filter((i) => i.checked).length)
 const progress = computed(() => (state.items.length ? (checkedCount.value / state.items.length) * 100 : 0))
 // Items still to buy first; bought ones sink to the bottom.
@@ -25,6 +33,27 @@ function submit() {
 function pickStore(id: string | null) {
   setStore(id)
   pickingStore.value = false
+  storeQuery.value = ''
+}
+
+function importFromPlan() {
+  const added = addManyShoppingItems(planIngredientLabels())
+  showToast(added ? `Đã thêm ${added} nguyên liệu từ kế hoạch tuần` : 'Danh sách đã có đủ nguyên liệu của kế hoạch')
+}
+
+async function copyList() {
+  const lines = state.items.filter((item) => !item.checked).map((item) => `- ${item.label}`)
+  if (!lines.length) {
+    showToast('Không còn món nào cần mua')
+    return
+  }
+  const header = `Danh sách đi chợ${currentStore.value ? ` - ${currentStore.value.name}` : ''}`
+  try {
+    await navigator.clipboard.writeText([header, ...lines].join('\n'))
+    showToast('Đã sao chép danh sách')
+  } catch {
+    showToast('Không thể sao chép trên thiết bị này')
+  }
 }
 </script>
 
@@ -46,39 +75,43 @@ function pickStore(id: string | null) {
         <Icon :icon="ICONS.chevronDown" class="text-xl text-gray-400 transition" :class="pickingStore ? 'rotate-180' : ''" />
       </button>
 
-      <div v-if="pickingStore" class="mt-4 grid max-h-72 grid-cols-4 gap-2 overflow-y-auto sm:grid-cols-6">
-        <button
-          type="button"
-          class="flex flex-col items-center rounded-2xl p-2 text-xs text-gray-600 hover:bg-gray-50"
-          @click="pickStore(null)"
-        >
-          <span class="mb-1 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
-            <Icon :icon="ICONS.close" class="text-lg" />
-          </span>
-          Bỏ chọn
-        </button>
-        <button
-          v-for="store in STORES"
-          :key="store.id"
-          type="button"
-          class="flex flex-col items-center rounded-2xl p-2 text-center text-[11px] leading-tight"
-          :class="state.storeId === store.id ? 'bg-brand-soft ring-1 ring-brand' : 'hover:bg-gray-50'"
-          @click="pickStore(store.id)"
-        >
-          <img :src="assetUrl(store.logo)" :alt="store.name" loading="lazy" class="mb-1 h-10 w-10 object-contain" />
-          {{ store.name }}
-        </button>
+      <div v-if="pickingStore" class="mt-4 space-y-3">
+        <input
+          v-model="storeQuery"
+          type="search"
+          placeholder="Tìm siêu thị..."
+          class="w-full rounded-2xl bg-surface px-4 py-2.5 text-sm outline-none ring-1 ring-transparent focus:ring-brand/40"
+        />
+        <div class="grid max-h-64 grid-cols-4 gap-2 overflow-y-auto sm:grid-cols-6">
+          <button
+            type="button"
+            class="flex flex-col items-center rounded-2xl p-2 text-xs text-gray-600 hover:bg-gray-50"
+            @click="pickStore(null)"
+          >
+            <span class="mb-1 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+              <Icon :icon="ICONS.close" class="text-lg" />
+            </span>
+            Bỏ chọn
+          </button>
+          <button
+            v-for="store in visibleStores"
+            :key="store.id"
+            type="button"
+            class="flex flex-col items-center rounded-2xl p-2 text-center text-[11px] leading-tight"
+            :class="state.storeId === store.id ? 'bg-brand-soft ring-1 ring-brand' : 'hover:bg-gray-50'"
+            @click="pickStore(store.id)"
+          >
+            <img :src="assetUrl(store.logo)" :alt="store.name" loading="lazy" class="mb-1 h-10 w-10 object-contain" />
+            {{ store.name }}
+          </button>
+        </div>
+        <p v-if="!visibleStores.length" class="py-2 text-center text-sm text-gray-500">Không có siêu thị phù hợp.</p>
       </div>
     </div>
 
     <!-- Add item -->
     <form class="flex items-center gap-2 rounded-2xl bg-white p-1.5 pl-4 shadow-card" @submit.prevent="submit">
-      <input
-        v-model="newItem"
-        type="text"
-        placeholder="Thêm món cần mua..."
-        class="min-w-0 flex-1 bg-transparent py-2 outline-none"
-      />
+      <input v-model="newItem" type="text" placeholder="Thêm món cần mua..." class="min-w-0 flex-1 bg-transparent py-2 outline-none" />
       <button
         type="submit"
         class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand text-white disabled:opacity-40"
@@ -88,6 +121,26 @@ function pickStore(id: string | null) {
         <Icon :icon="ICONS.plus" class="text-2xl" />
       </button>
     </form>
+
+    <!-- Actions -->
+    <div class="flex gap-2">
+      <button
+        type="button"
+        class="flex flex-1 items-center justify-center gap-2 rounded-full bg-brand-soft py-2.5 text-sm font-semibold text-brand disabled:opacity-40"
+        :disabled="!plannedMealCount"
+        @click="importFromPlan"
+      >
+        <Icon :icon="ICONS.calendarWeek" class="text-lg" /> Lấy từ kế hoạch
+      </button>
+      <button
+        type="button"
+        class="flex flex-1 items-center justify-center gap-2 rounded-full bg-white py-2.5 text-sm font-semibold text-gray-700 shadow-card disabled:opacity-40"
+        :disabled="!state.items.length"
+        @click="copyList"
+      >
+        <Icon :icon="ICONS.contentCopy" class="text-lg" /> Sao chép
+      </button>
+    </div>
 
     <!-- Progress -->
     <div v-if="state.items.length" class="space-y-2">

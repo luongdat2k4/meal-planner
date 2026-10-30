@@ -7,14 +7,19 @@ import { ICONS } from '../../shared/icons'
 import ChipTabs from '../../shared/ui/ChipTabs.vue'
 import SearchField from '../../shared/ui/SearchField.vue'
 import { MEAL_CATEGORIES, mealCategories } from './categories'
-import { MEALS } from './meals'
+import { MEALS, getMeal } from './meals'
 import type { Meal } from './types'
 import { useFavorites } from './useFavorites'
+import { useMealActivity } from './useMealActivity'
 
 const { isFavorite, toggleFavorite } = useFavorites()
+const activity = useMealActivity()
 
 const query = ref('')
 const category = ref('all')
+
+const recentMeals = computed(() => activity.state.recent.map(getMeal).filter((meal): meal is Meal => !!meal).slice(0, 8))
+const showRecent = computed(() => category.value === 'all' && !query.value.trim() && recentMeals.value.length > 0)
 
 const chips = [
   { id: 'all', label: 'Tất cả' },
@@ -38,6 +43,18 @@ const filtered = computed(() => {
   <section class="space-y-4">
     <SearchField v-model="query" placeholder="Tìm món ăn..." />
     <ChipTabs v-model="category" :options="chips" />
+
+    <div v-if="showRecent" class="space-y-2">
+      <h2 class="font-semibold">Xem gần đây</h2>
+      <ul class="-mx-5 flex gap-3 overflow-x-auto px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <li v-for="meal in recentMeals" :key="meal.id" class="w-28 shrink-0">
+          <RouterLink :to="{ name: 'meal-detail', params: { id: meal.id } }" class="block">
+            <img :src="assetUrl(meal.image)" :alt="meal.title" loading="lazy" class="aspect-square w-28 rounded-2xl object-cover shadow-card" />
+            <span class="mt-1 line-clamp-2 block text-xs font-medium leading-snug">{{ meal.title }}</span>
+          </RouterLink>
+        </li>
+      </ul>
+    </div>
 
     <p class="text-sm text-gray-500">{{ filtered.length }} món</p>
 

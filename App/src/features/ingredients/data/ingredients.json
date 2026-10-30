@@ -1,7 +1,7 @@
 [
   {
     "id": "anchovies",
-    "name": "Anchov Ies",
+    "name": "Anchovies",
     "image": "images/assets_ingredients_anchovies.png"
   },
   {
@@ -16,7 +16,7 @@
   },
   {
     "id": "baconlardons",
-    "name": "Baconlardons",
+    "name": "Bacon Lardons",
     "image": "images/assets_ingredients_baconlardons.png"
   },
   {
@@ -41,12 +41,12 @@
   },
   {
     "id": "beansprouts",
-    "name": "Beans Prouts",
+    "name": "Bean Sprouts",
     "image": "images/assets_ingredients_beansprouts.png"
   },
   {
     "id": "beefstockcube",
-    "name": "Beef Stockcube",
+    "name": "Beef Stock Cube",
     "image": "images/assets_ingredients_beefstockcube.png"
   },
   {
@@ -66,7 +66,7 @@
   },
   {
     "id": "bombaymix",
-    "name": "Bombaymix",
+    "name": "Bombay Mix",
     "image": "images/assets_ingredients_bombaymix.png"
   },
   {
@@ -81,12 +81,12 @@
   },
   {
     "id": "brownsugar",
-    "name": "Brownsugar",
+    "name": "Brown Sugar",
     "image": "images/assets_ingredients_brownsugar.png"
   },
   {
     "id": "brusselssprouts",
-    "name": "Brusselssprouts",
+    "name": "Brussels Sprouts",
     "image": "images/assets_ingredients_brusselssprouts.png"
   },
   {
@@ -121,7 +121,7 @@
   },
   {
     "id": "castersugar",
-    "name": "Castersugar",
+    "name": "Caster Sugar",
     "image": "images/assets_ingredients_castersugar.png"
   },
   {
@@ -141,7 +141,7 @@
   },
   {
     "id": "cherrytomatoes",
-    "name": "Cherrytomatoes",
+    "name": "Cherry Tomatoes",
     "image": "images/assets_ingredients_cherrytomatoes.png"
   },
   {
@@ -151,7 +151,7 @@
   },
   {
     "id": "chickenstockcube",
-    "name": "Chicken Stockcube",
+    "name": "Chicken Stock Cube",
     "image": "images/assets_ingredients_chickenstockcube.png"
   },
   {
@@ -181,7 +181,7 @@
   },
   {
     "id": "choppedtomatoes",
-    "name": "Chop Pedtomatoes",
+    "name": "Chopped Tomatoes",
     "image": "images/assets_ingredients_choppedtomatoes.png"
   },
   {
@@ -211,17 +211,17 @@
   },
   {
     "id": "coriander",
-    "name": "Cor Ian Der",
+    "name": "Coriander",
     "image": "images/assets_ingredients_coriander.png"
   },
   {
     "id": "cornflakes",
-    "name": "Cor Nflakes",
+    "name": "Cornflakes",
     "image": "images/assets_ingredients_cornflakes.png"
   },
   {
     "id": "cornflour",
-    "name": "Cor Nflour",
+    "name": "Cornflour",
     "image": "images/assets_ingredients_cornflour.png"
   },
   {
@@ -241,7 +241,7 @@
   },
   {
     "id": "crispyonions",
-    "name": "Crispy On Ions",
+    "name": "Crispy Onions",
     "image": "images/assets_ingredients_crispyonions.png"
   },
   {
@@ -266,7 +266,7 @@
   },
   {
     "id": "dijonmustard",
-    "name": "Dijonmustard",
+    "name": "Dijon Mustard",
     "image": "images/assets_ingredients_dijonmustard.png"
   },
   {
@@ -301,7 +301,7 @@
   },
   {
     "id": "fivespice",
-    "name": "Fivespice",
+    "name": "Five Spice",
     "image": "images/assets_ingredients_fivespice.png"
   },
   {
@@ -311,7 +311,7 @@
   },
   {
     "id": "frozenvegetables",
-    "name": "Frozenvegetables",
+    "name": "Frozen Vegetables",
     "image": "images/assets_ingredients_frozenvegetables.png"
   },
   {
@@ -341,12 +341,12 @@
   },
   {
     "id": "groundcinnamon",
-    "name": "Ground Cinnam On",
+    "name": "Ground Cinnamon",
     "image": "images/assets_ingredients_groundcinnamon.png"
   },
   {
     "id": "groundcumin",
-    "name": "Ground Cum In",
+    "name": "Ground Cumin",
     "image": "images/assets_ingredients_groundcumin.png"
   },
   {
@@ -381,7 +381,7 @@
   },
   {
     "id": "italianherbs",
-    "name": "Italianherbs",
+    "name": "Italian Herbs",
     "image": "images/assets_ingredients_italianherbs.png"
   },
   {
@@ -441,12 +441,12 @@
   },
   {
     "id": "maplesyrup",
-    "name": "Maplesyrup",
+    "name": "Maple Syrup",
     "image": "images/assets_ingredients_maplesyrup.png"
   },
   {
     "id": "mascarpone",
-    "name": "Mascarp One",
+    "name": "Mascarpone",
     "image": "images/assets_ingredients_mascarpone.png"
   },
   {
@@ -511,7 +511,7 @@
   },
   {
     "id": "pakchoi",
-    "name": "Pakchoi",
+    "name": "Pak Choi",
     "image": "images/assets_ingredients_pakchoi.png"
   },
   {
@@ -521,7 +521,7 @@
   },
   {
     "id": "pankobreadcrumbs",
-    "name": "Pan Kobreadcrumbs",
+    "name": "Panko Breadcrumbs",
     "image": "images/assets_ingredients_pankobreadcrumbs.png"
   },
   {
@@ -581,12 +581,12 @@
   },
   {
     "id": "pomegranateseeds",
-    "name": "Pomegranateseeds",
+    "name": "Pomegranate Seeds",
     "image": "images/assets_ingredients_pomegranateseeds.png"
   },
   {
     "id": "porkloinsteaks",
-    "name": "Pork Loinsteaks",
+    "name": "Pork Loin Steaks",
     "image": "images/assets_ingredients_porkloinsteaks.png"
   },
   {
@@ -616,7 +616,7 @@
   },
   {
     "id": "pumpkin",
-    "name": "Pumpk In",
+    "name": "Pumpkin",
     "image": "images/assets_ingredients_pumpkin.png"
   },
   {
@@ -751,12 +751,12 @@
   },
   {
     "id": "sugarsnappeas",
-    "name": "Sugarsnappeas",
+    "name": "Sugar Snap Peas",
     "image": "images/assets_ingredients_sugarsnappeas.png"
   },
   {
     "id": "sundriedtomatoes",
-    "name": "Sundriedtomatoes",
+    "name": "Sun-dried Tomatoes",
     "image": "images/assets_ingredients_sundriedtomatoes.png"
   },
   {
