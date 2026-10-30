@@ -10,14 +10,28 @@ const list = useTemplateRef<HTMLElement>('list')
 
 useDragScroll(list)
 
-// Keep the selected chip visible in the horizontal scroller.
-async function revealSelected() {
-  await nextTick()
-  list.value?.querySelector('[aria-selected="true"]')?.scrollIntoView({ inline: 'center', block: 'nearest' })
+// Keep the selected chip visible without moving the row more than needed. A chip the user just tapped is already
+// on screen, so it never makes the row jump; only a chip that is cut off (or off screen) is scrolled into view.
+const EDGE = 20 // the row's side padding
+
+function revealSelected(behavior: ScrollBehavior) {
+  const row = list.value
+  const chip = row?.querySelector<HTMLElement>('[aria-selected="true"]')
+  if (!row || !chip) return
+  const rowBox = row.getBoundingClientRect()
+  const chipBox = chip.getBoundingClientRect()
+  const left = chipBox.left - rowBox.left + row.scrollLeft - EDGE
+  const right = chipBox.right - rowBox.left + row.scrollLeft + EDGE
+  if (left < row.scrollLeft) row.scrollTo({ left: Math.max(0, left), behavior })
+  else if (right > row.scrollLeft + row.clientWidth) row.scrollTo({ left: right - row.clientWidth, behavior })
 }
 
-onMounted(revealSelected)
-watch(model, revealSelected)
+// On first show the chip jumps into place; later changes (not caused by a tap) glide.
+onMounted(() => revealSelected('instant'))
+watch(model, async () => {
+  await nextTick()
+  revealSelected('smooth')
+})
 </script>
 
 <template>
