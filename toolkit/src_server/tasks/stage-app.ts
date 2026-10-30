@@ -20,7 +20,8 @@ function atomicCopy(source: string, dest: string): void {
  *    và `manifest.json` (đã bỏ các file loại trừ);
  * 2. xóa db cũ trong `public/db/catalog` không còn trong lần stage này;
  * 3. xuất `App/public/i18n/<locale>.json` cho mỗi cột ngôn ngữ của bảng
- *    `language` (trừ `id`, `key`), dạng phẳng `{ "<key>": "<text>" }`: khóa như `steak` và `steak.step.oven.3` cùng tồn tại nên không thể lồng theo dấu chấm.
+ *    `language` (trừ `id`, `key`), dạng object theo slug: `{ "steak": { "title": "Steak", "step": { "oven": { "3": "..." } } } }`
+ *    (xem `buildI18nTree`).
  * Core chạy Split trước (khai ở `EXPORTS[].dependsOn`).
  */
 export function runStageApp({ log = console.log }: { log?: Log } = {}): void {
@@ -76,6 +77,34 @@ export function runStageApp({ log = console.log }: { log?: Log } = {}): void {
   writeI18n(log);
 }
 
+type I18nNode = { [segment: string]: string | I18nNode };
+
+/**
+ * `language.key` là `<slug>` hoặc `<slug>.step.<method>.<n>`. Mỗi slug thành một object:
+ * khóa chỉ có slug đặt chữ vào `title`, phần còn lại lồng theo dấu chấm.
+ */
+export function buildI18nTree(rows: Array<{ key: string; text: string }>): I18nNode {
+  const tree: I18nNode = Object.create(null) as I18nNode;
+  for (const { key, text } of rows) {
+    const segments = key.split(".");
+    if (segments.some((segment) => !segment)) throw new Error(`[stage] khóa i18n không hợp lệ: ${key}`);
+    const [slug, ...path] = segments;
+    const entry = (tree[slug] ??= Object.create(null) as I18nNode);
+    if (typeof entry === "string") throw new Error(`[stage] khóa i18n xung đột: ${key}`);
+    if (path.length === 0) path.push("title");
+    let node: I18nNode = entry;
+    for (const segment of path.slice(0, -1)) {
+      const child = (node[segment] ??= Object.create(null) as I18nNode);
+      if (typeof child === "string") throw new Error(`[stage] khóa i18n xung đột: ${key}`);
+      node = child;
+    }
+    const leaf = path[path.length - 1];
+    if (node[leaf] !== undefined) throw new Error(`[stage] khóa i18n xung đột: ${key}`);
+    node[leaf] = text;
+  }
+  return tree;
+}
+
 function writeI18n(log: Log): void {
   const db = new Database(config.masterPath, { readonly: true });
   try {
@@ -95,15 +124,12 @@ function writeI18n(log: Log): void {
     }
     mkdirSync(config.i18nDir, { recursive: true });
     for (const locale of locales) {
-      const map: Record<string, string> = Object.create(null) as Record<string, string>;
-      let count = 0;
-      for (const row of rows) {
+      const texts = rows.flatMap((row) => {
         const value = row[locale];
-        if (typeof value === "string" && value.length > 0) {
-          map[row.key] = value;
-          count++;
-        }
-      }
+        return typeof value === "string" && value.length > 0 ? [{ key: row.key, text: value }] : [];
+      });
+      const map = buildI18nTree(texts);
+      const count = texts.length;
       const dest = resolve(config.i18nDir, `${locale}.json`);
       const temp = `${dest}.tmp`;
       writeFileSync(temp, `${JSON.stringify(map, null, 2)}\n`, "utf8");

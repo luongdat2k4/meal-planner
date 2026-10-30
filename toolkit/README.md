@@ -9,7 +9,7 @@ Web dev chỉnh sửa dữ liệu và CLI build/split/stage DB cho Meal Planner.
 | `../database/master.db` | Nguồn sự thật cho catalog, sửa qua giao diện |
 | `../database/catalog/*.db`, `runtime-template.db`, `manifest.json` | Output của Split |
 | `../App/public/db` | Đích của Stage. App đóng gói thư mục này |
-| `../App/public/i18n/<locale>.json` | Stage xuất một file JSON cho mỗi cột ngôn ngữ trong bảng `language` (trừ `id`, `key`), dạng phẳng `{ "steak": "Steak", "steak.step.oven.3": "..." }`, không lồng, vì `steak` và `steak.step.oven.3` cùng tồn tại |
+| `../App/public/i18n/<locale>.json` | Stage xuất một file JSON cho mỗi cột ngôn ngữ trong bảng `language` (trừ `id`, `key`), dạng object theo slug: `{ "steak": { "title": "Steak", "step": { "oven": { "3": "..." } } } }`. Khóa chỉ có slug thành `title`, khóa bước nấu `<slug>.step.<method>.<n>` lồng bên trong |
 
 ## Chạy
 
