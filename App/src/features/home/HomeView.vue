@@ -2,13 +2,13 @@
 import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
-import { assetUrl } from '../../shared/assets'
 import { formatMinutes } from '../../shared/format'
 import { t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
 import { getMeal, getRecipe, useFavorites } from '../meals'
 import { dayNames, usePlanner } from '../planner'
 import { useShopping } from '../shopping'
+import AppImage from '../../shared/ui/AppImage.vue'
 
 const { state: planner, plannedMealCount } = usePlanner()
 const { state: favorites } = useFavorites()
@@ -78,7 +78,7 @@ const tiles = computed(() => [
             class="glass block rounded-[28px] bg-card p-3 text-center shadow-card transition active:scale-[0.98]"
           >
             <span class="mb-2 inline-block rounded-full bg-white/80 px-3 py-0.5 text-xs text-gray-600">{{ dayNames()[today] }}</span>
-            <img v-if="item.meal" :src="assetUrl(item.meal.image)" :alt="item.meal.title" class="aspect-[4/3] w-full rounded-2xl object-cover" />
+            <AppImage v-if="item.meal" :src="item.meal.image" :alt="item.meal.title" class="aspect-[4/3] w-full rounded-2xl object-cover" />
             <span class="mt-2 line-clamp-2 block min-h-10 text-sm font-semibold leading-snug">{{ item.meal?.title ?? item.mealId }}</span>
             <span class="mt-1 flex items-center justify-center gap-1 text-xs text-gray-500">
               <Icon :icon="ICONS.clockOutline" /> {{ formatMinutes(item.minutes) }}

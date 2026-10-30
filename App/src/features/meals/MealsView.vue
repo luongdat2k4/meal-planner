@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { assetUrl } from '../../shared/assets'
 import { formatMinutes } from '../../shared/format'
 import { t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
@@ -15,6 +14,7 @@ import { getLevel, getRecipe } from './recipe'
 import type { CookMethod, Meal } from './types'
 import { useFavorites } from './useFavorites'
 import { useMealActivity } from './useMealActivity'
+import AppImage from '../../shared/ui/AppImage.vue'
 
 const route = useRoute()
 const { isFavorite, toggleFavorite } = useFavorites()
@@ -66,6 +66,44 @@ const filtered = computed(() => {
   return getMeals().filter((meal) => inCategory(meal) && (!q || meal.title.toLowerCase().includes(q)))
 })
 
+// The catalog has hundreds of meals, so the grid shows them a few at a time: the next batch is added when
+// the placeholder at the bottom nears the viewport. Changing the filter or search starts over from the first batch.
+const BATCH = 12
+const shown = ref(BATCH)
+const visible = computed(() => filtered.value.slice(0, shown.value))
+const hasMore = computed(() => shown.value < filtered.value.length)
+const sentinel = ref<HTMLElement | null>(null)
+let observer: IntersectionObserver | null = null
+let loadTimer: ReturnType<typeof setTimeout> | undefined
+
+watch([category, query], () => {
+  shown.value = BATCH
+})
+
+function loadMore() {
+  if (!hasMore.value || loadTimer) return
+  // A short beat keeps the shimmer visible and lets the browser paint between batches.
+  loadTimer = setTimeout(() => {
+    loadTimer = undefined
+    shown.value += BATCH
+    // The placeholder may still be in view after the new batch; observe it again so the next batch follows.
+    if (sentinel.value && observer) {
+      observer.unobserve(sentinel.value)
+      observer.observe(sentinel.value)
+    }
+  }, 120)
+}
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => entries.some((entry) => entry.isIntersecting) && loadMore(), { rootMargin: '600px 0px' })
+  if (sentinel.value) observer.observe(sentinel.value)
+})
+
+onBeforeUnmount(() => {
+  observer?.disconnect()
+  clearTimeout(loadTimer)
+})
+
 function minutesOf(mealId: string): number {
   const recipe = getRecipe(mealId)
   return recipe ? recipe.prepMinutes + recipe.cookMinutes : 0
@@ -92,7 +130,7 @@ function levelOf(mealId: string): string {
           :to="{ name: 'meal-detail', params: { id: featured.id } }"
           class="glass block rounded-[32px] bg-card p-4 text-center shadow-card transition active:scale-[0.99]"
         >
-          <img :src="assetUrl(featured.image)" :alt="featured.title" class="aspect-[4/3] w-full rounded-3xl object-cover" />
+          <AppImage :src="featured.image" :alt="featured.title" class="aspect-[4/3] w-full rounded-3xl object-cover" />
           <h3 class="mt-3 text-xl font-semibold leading-snug">{{ featured.title }}</h3>
           <p class="mt-2 flex flex-wrap items-center justify-center gap-2 text-xs text-gray-600">
             <span class="flex items-center gap-1 rounded-full bg-white/80 px-3 py-1"><Icon :icon="ICONS.clockOutline" /> {{ formatMinutes(minutesOf(featured.id)) }}</span>
@@ -122,7 +160,7 @@ function levelOf(mealId: string): string {
       <ul class="-mx-5 flex gap-3 overflow-x-auto px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <li v-for="meal in recentMeals" :key="meal.id" class="w-28 shrink-0">
           <RouterLink :to="{ name: 'meal-detail', params: { id: meal.id } }" class="block">
-            <img :src="assetUrl(meal.image)" :alt="meal.title" loading="lazy" class="aspect-square w-28 rounded-3xl object-cover shadow-card" />
+            <AppImage :src="meal.image" :alt="meal.title" loading="lazy" class="aspect-square w-28 rounded-3xl object-cover shadow-card" />
             <span class="mt-1 line-clamp-2 block text-xs font-medium leading-snug">{{ meal.title }}</span>
           </RouterLink>
         </li>
@@ -137,13 +175,13 @@ function levelOf(mealId: string): string {
       </div>
 
       <div class="grid grid-cols-2 gap-4">
-        <article v-for="meal in filtered" :key="meal.id" class="relative">
+        <article v-for="meal in visible" :key="meal.id" class="relative">
           <RouterLink
             :to="{ name: 'meal-detail', params: { id: meal.id } }"
             class="glass block overflow-hidden rounded-[28px] bg-card p-2 shadow-card transition active:scale-[0.98]"
           >
             <div class="relative">
-              <img :src="assetUrl(meal.image)" :alt="meal.title" loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover" />
+              <AppImage :src="meal.image" :alt="meal.title" loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover" />
               <span
                 v-if="mealCategories(meal.id)[0]"
                 class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-1 text-xs font-semibold text-gray-800"
@@ -170,6 +208,17 @@ function levelOf(mealId: string): string {
             <Icon :icon="isFavorite(meal.id) ? ICONS.heart : ICONS.heartOutline" class="text-xl" />
           </button>
         </article>
+      </div>
+
+      <!-- Placeholders for the next batch; they also mark where to load more. -->
+      <div v-show="hasMore" ref="sentinel" class="grid grid-cols-2 gap-4" aria-hidden="true">
+        <div v-for="n in 2" :key="n" class="rounded-[28px] bg-card p-2 shadow-card">
+          <div class="skeleton aspect-[4/3] w-full rounded-3xl" />
+          <div class="space-y-2 px-1.5 pb-2 pt-3">
+            <div class="skeleton h-3.5 w-11/12 rounded-full" />
+            <div class="skeleton h-3.5 w-2/3 rounded-full" />
+          </div>
+        </div>
       </div>
 
       <p v-if="filtered.length === 0" class="py-10 text-center text-gray-500">{{ t('meal.list.empty') }}</p>

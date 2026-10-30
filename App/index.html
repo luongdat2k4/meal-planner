@@ -6,7 +6,27 @@
     <title>Meal Planner</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Shown until the databases are open and the app mounts. -->
+      <div class="mx-auto max-w-2xl space-y-5 px-5 pt-6" aria-busy="true" aria-label="Loading">
+        <div class="skeleton h-9 w-40 rounded-full"></div>
+        <div class="skeleton h-12 w-full rounded-2xl"></div>
+        <div class="flex gap-2">
+          <div class="skeleton h-9 w-16 rounded-full"></div>
+          <div class="skeleton h-9 w-24 rounded-full"></div>
+          <div class="skeleton h-9 w-20 rounded-full"></div>
+          <div class="skeleton h-9 w-24 rounded-full"></div>
+        </div>
+        <div class="rounded-[32px] bg-card p-4 shadow-card">
+          <div class="skeleton aspect-[4/3] w-full rounded-3xl"></div>
+          <div class="skeleton mx-auto mt-4 h-5 w-3/4 rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="skeleton aspect-[4/5] rounded-[28px]"></div>
+          <div class="skeleton aspect-[4/5] rounded-[28px]"></div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

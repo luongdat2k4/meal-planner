@@ -2,7 +2,6 @@
 import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
-import { assetUrl } from '../../shared/assets'
 import { formatMinutes, formatVnd } from '../../shared/format'
 import { ICONS } from '../../shared/icons'
 import { t } from '../../shared/i18n'
@@ -15,6 +14,7 @@ import { useShopping } from '../shopping'
 import { planCost, regeneratePlan, swapCandidates } from './generatePlan'
 import { dayNames } from './types'
 import { usePlanner } from './usePlanner'
+import AppImage from '../../shared/ui/AppImage.vue'
 
 const { state, plannedMealCount, removeMealFromDay, replaceMeal, clearDay } = usePlanner()
 const { state: prefs } = usePreferences()
@@ -141,9 +141,9 @@ function applySwap(newMealId: string) {
     <ul v-if="dayMeals.length" class="space-y-3">
       <li v-for="item in dayMeals" :key="`${item.mealId}-${item.index}`" class="flex items-center gap-3 rounded-3xl bg-card p-3 shadow-card">
         <RouterLink :to="{ name: 'meal-detail', params: { id: item.mealId } }" class="flex min-w-0 flex-1 items-center gap-3">
-          <img
+          <AppImage
             v-if="item.meal"
-            :src="assetUrl(item.meal.image)"
+            :src="item.meal.image"
             :alt="item.meal.title"
             loading="lazy"
             class="h-16 w-16 shrink-0 rounded-2xl object-cover"
@@ -190,7 +190,7 @@ function applySwap(newMealId: string) {
             class="flex w-full items-center gap-3 rounded-2xl bg-card p-3 text-left shadow-card transition active:scale-[0.99]"
             @click="applySwap(option.id)"
           >
-            <img :src="assetUrl(option.image)" :alt="option.title" loading="lazy" class="h-14 w-14 shrink-0 rounded-xl object-cover" />
+            <AppImage :src="option.image" :alt="option.title" loading="lazy" class="h-14 w-14 shrink-0 rounded-xl object-cover" />
             <span class="min-w-0 flex-1">
               <span class="line-clamp-2 block text-sm font-semibold leading-snug">{{ option.title }}</span>
               <span class="text-xs text-gray-500">{{ formatMinutes(minutesOf(option.id)) }} · {{ formatVnd(priceOf(option.id)) }}</span>

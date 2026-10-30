@@ -2,7 +2,6 @@
 import { computed, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, useRouter } from 'vue-router'
-import { assetUrl } from '../../shared/assets'
 import { formatMinutes, formatVnd } from '../../shared/format'
 import { t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
@@ -25,6 +24,7 @@ import { getLevel, getRecipe } from './recipe'
 import type { CookMethod, RecipeIngredient } from './types'
 import { useFavorites } from './useFavorites'
 import { useMealActivity } from './useMealActivity'
+import AppImage from '../../shared/ui/AppImage.vue'
 
 const props = defineProps<{ id: string }>()
 
@@ -122,7 +122,7 @@ function addToPlan() {
     </div>
 
     <div class="relative mt-4">
-      <img :src="assetUrl(meal.image)" :alt="meal.title" class="aspect-[4/3] w-full rounded-[32px] object-cover shadow-card" />
+      <AppImage :src="meal.image" :alt="meal.title" class="aspect-[4/3] w-full rounded-[32px] object-cover shadow-card" />
       <span class="glass absolute left-4 top-4 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.protein', { value: recipe.macros.protein }) }}</span>
       <span class="glass absolute right-4 top-1/3 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.carbs', { value: recipe.macros.carbs }) }}</span>
       <span class="glass absolute bottom-6 left-4 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.fat', { value: recipe.macros.fat }) }}</span>
