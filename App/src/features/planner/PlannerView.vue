@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import { MEALS } from '../data/catalog'
-import { useStore } from '../composables/useStore'
-import { DAY_NAMES } from '../types'
-import { ICONS } from '../icons'
+import { ICONS } from '../../shared/icons'
+import { MEALS } from '../meals'
+import { DAY_NAMES } from './types'
+import { usePlanner } from './usePlanner'
 
-const { state, addMealToDay, removeMealFromDay, clearDay } = useStore()
+const { state, addMealToDay, removeMealFromDay, clearDay } = usePlanner()
 
 // Meal chosen to add per day, keyed by day index.
 const pending = ref<Record<number, string>>({})

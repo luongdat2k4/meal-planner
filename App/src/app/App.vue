@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import MealsView from './views/MealsView.vue'
-import PlannerView from './views/PlannerView.vue'
-import IngredientsView from './views/IngredientsView.vue'
-import ShoppingView from './views/ShoppingView.vue'
-import SettingsView from './views/SettingsView.vue'
-import { ICONS } from './icons'
+import IngredientsView from '../features/ingredients/IngredientsView.vue'
+import MealsView from '../features/meals/MealsView.vue'
+import PlannerView from '../features/planner/PlannerView.vue'
+import SettingsView from '../features/settings/SettingsView.vue'
+import ShoppingView from '../features/shopping/ShoppingView.vue'
+import { ICONS } from '../shared/icons'
 
 type TabId = 'meals' | 'planner' | 'ingredients' | 'shopping' | 'settings'
 

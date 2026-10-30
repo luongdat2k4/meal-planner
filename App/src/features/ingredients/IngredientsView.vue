@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import { INGREDIENTS, assetUrl } from '../data/catalog'
-import { useStore } from '../composables/useStore'
-import { ICONS } from '../icons'
+import { assetUrl } from '../../shared/assets'
+import { ICONS } from '../../shared/icons'
+import { useShopping } from '../shopping'
+import { INGREDIENTS } from './ingredients'
 
-const { state, addShoppingItem } = useStore()
+const { state, addShoppingItem } = useShopping()
 
 const query = ref('')
 
@@ -14,7 +15,7 @@ const filtered = computed(() => {
   return q ? INGREDIENTS.filter((i) => i.name.toLowerCase().includes(q)) : INGREDIENTS
 })
 
-const onList = (name: string) => state.shopping.some((s) => s.label === name && !s.checked)
+const onList = (name: string) => state.items.some((s) => s.label === name && !s.checked)
 </script>
 
 <template>

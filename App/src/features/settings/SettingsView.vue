@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { Icon } from '@iconify/vue'
-import { DIETARY, INGREDIENTS, MEALS, STORES, assetUrl } from '../data/catalog'
-import { useStore } from '../composables/useStore'
-import { ICONS } from '../icons'
+import { assetUrl } from '../../shared/assets'
+import { ICONS } from '../../shared/icons'
+import { INGREDIENTS } from '../ingredients'
+import { MEALS } from '../meals'
+import { usePlanner } from '../planner'
+import { STORES, useShopping } from '../shopping'
+import { DIETARY } from './dietary'
 
-const { state, resetAll } = useStore()
-
-const plannedMeals = computed(() => Object.values(state.plan).reduce((sum, list) => sum + list.length, 0))
+const planner = usePlanner()
+const shopping = useShopping()
 
 function confirmReset() {
-  if (window.confirm('Xóa toàn bộ kế hoạch và danh sách đi chợ trên thiết bị này?')) resetAll()
+  if (!window.confirm('Xóa toàn bộ kế hoạch và danh sách đi chợ trên thiết bị này?')) return
+  planner.reset()
+  shopping.reset()
 }
 </script>
 
@@ -39,7 +43,7 @@ function confirmReset() {
         <p class="text-xs text-gray-500">Siêu thị</p>
       </div>
       <div class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5">
-        <p class="text-2xl font-semibold text-brand">{{ plannedMeals }}</p>
+        <p class="text-2xl font-semibold text-brand">{{ planner.plannedMealCount }}</p>
         <p class="text-xs text-gray-500">Món đã lên lịch</p>
       </div>
     </div>

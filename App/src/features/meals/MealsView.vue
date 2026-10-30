@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import { MEALS, assetUrl } from '../data/catalog'
-import { useStore } from '../composables/useStore'
-import { DAY_NAMES, type Meal } from '../types'
-import { ICONS } from '../icons'
+import { assetUrl } from '../../shared/assets'
+import { ICONS } from '../../shared/icons'
+import { DAY_NAMES, usePlanner } from '../planner'
+import { MEALS } from './meals'
+import type { Meal } from './types'
 
-const { addMealToDay } = useStore()
+const { addMealToDay } = usePlanner()
 
 const query = ref('')
 const selected = ref<Meal | null>(null)

@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import { STORES, assetUrl } from '../data/catalog'
-import { useStore } from '../composables/useStore'
-import { ICONS } from '../icons'
+import { assetUrl } from '../../shared/assets'
+import { ICONS } from '../../shared/icons'
+import { STORES } from './stores'
+import { useShopping } from './useShopping'
 
-const { state, addShoppingItem, toggleShoppingItem, removeShoppingItem, clearCheckedItems, setStore } = useStore()
+const { state, addShoppingItem, toggleShoppingItem, removeShoppingItem, clearCheckedItems, setStore } = useShopping()
 
 const newItem = ref('')
 const pickingStore = ref(false)
 
 const currentStore = computed(() => STORES.find((s) => s.id === state.storeId) ?? null)
-const checkedCount = computed(() => state.shopping.filter((i) => i.checked).length)
+const checkedCount = computed(() => state.items.filter((i) => i.checked).length)
 
 function submit() {
   addShoppingItem(newItem.value)
@@ -79,12 +80,12 @@ function pickStore(id: string | null) {
     <!-- List -->
     <div class="rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
       <div class="flex items-center justify-between border-b border-gray-100 px-4 py-3 text-sm text-gray-500">
-        <span>{{ state.shopping.length }} món · đã mua {{ checkedCount }}</span>
+        <span>{{ state.items.length }} món · đã mua {{ checkedCount }}</span>
         <button v-if="checkedCount" type="button" class="font-medium text-brand" @click="clearCheckedItems">Xóa đã mua</button>
       </div>
 
-      <ul v-if="state.shopping.length" class="divide-y divide-gray-100">
-        <li v-for="item in state.shopping" :key="item.id" class="flex items-center gap-3 px-4 py-3">
+      <ul v-if="state.items.length" class="divide-y divide-gray-100">
+        <li v-for="item in state.items" :key="item.id" class="flex items-center gap-3 px-4 py-3">
           <button
             type="button"
             class="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border"
