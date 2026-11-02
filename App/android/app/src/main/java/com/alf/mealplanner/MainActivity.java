@@ -11,6 +11,6 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(savedInstanceState);
 
         // Ép bật DevTools (Inspect) trên Chrome cho app này
-        WebView.setWebContentsDebuggingEnabled(true);
+        WebView.setWebContentsDebuggingEnabled(false);
     }
 }
