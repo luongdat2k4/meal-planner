@@ -13,5 +13,7 @@ declare module 'vue-router' {
     hideHeader?: boolean
     // Shows a back button in the header that links here.
     backTo?: RouteLocationRaw
+    // Colour (#rrggbb) behind the phone's status bar on this screen; defaults to the page background.
+    statusBar?: string
   }
 }

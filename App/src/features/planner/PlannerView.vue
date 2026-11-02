@@ -45,9 +45,12 @@ const minutesOf = (mealId: string) => {
 
 async function generate() {
   generating.value = true
-  await new Promise((resolve) => setTimeout(resolve, 600))
-  regeneratePlan()
-  generating.value = false
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 600))
+    regeneratePlan()
+  } finally {
+    generating.value = false
+  }
   const firstDay = Object.keys(state.plan)[0]
   if (firstDay !== undefined) activeDay.value = firstDay
   showToast(t('planner.toast.generated'))

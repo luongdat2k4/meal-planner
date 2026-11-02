@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
@@ -8,10 +8,15 @@ import { t } from '../shared/i18n'
 import { ICONS } from '../shared/icons'
 import ToastHost from '../shared/ui/ToastHost.vue'
 import { tabs } from './router'
+import { applyStatusBar, DEFAULT_STATUS_BAR } from './statusBar'
 
 const route = useRoute()
 const router = useRouter()
 const { state: shopping } = useShopping()
+
+// The status bar takes the colour of the current screen.
+const statusBarColor = computed(() => route.meta.statusBar ?? DEFAULT_STATUS_BAR)
+watch(statusBarColor, applyStatusBar, { immediate: true })
 
 // Until the first navigation resolves, route.meta is empty; hold the chrome back to avoid a flash.
 const ready = ref(false)
@@ -34,6 +39,13 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
 
 <template>
   <div class="mx-auto flex min-h-dvh max-w-2xl flex-col">
+    <!-- Paints the status bar area when the app is drawn edge to edge (no height where there is no status bar). -->
+    <div
+      class="pointer-events-none fixed inset-x-0 top-0 z-40 h-[env(safe-area-inset-top)] transition-colors duration-300"
+      :style="{ backgroundColor: statusBarColor }"
+      aria-hidden="true"
+    />
+
     <header v-if="showHeader" class="glass sticky top-0 z-20 flex items-center gap-2 bg-white/40 px-5 pb-3 pt-[max(env(safe-area-inset-top),1.25rem)]">
       <RouterLink
         v-if="route.meta.backTo"

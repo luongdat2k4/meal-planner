@@ -1,3 +1,4 @@
+import { uuid } from '../shared/uuid'
 import { hasIngredient, hasMeal } from './catalog'
 import { all, one, runtimeDb, transaction, write } from './database'
 
@@ -186,7 +187,7 @@ export function replacePlanItems(weekStart: string, servings: number, budget: nu
     for (const item of items) {
       const position = next.get(item.weekday) ?? 0
       next.set(item.weekday, position + 1)
-      write(insertItemSql, [crypto.randomUUID(), weekStart, item.weekday, position, item.mealSlug, item.servings])
+      write(insertItemSql, [uuid(), weekStart, item.weekday, position, item.mealSlug, item.servings])
     }
   })
 }
@@ -197,7 +198,7 @@ export function insertPlanItem(weekStart: string, servings: number, budget: numb
     ensurePlan(weekStart, servings, budget)
     const last = one(runtimeDb(), 'SELECT max(position) AS p FROM plan_item WHERE week_start = ? AND weekday = ?', [weekStart, item.weekday])
     const position = last?.p === null || last?.p === undefined ? 0 : Number(last.p) + 1
-    write(insertItemSql, [crypto.randomUUID(), weekStart, item.weekday, position, item.mealSlug, item.servings])
+    write(insertItemSql, [uuid(), weekStart, item.weekday, position, item.mealSlug, item.servings])
   })
 }
 
@@ -251,7 +252,7 @@ const insertShoppingSql = `INSERT INTO shopping_item (id, week_start, ingredient
 
 export function insertShopping(item: NewShoppingItem) {
   if (item.ingredientSlug && !hasIngredient(item.ingredientSlug)) throw new Error(`Unknown ingredient: ${item.ingredientSlug}`)
-  write(insertShoppingSql, [crypto.randomUUID(), item.weekStart, item.ingredientSlug, item.label, item.quantity, item.unit, item.storeId])
+  write(insertShoppingSql, [uuid(), item.weekStart, item.ingredientSlug, item.label, item.quantity, item.unit, item.storeId])
 }
 
 export type PlanShoppingLine = {
@@ -277,7 +278,7 @@ export function importShopping(lines: PlanShoppingLine[]): number {
         `INSERT INTO shopping_item (id, week_start, ingredient_slug, label, quantity, unit, checked, store_id)
          VALUES (?, ?, ?, '', ?, ?, 0, ?)
          ON CONFLICT(week_start, ingredient_slug, unit) WHERE ingredient_slug IS NOT NULL DO NOTHING`,
-        [crypto.randomUUID(), line.weekStart, line.ingredientSlug, line.quantity, line.unit, line.storeId],
+        [uuid(), line.weekStart, line.ingredientSlug, line.quantity, line.unit, line.storeId],
       )
     }
   })
