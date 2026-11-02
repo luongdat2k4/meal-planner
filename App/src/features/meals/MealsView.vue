@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onActivated, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { formatMinutes } from '../../shared/format'
@@ -68,43 +68,69 @@ const filtered = computed(() => {
   return getMeals().filter((meal) => inCategory(meal) && (!q || meal.title.toLowerCase().includes(q)))
 })
 
-// The catalog has hundreds of meals, so the grid shows them a few at a time: the next batch is added when
-// the placeholder at the bottom nears the viewport. Changing the filter or search starts over from the first batch.
-const BATCH = 12
-const shown = ref(BATCH)
-const visible = computed(() => filtered.value.slice(0, shown.value))
-const hasMore = computed(() => shown.value < filtered.value.length)
-const sentinel = ref<HTMLElement | null>(null)
-let observer: IntersectionObserver | null = null
-let loadTimer: ReturnType<typeof setTimeout> | undefined
+// The catalog has hundreds of meals, so the grid is windowed: only the rows near the viewport are in the DOM, and
+// padding above and below stands in for the rows that are not, so the page keeps its full height and scrollbar.
+// The page itself scrolls, so the window is computed from window.scrollY and the grid's position in the document.
+const COLUMNS = 2
+const GAP = 16
+const OVERSCAN = 500
+const gridHost = ref<HTMLElement | null>(null)
+const grid = ref<HTMLElement | null>(null)
 
-watch([category, query], () => {
-  shown.value = BATCH
-})
+// Distance from one row to the next (card height + gap). Cards all have the same height, so it is measured
+// from the first rendered card; until then this is a close estimate.
+const pitch = ref(260)
+const rowCount = computed(() => Math.ceil(filtered.value.length / COLUMNS))
+const rows = ref({ start: 0, end: 6 })
 
-function loadMore() {
-  if (!hasMore.value || loadTimer) return
-  // A short beat keeps the shimmer visible and lets the browser paint between batches.
-  loadTimer = setTimeout(() => {
-    loadTimer = undefined
-    shown.value += BATCH
-    // The placeholder may still be in view after the new batch; observe it again so the next batch follows.
-    if (sentinel.value && observer) {
-      observer.unobserve(sentinel.value)
-      observer.observe(sentinel.value)
-    }
-  }, 120)
+const visible = computed(() => filtered.value.slice(rows.value.start * COLUMNS, rows.value.end * COLUMNS))
+const padTop = computed(() => rows.value.start * pitch.value)
+const padBottom = computed(() => Math.max(0, rowCount.value - rows.value.end) * pitch.value)
+
+function updateRows() {
+  const host = gridHost.value
+  if (!host) return
+  const card = grid.value?.querySelector('article')
+  if (card && Math.abs(card.offsetHeight + GAP - pitch.value) > 0.5) pitch.value = card.offsetHeight + GAP
+
+  const top = host.getBoundingClientRect().top + window.scrollY
+  const first = Math.floor((window.scrollY - OVERSCAN - top) / pitch.value)
+  const last = Math.ceil((window.scrollY + window.innerHeight + OVERSCAN - top) / pitch.value)
+  const start = Math.min(Math.max(first, 0), Math.max(rowCount.value - 1, 0))
+  const end = Math.min(Math.max(last, start + 1), rowCount.value)
+  if (start !== rows.value.start || end !== rows.value.end) rows.value = { start, end }
 }
 
-onMounted(() => {
-  observer = new IntersectionObserver((entries) => entries.some((entry) => entry.isIntersecting) && loadMore(), { rootMargin: '600px 0px' })
-  if (sentinel.value) observer.observe(sentinel.value)
-})
+let frame = 0
+function scheduleUpdate() {
+  if (frame) return
+  frame = requestAnimationFrame(() => {
+    frame = 0
+    updateRows()
+  })
+}
 
-onBeforeUnmount(() => {
-  observer?.disconnect()
-  clearTimeout(loadTimer)
-})
+function listen() {
+  window.addEventListener('scroll', scheduleUpdate, { passive: true })
+  window.addEventListener('resize', scheduleUpdate)
+  scheduleUpdate()
+}
+
+function unlisten() {
+  window.removeEventListener('scroll', scheduleUpdate)
+  window.removeEventListener('resize', scheduleUpdate)
+  cancelAnimationFrame(frame)
+  frame = 0
+}
+
+// The screen is kept alive between tabs, so listening follows whether it is on screen.
+onMounted(listen)
+onActivated(listen)
+onDeactivated(unlisten)
+onBeforeUnmount(unlisten)
+
+// A new filter or search changes the number of rows, and rendering rows changes the measured card height.
+watch([filtered, visible, isBrowsing, showRecent], () => nextTick(scheduleUpdate))
 
 function minutesOf(mealId: string): number {
   const recipe = getRecipe(mealId)
@@ -145,50 +171,41 @@ function levelOf(mealId: string): string {
         <span class="text-sm text-gray-500">{{ t('meal.list.count', { count: filtered.length }) }}</span>
       </div>
 
-      <div class="grid grid-cols-2 gap-4">
-        <article v-for="meal in visible" :key="meal.id" class="relative">
-          <RouterLink
-            :to="{ name: 'meal-detail', params: { id: meal.id } }"
-            class="glass block overflow-hidden rounded-[28px] bg-card p-2 shadow-card transition active:scale-[0.98]"
-          >
-            <div class="relative">
-              <AppImage :src="meal.image" :alt="meal.title" loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover" />
-              <span
-                v-if="mealCategories(meal.id)[0]"
-                class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-1 text-xs font-semibold text-gray-800"
-              >
-                {{ mealCategories(meal.id)[0]?.label }}
-              </span>
-            </div>
-            <div class="px-1.5 pb-1.5 pt-2.5">
-              <p class="line-clamp-2 min-h-10 text-sm font-semibold leading-snug">{{ meal.title }}</p>
-              <p class="mt-1 flex items-center gap-1 text-xs text-gray-500">
-                <Icon :icon="ICONS.clockOutline" /> {{ formatMinutes(minutesOf(meal.id)) }} · {{ levelOf(meal.id) }}
-              </p>
-            </div>
-          </RouterLink>
+      <div ref="gridHost" :style="{ paddingTop: `${padTop}px`, paddingBottom: `${padBottom}px` }">
+        <div ref="grid" class="grid grid-cols-2 gap-4">
+          <article v-for="meal in visible" :key="meal.id" class="relative">
+            <RouterLink
+              :to="{ name: 'meal-detail', params: { id: meal.id } }"
+              class="glass block overflow-hidden rounded-[28px] bg-card p-2 shadow-card transition active:scale-[0.98]"
+            >
+              <div class="relative">
+                <AppImage :src="meal.image" :alt="meal.title" loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover" />
+                <span
+                  v-if="mealCategories(meal.id)[0]"
+                  class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-1 text-xs font-semibold text-gray-800"
+                >
+                  {{ mealCategories(meal.id)[0]?.label }}
+                </span>
+              </div>
+              <div class="px-1.5 pb-1.5 pt-2.5">
+                <p class="line-clamp-2 min-h-10 text-sm font-semibold leading-snug">{{ meal.title }}</p>
+                <p class="mt-1 flex items-center gap-1 text-xs text-gray-500">
+                  <Icon :icon="ICONS.clockOutline" /> {{ formatMinutes(minutesOf(meal.id)) }} · {{ levelOf(meal.id) }}
+                </p>
+              </div>
+            </RouterLink>
 
-          <button
-            type="button"
-            class="glass absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-card shadow"
-            :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-600'"
-            :aria-label="isFavorite(meal.id) ? t('meal.unfavorite') : t('meal.favorite')"
-            :aria-pressed="isFavorite(meal.id)"
-            @click="toggleFavorite(meal.id)"
-          >
-            <Icon :icon="isFavorite(meal.id) ? ICONS.heart : ICONS.heartOutline" class="text-xl" />
-          </button>
-        </article>
-      </div>
-
-      <!-- Placeholders for the next batch; they also mark where to load more. -->
-      <div v-show="hasMore" ref="sentinel" class="grid grid-cols-2 gap-4" aria-hidden="true">
-        <div v-for="n in 2" :key="n" class="rounded-[28px] bg-card p-2 shadow-card">
-          <div class="skeleton aspect-[4/3] w-full rounded-3xl" />
-          <div class="space-y-2 px-1.5 pb-2 pt-3">
-            <div class="skeleton h-3.5 w-11/12 rounded-full" />
-            <div class="skeleton h-3.5 w-2/3 rounded-full" />
-          </div>
+            <button
+              type="button"
+              class="glass absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-card shadow"
+              :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-600'"
+              :aria-label="isFavorite(meal.id) ? t('meal.unfavorite') : t('meal.favorite')"
+              :aria-pressed="isFavorite(meal.id)"
+              @click="toggleFavorite(meal.id)"
+            >
+              <Icon :icon="isFavorite(meal.id) ? ICONS.heart : ICONS.heartOutline" class="text-xl" />
+            </button>
+          </article>
         </div>
       </div>
 
