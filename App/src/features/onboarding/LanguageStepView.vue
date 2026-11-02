@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
+import { assetUrl } from '../../shared/assets'
 import { saveLang, t } from '../../shared/i18n'
-import { ICONS } from '../../shared/icons'
 import LanguageList from '../../shared/ui/LanguageList.vue'
 import InFeedAd from '../ads/components/InFeedAd.vue'
 import { usePreferences } from '../preferences'
@@ -21,9 +20,7 @@ async function next() {
 <template>
   <section class="mx-auto flex min-h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
     <header class="flex items-center gap-2 font-semibold">
-      <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-white">
-        <Icon :icon="ICONS.silverware" class="text-xl" />
-      </span>
+      <img :src="assetUrl('icon-app-tile.png')" alt="" class="h-9 w-9" />
       Meal Planner
     </header>
 

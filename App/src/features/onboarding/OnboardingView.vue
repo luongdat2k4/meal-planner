@@ -2,7 +2,7 @@
 import { computed, ref, useTemplateRef } from 'vue'
 import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
-import { thumbUrl } from '../../shared/assets'
+import { assetUrl, thumbUrl } from '../../shared/assets'
 import { t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
 import { getMeal } from '../meals'
@@ -65,9 +65,7 @@ async function next() {
   <section class="mx-auto flex min-h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
     <header class="flex items-center justify-between px-5">
       <span class="flex items-center gap-2 font-semibold">
-        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-white">
-          <Icon :icon="ICONS.silverware" class="text-xl" />
-        </span>
+        <img :src="assetUrl('icon-app-tile.png')" alt="" class="h-9 w-9" />
         Meal Planner
       </span>
       <button type="button" class="text-sm font-medium text-gray-500" @click="finish">{{ t('onboarding.skip') }}</button>

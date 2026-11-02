@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { Icon } from '@iconify/vue'
 import { useRouter } from 'vue-router'
 import { t } from '../../shared/i18n'
-import { ICONS } from '../../shared/icons'
+import { assetUrl } from '../../shared/assets'
 import { showAppOpenAd, useOverlayFlag } from '../ads/adRuntime'
 import InFeedAd from '../ads/components/InFeedAd.vue'
 import { begin } from './begin'
@@ -48,9 +47,7 @@ async function enter() {
 <template>
   <section class="mx-auto flex min-h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
     <header class="flex justify-center">
-      <span class="flex h-20 w-20 items-center justify-center rounded-full bg-brand text-white shadow-lg shadow-brand/30" role="img" aria-label="Meal Planner">
-        <Icon :icon="ICONS.silverware" class="text-5xl" />
-      </span>
+      <img :src="assetUrl('icon-app-tile.png')" alt="Meal Planner" class="h-28 w-28 drop-shadow-lg" />
     </header>
 
     <main class="flex flex-1 flex-col justify-center gap-8 py-8">
