@@ -149,9 +149,9 @@ watch(
           <RouterLink
             :to="{ name: 'meal-detail', params: { id: slide.meal.id } }"
             :tabindex="at === position ? 0 : -1"
-            class="glass block rounded-[32px] bg-card p-4 text-center shadow-card transition active:scale-[0.99]"
+            class="block rounded-[32px] bg-card p-4 text-center shadow-card transition active:scale-[0.99]"
           >
-            <AppImage :src="slide.meal.image" :alt="slide.meal.title" class="aspect-[4/3] w-full rounded-3xl object-cover" />
+            <AppImage thumb :src="slide.meal.image" :alt="slide.meal.title" class="aspect-[4/3] w-full rounded-3xl object-cover" />
             <h3 class="mt-3 line-clamp-1 text-xl font-semibold leading-snug">{{ slide.meal.title }}</h3>
             <p class="mt-2 flex flex-wrap items-center justify-center gap-2 text-xs text-gray-600">
               <span class="flex items-center gap-1 rounded-full bg-white/80 px-3 py-1"><Icon :icon="ICONS.clockOutline" /> {{ formatMinutes(minutesOf(slide.meal.id)) }}</span>
@@ -161,7 +161,7 @@ watch(
           </RouterLink>
           <button
             type="button"
-            class="glass absolute left-7 top-7 flex h-10 w-10 items-center justify-center rounded-full bg-card shadow"
+            class="absolute left-7 top-7 flex h-10 w-10 items-center justify-center rounded-full bg-card shadow"
             :class="isFavorite(slide.meal.id) ? 'text-brand' : 'text-gray-600'"
             :tabindex="at === position ? 0 : -1"
             :aria-label="isFavorite(slide.meal.id) ? t('meal.unfavorite') : t('meal.favorite')"

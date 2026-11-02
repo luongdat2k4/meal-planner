@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
-import { assetUrl } from '../../../shared/assets'
+import { thumbUrl } from '../../../shared/assets'
 import { formatAmount } from '../../../shared/format'
 import { t } from '../../../shared/i18n'
 import { ICONS } from '../../../shared/icons'
@@ -12,9 +12,9 @@ const emit = defineEmits<{ add: [item: RecipeIngredient] }>()
 </script>
 
 <template>
-  <ul class="glass divide-y divide-gray-200/60 overflow-hidden rounded-[28px] bg-card shadow-card">
+  <ul class="divide-y divide-gray-200/60 overflow-hidden rounded-[28px] bg-card shadow-card">
     <li v-for="item in items" :key="item.ingredientId" class="flex items-center gap-3 px-4 py-3">
-      <img :src="assetUrl(item.image)" :alt="item.name" loading="lazy" class="h-10 w-10 shrink-0 object-contain" />
+      <img :src="thumbUrl(item.image)" :alt="item.name" loading="lazy" class="h-10 w-10 shrink-0 object-contain" />
       <span class="min-w-0 flex-1 truncate text-sm font-medium text-gray-700">{{ item.name }}</span>
       <span class="shrink-0 text-sm font-semibold">{{ formatAmount(item.amount * scale, item.unit) }}</span>
       <button

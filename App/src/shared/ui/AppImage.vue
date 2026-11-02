@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-import { assetUrl } from '../assets'
+import { computed, onMounted, ref, watch } from 'vue'
+import { assetUrl, thumbUrl } from '../assets'
 
 // A photo that shows a shimmering placeholder until it has loaded. Size and shape come from the caller's classes.
-const props = defineProps<{ src: string; alt: string }>()
+// With `thumb` it loads the small copy of the photo (cards, lists); without, the full-size original.
+const props = defineProps<{ src: string; alt: string; thumb?: boolean }>()
 
 const el = ref<HTMLImageElement | null>(null)
 const loaded = ref(false)
+// Set when a thumbnail is missing, so the original is shown instead of a broken image.
+const original = ref(false)
+
+const url = computed(() => (props.thumb && !original.value ? thumbUrl(props.src) : assetUrl(props.src)))
 
 onMounted(() => {
   // A cached image can finish before the load listener is attached.
@@ -17,10 +22,16 @@ watch(
   () => props.src,
   () => {
     loaded.value = false
+    original.value = false
   },
 )
+
+function onError() {
+  if (props.thumb && !original.value) original.value = true
+  else loaded.value = true
+}
 </script>
 
 <template>
-  <img ref="el" :src="assetUrl(src)" :alt="alt" :class="loaded ? '' : 'skeleton'" @load="loaded = true" @error="loaded = true" />
+  <img ref="el" :src="url" :alt="alt" :class="loaded ? '' : 'skeleton'" decoding="async" @load="loaded = true" @error="onError" />
 </template>

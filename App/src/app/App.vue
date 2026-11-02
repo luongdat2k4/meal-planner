@@ -60,7 +60,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       <RouterLink
         v-if="route.meta.backTo"
         :to="route.meta.backTo"
-        class="glass -ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-card shadow-card"
+        class="-ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-card shadow-card"
         :aria-label="t('nav.back')"
       >
         <Icon :icon="ICONS.arrowLeft" class="text-2xl" />
@@ -76,7 +76,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
     >
       <RouterLink
         :to="{ name: 'settings' }"
-        class="glass pointer-events-auto -mt-1.5 flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
+        class="pointer-events-auto -mt-1.5 flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
         :aria-label="t('nav.profile')"
       >
         <Icon :icon="ICONS.accountCircle" class="text-3xl text-gray-700" />

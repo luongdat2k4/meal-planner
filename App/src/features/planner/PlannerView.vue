@@ -149,6 +149,7 @@ function applySwap(newMealId: string) {
         <RouterLink :to="{ name: 'meal-detail', params: { id: item.mealId } }" class="flex min-w-0 flex-1 items-center gap-3">
           <AppImage
             v-if="item.meal"
+            thumb
             :src="item.meal.image"
             :alt="item.meal.title"
             loading="lazy"
@@ -196,7 +197,7 @@ function applySwap(newMealId: string) {
             class="flex w-full items-center gap-3 rounded-2xl bg-card p-3 text-left shadow-card transition active:scale-[0.99]"
             @click="applySwap(option.id)"
           >
-            <AppImage :src="option.image" :alt="option.title" loading="lazy" class="h-14 w-14 shrink-0 rounded-xl object-cover" />
+            <AppImage thumb :src="option.image" :alt="option.title" loading="lazy" class="h-14 w-14 shrink-0 rounded-xl object-cover" />
             <span class="min-w-0 flex-1">
               <span class="line-clamp-2 block text-sm font-semibold leading-snug">{{ option.title }}</span>
               <span class="text-xs text-gray-500">{{ formatMinutes(minutesOf(option.id)) }} · {{ formatVnd(priceOf(option.id)) }}</span>

@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink } from 'vue-router'
-import { assetUrl } from '../../shared/assets'
+import { assetUrl, thumbUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
 import { t } from '../../shared/i18n'
 import { showToast } from '../../shared/toast'
@@ -149,7 +149,7 @@ async function copyList() {
 
     <RouterLink
       :to="{ name: 'ingredients' }"
-      class="glass flex items-center justify-between rounded-2xl bg-card px-4 py-3 text-sm font-semibold shadow-card"
+      class="flex items-center justify-between rounded-2xl bg-card px-4 py-3 text-sm font-semibold shadow-card"
     >
       <span class="flex items-center gap-2"><Icon :icon="ICONS.carrot" class="text-xl text-brand" /> {{ t('shopping.pickFromIngredients') }}</span>
       <Icon :icon="ICONS.chevronRight" class="text-xl text-gray-300" />
@@ -178,7 +178,7 @@ async function copyList() {
         >
           <Icon v-if="item.checked" :icon="ICONS.check" class="text-sm" />
         </button>
-        <img v-if="item.image" :src="assetUrl(item.image)" alt="" loading="lazy" class="h-10 w-10 shrink-0 rounded-xl bg-white object-contain p-1" :class="item.checked ? 'opacity-50' : ''" />
+        <img v-if="item.image" :src="thumbUrl(item.image)" alt="" loading="lazy" class="h-10 w-10 shrink-0 rounded-xl bg-white object-contain p-1" :class="item.checked ? 'opacity-50' : ''" />
         <span v-else class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand">
           <Icon :icon="ICONS.carrot" class="text-xl" />
         </span>

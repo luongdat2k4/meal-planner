@@ -106,12 +106,12 @@ function addToPlan() {
     <div
       class="pointer-events-none fixed inset-x-0 top-0 z-20 mx-auto flex max-w-2xl items-center justify-between px-5 pt-[max(env(safe-area-inset-top),1rem)]"
     >
-      <RouterLink :to="{ name: 'meals' }" class="glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card" :aria-label="t('meal.back')">
+      <RouterLink :to="{ name: 'meals' }" class="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card" :aria-label="t('meal.back')">
         <Icon :icon="ICONS.arrowLeft" class="text-2xl" />
       </RouterLink>
       <button
         type="button"
-        class="glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
+        class="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
         :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-700'"
         :aria-label="isFavorite(meal.id) ? t('meal.unfavorite') : t('meal.favorite')"
         :aria-pressed="isFavorite(meal.id)"
@@ -123,12 +123,12 @@ function addToPlan() {
 
     <div class="relative mt-4">
       <AppImage :src="meal.image" :alt="meal.title" class="aspect-[4/3] w-full rounded-[32px] object-cover shadow-card" />
-      <span class="glass absolute left-4 top-4 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.protein', { value: recipe.macros.protein }) }}</span>
-      <span class="glass absolute right-4 top-1/3 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.carbs', { value: recipe.macros.carbs }) }}</span>
-      <span class="glass absolute bottom-6 left-4 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.fat', { value: recipe.macros.fat }) }}</span>
+      <span class="absolute left-4 top-4 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.protein', { value: recipe.macros.protein }) }}</span>
+      <span class="absolute right-4 top-1/3 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.carbs', { value: recipe.macros.carbs }) }}</span>
+      <span class="absolute bottom-6 left-4 rounded-full bg-card px-3 py-1.5 text-xs font-semibold shadow-card">{{ t('meal.detail.fat', { value: recipe.macros.fat }) }}</span>
       <span
         v-if="rating"
-        class="glass absolute -bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-card px-4 py-1.5 text-sm font-semibold shadow-card"
+        class="absolute -bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full bg-card px-4 py-1.5 text-sm font-semibold shadow-card"
       >
         <Icon :icon="ICONS.star" class="text-amber-400" /> {{ rating }}
       </span>
@@ -166,7 +166,7 @@ function addToPlan() {
         </li>
       </ul>
 
-      <div class="glass flex items-center justify-between gap-3 rounded-3xl bg-tile-green/70 p-4">
+      <div class="flex items-center justify-between gap-3 rounded-3xl bg-tile-green/70 p-4">
         <div>
           <p class="text-xs text-gray-600">{{ t('meal.detail.servings') }}</p>
           <Stepper v-model="servings" :min="1" :max="12" class="mt-1" />
@@ -198,7 +198,7 @@ function addToPlan() {
         <StepList :steps="steps" />
       </section>
 
-      <section class="glass space-y-4 rounded-[28px] bg-card p-5 shadow-card">
+      <section class="space-y-4 rounded-[28px] bg-card p-5 shadow-card">
         <h2 class="text-lg font-semibold">{{ t('meal.detail.yours') }}</h2>
 
         <button

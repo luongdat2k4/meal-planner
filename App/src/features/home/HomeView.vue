@@ -42,12 +42,12 @@ const tiles = computed(() => [
       </div>
     </header>
 
-    <RouterLink :to="{ name: 'meals' }" class="glass flex items-center gap-3 rounded-full bg-card px-5 py-4 text-gray-500 shadow-card">
+    <RouterLink :to="{ name: 'meals' }" class="flex items-center gap-3 rounded-full bg-card px-5 py-4 text-gray-500 shadow-card">
       <Icon :icon="ICONS.autoFix" class="text-xl text-brand" />
       {{ t('home.search') }}
     </RouterLink>
 
-    <div class="glass space-y-3 rounded-[28px] bg-card p-4 shadow-card">
+    <div class="space-y-3 rounded-[28px] bg-card p-4 shadow-card">
       <h2 class="flex items-center gap-2 px-1 font-semibold">
         <Icon :icon="ICONS.calendarWeek" class="text-xl" /> {{ t('home.weekGlance') }}
       </h2>
@@ -75,10 +75,10 @@ const tiles = computed(() => [
         <li v-for="(item, index) in todayMeals" :key="`${item.mealId}-${index}`" class="w-52 shrink-0">
           <RouterLink
             :to="{ name: 'meal-detail', params: { id: item.mealId } }"
-            class="glass block rounded-[28px] bg-card p-3 text-center shadow-card transition active:scale-[0.98]"
+            class="block rounded-[28px] bg-card p-3 text-center shadow-card transition active:scale-[0.98]"
           >
             <span class="mb-2 inline-block rounded-full bg-white/80 px-3 py-0.5 text-xs text-gray-600">{{ dayNames()[today] }}</span>
-            <AppImage v-if="item.meal" :src="item.meal.image" :alt="item.meal.title" class="aspect-[4/3] w-full rounded-2xl object-cover" />
+            <AppImage v-if="item.meal" thumb :src="item.meal.image" :alt="item.meal.title" class="aspect-[4/3] w-full rounded-2xl object-cover" />
             <span class="mt-2 line-clamp-2 block min-h-10 text-sm font-semibold leading-snug">{{ item.meal?.title ?? item.mealId }}</span>
             <span class="mt-1 flex items-center justify-center gap-1 text-xs text-gray-500">
               <Icon :icon="ICONS.clockOutline" /> {{ formatMinutes(item.minutes) }}
@@ -87,7 +87,7 @@ const tiles = computed(() => [
         </li>
       </ul>
 
-      <div v-else class="glass rounded-[28px] bg-card px-6 py-8 text-center shadow-card">
+      <div v-else class="rounded-[28px] bg-card px-6 py-8 text-center shadow-card">
         <p class="mb-4 text-gray-500">{{ t('home.noMealsToday') }}</p>
         <RouterLink :to="{ name: 'planner' }" class="inline-block rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-brand/30">
           {{ t('home.makePlan') }}

@@ -157,7 +157,7 @@ function levelOf(mealId: string): string {
       <ul class="-mx-5 flex gap-3 overflow-x-auto px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <li v-for="meal in recentMeals" :key="meal.id" class="w-28 shrink-0">
           <RouterLink :to="{ name: 'meal-detail', params: { id: meal.id } }" class="block">
-            <AppImage :src="meal.image" :alt="meal.title" loading="lazy" class="aspect-square w-28 rounded-3xl object-cover shadow-card" />
+            <AppImage thumb :src="meal.image" :alt="meal.title" loading="lazy" class="aspect-square w-28 rounded-3xl object-cover shadow-card" />
             <span class="mt-1 line-clamp-2 block text-xs font-medium leading-snug">{{ meal.title }}</span>
           </RouterLink>
         </li>
@@ -176,10 +176,10 @@ function levelOf(mealId: string): string {
           <article v-for="meal in visible" :key="meal.id" class="relative">
             <RouterLink
               :to="{ name: 'meal-detail', params: { id: meal.id } }"
-              class="glass block overflow-hidden rounded-[28px] bg-card p-2 shadow-card transition active:scale-[0.98]"
+              class="block overflow-hidden rounded-[28px] bg-card p-2 shadow-card transition active:scale-[0.98]"
             >
               <div class="relative">
-                <AppImage :src="meal.image" :alt="meal.title" loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover" />
+                <AppImage thumb :src="meal.image" :alt="meal.title" loading="lazy" class="aspect-[4/3] w-full rounded-3xl object-cover" />
                 <span
                   v-if="mealCategories(meal.id)[0]"
                   class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2.5 py-1 text-xs font-semibold text-gray-800"
@@ -197,7 +197,7 @@ function levelOf(mealId: string): string {
 
             <button
               type="button"
-              class="glass absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-card shadow"
+              class="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-card shadow"
               :class="isFavorite(meal.id) ? 'text-brand' : 'text-gray-600'"
               :aria-label="isFavorite(meal.id) ? t('meal.unfavorite') : t('meal.favorite')"
               :aria-pressed="isFavorite(meal.id)"

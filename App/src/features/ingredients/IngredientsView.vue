@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import { assetUrl } from '../../shared/assets'
+import { thumbUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
 import { t } from '../../shared/i18n'
 import SearchField from '../../shared/ui/SearchField.vue'
@@ -29,7 +29,7 @@ const onList = (slug: string) => state.items.some((s) => s.ingredientSlug === sl
 
     <ul class="grid grid-cols-3 gap-3">
       <li v-for="item in filtered" :key="item.id" class="flex flex-col items-center rounded-3xl bg-card p-3 text-center shadow-card">
-        <img :src="assetUrl(item.image)" :alt="item.name" loading="lazy" class="mb-2 h-16 w-16 object-contain" />
+        <img :src="thumbUrl(item.image)" :alt="item.name" loading="lazy" class="mb-2 h-16 w-16 object-contain" />
         <span class="mb-3 line-clamp-2 min-h-8 text-xs font-semibold leading-snug">{{ item.name }}</span>
         <button
           type="button"
