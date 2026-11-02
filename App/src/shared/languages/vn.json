@@ -92,6 +92,9 @@
       "backToList": "Về danh sách món"
     }
   },
+  "ads": {
+    "label": "Quảng cáo"
+  },
   "ui": {
     "close": "Đóng",
     "decrease": "Giảm",

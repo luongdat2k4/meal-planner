@@ -9,6 +9,7 @@ import { getMeal, getRecipe, useFavorites } from '../meals'
 import { dayNames, usePlanner } from '../planner'
 import { useShopping } from '../shopping'
 import AppImage from '../../shared/ui/AppImage.vue'
+import InFeedAd from '../ads/components/InFeedAd.vue'
 
 const { state: planner, plannedMealCount } = usePlanner()
 const { state: favorites } = useFavorites()
@@ -94,5 +95,7 @@ const tiles = computed(() => [
         </RouterLink>
       </div>
     </div>
+
+    <InFeedAd name="home" />
   </section>
 </template>

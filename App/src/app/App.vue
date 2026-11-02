@@ -3,6 +3,8 @@ import { computed, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
+import { adsAvailable, adsSuppressed } from '../features/ads/adRuntime'
+import BannerAd from '../features/ads/components/BannerAd.vue'
 import QuickSuggestSheet from '../features/planner/components/QuickSuggestSheet.vue'
 import { lang, t } from '../shared/i18n'
 import { usePreferences } from '../features/preferences'
@@ -35,6 +37,8 @@ router.isReady().then(() => {
 })
 const showChrome = computed(() => ready.value && !route.meta.fullscreen)
 const showHeader = computed(() => showChrome.value && !route.meta.hideHeader)
+// The bottom banner: on routes that ask for it, and never over a sheet or the keyboard.
+const shellBanner = computed(() => showChrome.value && adsAvailable.value && !!route.meta.ads?.banner && !adsSuppressed.value)
 
 const pendingCount = computed(() => shopping.items.filter((item) => !item.checked).length)
 
@@ -51,12 +55,13 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
   <div class="mx-auto flex min-h-dvh max-w-2xl flex-col">
     <!-- Paints the status bar area when the app is drawn edge to edge (no height where there is no status bar). -->
     <div
+      data-ad-chrome="top"
       class="pointer-events-none fixed inset-x-0 top-0 z-40 h-[env(safe-area-inset-top)] transition-colors duration-300"
       :style="{ backgroundColor: statusBarColor }"
       aria-hidden="true"
     />
 
-    <header v-if="showHeader" class="glass sticky top-0 z-20 flex items-center gap-2 bg-white/40 px-5 pb-[15px] pt-[max(env(safe-area-inset-top),1rem)]">
+    <header v-if="showHeader" data-ad-chrome="top" class="glass sticky top-0 z-20 flex items-center gap-2 bg-white/40 px-5 pb-[15px] pt-[max(env(safe-area-inset-top),1rem)]">
       <RouterLink
         v-if="route.meta.backTo"
         :to="route.meta.backTo"
@@ -72,6 +77,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
          the 44px button on the 32px title line of the header. -->
     <div
       v-if="showChrome && route.meta.tab"
+      data-ad-chrome="top"
       class="pointer-events-none fixed inset-x-0 top-0 z-30 mx-auto flex max-w-2xl justify-end px-5 pt-[max(env(safe-area-inset-top),1rem)]"
     >
       <RouterLink
@@ -83,7 +89,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       </RouterLink>
     </div>
 
-    <main class="flex-1" :class="showChrome ? (showHeader ? 'px-5 pb-32 pt-3' : 'px-5 pb-32') : ''">
+    <main class="flex-1" :class="showChrome ? (showHeader ? 'px-5 pb-[calc(8rem+var(--ad-bottom,0px))] pt-3' : 'px-5 pb-[calc(8rem+var(--ad-bottom,0px))]') : ''">
       <RouterView v-slot="{ Component }">
         <KeepAlive :include="cachedViews">
           <component :is="Component" />
@@ -91,7 +97,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       </RouterView>
     </main>
 
-    <nav v-if="showChrome" class="fixed inset-x-0 bottom-0 z-30 mx-auto max-w-2xl px-5 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
+    <nav v-if="showChrome" data-ad-chrome="bottom" class="fixed inset-x-0 bottom-[var(--ad-bottom,0px)] z-30 transition-[bottom] duration-200 mx-auto max-w-2xl px-5 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
       <ul class="flex items-center justify-between rounded-full bg-white p-2 shadow-[0_12px_36px_rgb(70_80_140/0.18)] ring-1 ring-white/70">
         <li v-for="tab in leftTabs" :key="tab.name">
           <RouterLink :to="{ name: tab.name }" custom v-slot="{ href, navigate, isActive }">
@@ -145,6 +151,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       </ul>
     </nav>
 
+    <BannerAd v-if="shellBanner" />
     <QuickSuggestSheet v-model="suggestOpen" />
     <ToastHost />
   </div>

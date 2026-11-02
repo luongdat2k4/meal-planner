@@ -3,10 +3,13 @@ import { onBeforeUnmount, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { t } from '../i18n'
 import { ICONS } from '../icons'
+import { useOverlayFlag } from '../../features/ads/adRuntime'
 
 defineProps<{ title: string }>()
 
 const open = defineModel<boolean>({ required: true })
+// Ad banners and native ads are hidden while a sheet is open.
+useOverlayFlag(open)
 
 function onKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') open.value = false

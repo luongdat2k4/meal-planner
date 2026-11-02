@@ -15,5 +15,7 @@ declare module 'vue-router' {
     backTo?: RouteLocationRaw
     // Colour (#rrggbb) behind the phone's status bar on this screen; defaults to the page background.
     statusBar?: string
+    // Ads on this screen. `banner`: the bottom banner is shown (see features/ads).
+    ads?: { banner?: boolean }
   }
 }

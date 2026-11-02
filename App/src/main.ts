@@ -6,7 +6,7 @@ import '@fontsource/be-vietnam-pro/700.css'
 import './app/style.css'
 import App from './app/App.vue'
 import { router } from './app/router'
-import { startSdk } from './app/sdk'
+import { initializeAds } from './features/ads/adRuntime'
 import { initBackend } from './backend'
 import { t } from './shared/i18n'
 
@@ -15,7 +15,7 @@ initBackend()
   .then(() => {
     createApp(App).use(router).mount('#app')
     // After the first paint, so the SDK's start-up (network, native plugins) never delays the screen.
-    void startSdk()
+    void initializeAds()
   })
   .catch((error) => {
     console.error('Cannot open the databases', error)

@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { saveLang, t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
 import LanguageList from '../../shared/ui/LanguageList.vue'
+import InFeedAd from '../ads/components/InFeedAd.vue'
 import { usePreferences } from '../preferences'
 
 const router = useRouter()
@@ -31,6 +32,7 @@ async function next() {
       <h1 class="mb-8 text-3xl font-semibold leading-tight">{{ t('onboarding.languageTitle') }}</h1>
 
       <LanguageList />
+      <InFeedAd name="onboarding-language" :min-viewport-height="700" class="mt-6" />
     </main>
 
     <button

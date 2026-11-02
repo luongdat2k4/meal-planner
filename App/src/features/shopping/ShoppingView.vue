@@ -7,6 +7,7 @@ import { ICONS } from '../../shared/icons'
 import { t } from '../../shared/i18n'
 import { showToast } from '../../shared/toast'
 import { usePlanner, type DayRange } from '../planner'
+import InFeedAd from '../ads/components/InFeedAd.vue'
 import ImportRangeSheet from './components/ImportRangeSheet.vue'
 import { STORES } from './stores'
 import { useShopping } from './useShopping'
@@ -192,6 +193,8 @@ async function copyList() {
       <Icon :icon="ICONS.cart" class="mx-auto mb-3 text-5xl text-gray-300" />
       <p class="text-gray-500">{{ t('shopping.empty') }}</p>
     </div>
+
+    <InFeedAd v-if="state.items.length - checkedCount >= 5" name="shopping" />
 
     <ImportRangeSheet v-model="rangeOpen" @pick="importFromPlan" />
   </section>

@@ -98,6 +98,8 @@ async function next() {
       </article>
     </div>
 
+    <InFeedAd name="onboarding" :min-viewport-height="820" class="mx-5 mb-4" />
+
     <footer class="space-y-5 px-5 pt-4">
       <div class="flex justify-center gap-2" role="tablist" :aria-label="t('onboarding.pages')">
         <button

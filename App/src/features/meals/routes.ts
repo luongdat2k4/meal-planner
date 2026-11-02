@@ -6,7 +6,7 @@ export const mealsRoutes: RouteRecordRaw[] = [
     path: '/meals',
     name: 'meals',
     component: () => import('./MealsView.vue'),
-    meta: { title: 'nav.meals', statusBar: '#fbd5e8', tab: { label: 'nav.meals', icon: ICONS.silverware, order: 3 } },
+    meta: { title: 'nav.meals', statusBar: '#fbd5e8', ads: { banner: true }, tab: { label: 'nav.meals', icon: ICONS.silverware, order: 3 } },
   },
   {
     path: '/meals/:id',
