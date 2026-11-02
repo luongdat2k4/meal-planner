@@ -97,7 +97,13 @@
     "decrease": "Giảm",
     "increase": "Tăng",
     "rating": "Đánh giá",
-    "stars": "{n} sao"
+    "stars": "{n} sao",
+    "hour": "Giờ",
+    "minute": "Phút",
+    "done": "Xong",
+    "am": "SA",
+    "pm": "CH",
+    "period": "Sáng hoặc chiều"
   },
   "format": {
     "minutes": "{count} phút",

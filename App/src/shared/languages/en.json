@@ -97,7 +97,13 @@
     "decrease": "Decrease",
     "increase": "Increase",
     "rating": "Rating",
-    "stars": "{n} stars"
+    "stars": "{n} stars",
+    "hour": "Hour",
+    "minute": "Minute",
+    "done": "Done",
+    "am": "AM",
+    "pm": "PM",
+    "period": "AM or PM"
   },
   "format": {
     "minutes": "{count} min",

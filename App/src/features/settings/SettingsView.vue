@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import { resetAllData } from '../../app/resetAll'
 import { formatVnd } from '../../shared/format'
 import { flagSrc, lang, languages, t } from '../../shared/i18n'
+import { formatTime } from '../../shared/time'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import BottomSheet from '../../shared/ui/BottomSheet.vue'
@@ -23,7 +24,7 @@ const preferenceSummary = computed(
   () => t('settings.preferenceSummary', { people: prefs.householdSize, days: prefs.cookingDays.length, budget: formatVnd(prefs.weeklyBudget) }),
 )
 const reminderSummary = computed(() =>
-  prefs.reminder.enabled ? t('settings.reminderOn', { days: prefs.reminder.days.map((day) => shortDayNames()[day]).join(', '), time: prefs.reminder.time }) : t('settings.reminderOff'),
+  prefs.reminder.enabled ? t('settings.reminderOn', { days: prefs.reminder.days.map((day) => shortDayNames()[day]).join(', '), time: formatTime(prefs.reminder.time) }) : t('settings.reminderOff'),
 )
 const stats = computed(() => [
   { label: t('settings.stats.meals'), value: getMeals().length },

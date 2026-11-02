@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { ensureReminderPermission, remindersSupported, sendTestReminder } from '../../../app/reminders'
 import { t } from '../../../shared/i18n'
 import { showToast } from '../../../shared/toast'
+import TimePicker from '../../../shared/ui/TimePicker.vue'
 import ToggleSwitch from '../../../shared/ui/ToggleSwitch.vue'
 import { dayNames, shortDayNames } from '../../planner'
 import { usePreferences } from '../usePreferences'
@@ -63,10 +64,10 @@ async function test() {
         <p v-if="!state.reminder.days.length" class="mt-2 text-xs text-red-600">{{ t('preferences.fieldReminder.minDay') }}</p>
       </div>
 
-      <label class="flex items-center justify-between gap-4 rounded-2xl bg-card px-4 py-3 shadow-card">
+      <div class="flex items-center justify-between gap-4 rounded-2xl bg-card px-4 py-3 shadow-card">
         <span class="text-sm font-semibold">{{ t('preferences.fieldReminder.time') }}</span>
-        <input v-model="state.reminder.time" type="time" required class="rounded-xl bg-surface px-3 py-1.5 outline-none" />
-      </label>
+        <TimePicker v-model="state.reminder.time" :title="t('preferences.fieldReminder.time')" />
+      </div>
 
       <button
         v-if="native"

@@ -5,10 +5,11 @@ import vn from './languages/vn.json'
 // Catalog text exists in two languages (public/i18n/<lang>.json, columns of the `language` table).
 export type Lang = 'vn' | 'en'
 
-// `flag` is the file name (without .svg) in public/asset/flag.
-export const languages: { id: Lang; label: string; flag: string }[] = [
-  { id: 'vn', label: 'Tiếng Việt', flag: 'vi' },
-  { id: 'en', label: 'English', flag: 'en' },
+// `flag` is the file name (without .svg) in public/asset/flag. `hour12` is how times are read in that country:
+// 7:30 PM (true) or 19:30 (false).
+export const languages: { id: Lang; label: string; flag: string; hour12: boolean }[] = [
+  { id: 'vn', label: 'Tiếng Việt', flag: 'vi', hour12: false },
+  { id: 'en', label: 'English', flag: 'en', hour12: true },
 ]
 
 export const flagSrc = (id: Lang) =>
