@@ -123,7 +123,8 @@
     "back": "Back",
     "profile": "Profile and settings",
     "quickSuggest": "Quick suggestions",
-    "language": "Language"
+    "language": "Language",
+    "reminder": "Planning reminder"
   },
   "planner": {
     "summary": {
@@ -279,11 +280,12 @@
     },
     "fieldReminder": {
       "title": "Remind me to plan every week",
-      "subtitle": "One reminder on the day and time you choose.",
+      "subtitle": "Get a notification on the days and time you choose.",
       "toggle": "Weekly planning reminder",
-      "day": "Reminder day",
+      "day": "Remind me on",
       "time": "Reminder time",
-      "demo": "Demo: reminders are not actually sent to your device."
+      "minDay": "Pick at least one day.",
+      "webNote": "Notifications are sent by the phone app. Here the setting is only saved."
     },
     "fieldSchedule": {
       "days": "Days you cook",
@@ -324,7 +326,7 @@
   },
   "settings": {
     "preferenceSummary": "{people} people · {days} cooking days · {budget}/week",
-    "reminderOn": "{day} at {time}",
+    "reminderOn": "{days} at {time}",
     "reminderOff": "Off",
     "stats": {
       "meals": "Meals",
@@ -342,5 +344,13 @@
     "reset": "Delete data on this device",
     "cancel": "Cancel",
     "resetAction": "Delete data"
+  },
+  "reminder": {
+    "title": "Time to plan your meals",
+    "body": "Plan this week's meals and build your shopping list.",
+    "channel": "Planning reminder",
+    "denied": "Notifications are blocked. Allow them in the phone settings.",
+    "test": "Send a test notification",
+    "testSent": "Test notification on its way"
   }
 }

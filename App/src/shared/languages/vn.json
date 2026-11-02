@@ -123,7 +123,8 @@
     "back": "Quay lại",
     "profile": "Hồ sơ và cài đặt",
     "quickSuggest": "Gợi ý nhanh",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "reminder": "Nhắc lập kế hoạch"
   },
   "planner": {
     "summary": {
@@ -279,11 +280,12 @@
     },
     "fieldReminder": {
       "title": "Nhắc tôi lập kế hoạch mỗi tuần",
-      "subtitle": "Một lời nhắc đúng ngày và giờ bạn chọn.",
+      "subtitle": "Nhận thông báo vào những ngày và giờ bạn chọn.",
       "toggle": "Nhắc lập kế hoạch hằng tuần",
-      "day": "Ngày nhắc",
+      "day": "Nhắc vào",
       "time": "Giờ nhắc",
-      "demo": "Bản demo: lời nhắc chưa được gửi thật trên thiết bị."
+      "minDay": "Chọn ít nhất một ngày.",
+      "webNote": "Thông báo được gửi bởi app trên điện thoại. Ở đây cài đặt chỉ được lưu lại."
     },
     "fieldSchedule": {
       "days": "Những ngày bạn nấu",
@@ -324,7 +326,7 @@
   },
   "settings": {
     "preferenceSummary": "{people} người · {days} ngày nấu · {budget}/tuần",
-    "reminderOn": "{day} lúc {time}",
+    "reminderOn": "{days} lúc {time}",
     "reminderOff": "Đang tắt",
     "stats": {
       "meals": "Món ăn",
@@ -342,5 +344,13 @@
     "reset": "Xóa dữ liệu trên thiết bị",
     "cancel": "Hủy",
     "resetAction": "Xóa dữ liệu"
+  },
+  "reminder": {
+    "title": "Đến giờ lên kế hoạch bữa ăn",
+    "body": "Lên kế hoạch cho tuần này và tạo danh sách đi chợ.",
+    "channel": "Nhắc lập kế hoạch",
+    "denied": "Thông báo đang bị chặn. Hãy cho phép trong cài đặt điện thoại.",
+    "test": "Gửi thông báo thử",
+    "testSent": "Thông báo thử sắp hiện"
   }
 }

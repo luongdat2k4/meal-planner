@@ -9,10 +9,9 @@ import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import BottomSheet from '../../shared/ui/BottomSheet.vue'
 import ListRow from '../../shared/ui/ListRow.vue'
-import ToggleSwitch from '../../shared/ui/ToggleSwitch.vue'
 import { getIngredients } from '../ingredients'
 import { getMeals } from '../meals'
-import { dayNames, usePlanner } from '../planner'
+import { shortDayNames, usePlanner } from '../planner'
 import { usePreferences } from '../preferences'
 import { STORES } from '../shopping'
 
@@ -24,7 +23,7 @@ const preferenceSummary = computed(
   () => t('settings.preferenceSummary', { people: prefs.householdSize, days: prefs.cookingDays.length, budget: formatVnd(prefs.weeklyBudget) }),
 )
 const reminderSummary = computed(() =>
-  prefs.reminder.enabled ? t('settings.reminderOn', { day: dayNames()[prefs.reminder.day], time: prefs.reminder.time }) : t('settings.reminderOff'),
+  prefs.reminder.enabled ? t('settings.reminderOn', { days: prefs.reminder.days.map((day) => shortDayNames()[day]).join(', '), time: prefs.reminder.time }) : t('settings.reminderOff'),
 )
 const stats = computed(() => [
   { label: t('settings.stats.meals'), value: getMeals().length },
@@ -58,9 +57,7 @@ async function confirmReset() {
         <img :src="flagSrc(lang)" alt="" class="h-7 w-7 shrink-0 rounded-full object-cover shadow-sm" />
         <Icon :icon="ICONS.chevronRight" class="text-xl text-gray-300" />
       </ListRow>
-      <ListRow :icon="ICONS.bellOutline" :title="t('settings.reminder')" :subtitle="reminderSummary">
-        <ToggleSwitch v-model="prefs.reminder.enabled" :label="t('settings.reminderToggle')" />
-      </ListRow>
+      <ListRow :icon="ICONS.bellOutline" :title="t('settings.reminder')" :subtitle="reminderSummary" :to="{ name: 'settings-reminder' }" />
     </div>
 
     <!-- Stats -->

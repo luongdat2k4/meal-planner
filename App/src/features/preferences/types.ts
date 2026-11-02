@@ -7,8 +7,8 @@ export interface Dietary {
 
 export interface Reminder {
   enabled: boolean
-  // Day index (0 = Monday) and "HH:mm".
-  day: number
+  // Day indexes (0 = Monday) to remind on, and the time as "HH:mm".
+  days: number[]
   time: string
 }
 

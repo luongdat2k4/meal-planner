@@ -4,10 +4,12 @@ import { Icon } from '@iconify/vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
 import QuickSuggestSheet from '../features/planner/components/QuickSuggestSheet.vue'
-import { t } from '../shared/i18n'
+import { lang, t } from '../shared/i18n'
+import { usePreferences } from '../features/preferences'
 import { ICONS } from '../shared/icons'
 import ToastHost from '../shared/ui/ToastHost.vue'
 import { tabs } from './router'
+import { syncReminders } from './reminders'
 import { applyStatusBar, DEFAULT_STATUS_BAR } from './statusBar'
 
 const route = useRoute()
@@ -17,6 +19,14 @@ const { state: shopping } = useShopping()
 // The status bar takes the colour of the current screen.
 const statusBarColor = computed(() => route.meta.statusBar ?? DEFAULT_STATUS_BAR)
 watch(statusBarColor, applyStatusBar, { immediate: true })
+
+// Keep the phone's scheduled reminders in step with the settings (and the language, which the text follows).
+const { state: prefs } = usePreferences()
+watch(
+  () => [prefs.reminder.enabled, prefs.reminder.days.join(), prefs.reminder.time, lang.value] as const,
+  () => syncReminders({ enabled: prefs.reminder.enabled, days: [...prefs.reminder.days], time: prefs.reminder.time }),
+  { immediate: true },
+)
 
 // Until the first navigation resolves, route.meta is empty; hold the chrome back to avoid a flash.
 const ready = ref(false)

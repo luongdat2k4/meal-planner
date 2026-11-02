@@ -13,4 +13,10 @@ export const settingsRoutes: RouteRecordRaw[] = [
     component: () => import('./LanguageView.vue'),
     meta: { title: 'nav.language', backTo: { name: 'settings' } },
   },
+  {
+    path: '/settings/reminder',
+    name: 'settings-reminder',
+    component: () => import('./ReminderView.vue'),
+    meta: { title: 'nav.reminder', backTo: { name: 'settings' } },
+  },
 ]

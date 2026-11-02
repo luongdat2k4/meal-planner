@@ -12,7 +12,7 @@ interface Flow {
   onboardingSeen: boolean
   setupDone: boolean
   setupStep: number
-  reminderDay: number
+  reminderDays: number[]
   reminderTime: string
 }
 
@@ -21,7 +21,7 @@ const flow = createPersistedState<Flow>('meal-planner:flow', () => ({
   onboardingSeen: false,
   setupDone: false,
   setupStep: 0,
-  reminderDay: 6,
+  reminderDays: [6],
   reminderTime: '18:00',
 }))
 
@@ -37,7 +37,7 @@ const defaults = (): Preferences => ({
   cookingDays: [0, 1, 2, 3, 4],
   maxCookMinutes: 45,
   weeklyBudget: 1_200_000,
-  reminder: { enabled: false, day: flow.reminderDay, time: flow.reminderTime },
+  reminder: { enabled: false, days: [...flow.reminderDays], time: flow.reminderTime },
 })
 
 function load(): Preferences {
@@ -63,7 +63,7 @@ function persist(state: Preferences) {
   flow.onboardingSeen = state.onboardingSeen
   flow.setupDone = state.setupDone
   flow.setupStep = state.setupStep
-  flow.reminderDay = state.reminder.day
+  flow.reminderDays = [...state.reminder.days]
   flow.reminderTime = state.reminder.time
   savePreference({
     householdSize: state.householdSize,
@@ -111,7 +111,7 @@ export function usePreferences() {
     flow.onboardingSeen = false
     flow.setupDone = false
     flow.setupStep = 0
-    flow.reminderDay = 6
+    flow.reminderDays = [6]
     flow.reminderTime = '18:00'
     Object.assign(prefs, defaults())
   }
