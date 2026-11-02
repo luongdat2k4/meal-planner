@@ -11,6 +11,6 @@ export const preferencesRoutes: RouteRecordRaw[] = [
     path: '/settings/preferences',
     name: 'preferences',
     component: () => import('./PreferencesView.vue'),
-    meta: { title: 'nav.preferences', backTo: { name: 'settings' } },
+    meta: { title: 'nav.preferences', backTo: { name: 'settings' }, ads: { banner: true } },
   },
 ]

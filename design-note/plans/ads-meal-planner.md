@@ -90,7 +90,8 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 | `/ingredients` | Banner | Có ô tìm kiếm: ẩn khi bàn phím hiện. |
 | `/settings` | Banner | Không native giữa các hàng. |
 | `/settings/language` | Banner + native small | Native dưới danh sách ngôn ngữ, tách bằng khoảng cách. |
-| `/settings/reminder`, `/settings/preferences` | Không | Biểu mẫu, wheel giờ, xin quyền thông báo. |
+| `/settings/preferences` | Banner | Chỉ chọn chip/nút, không nhập chữ; banner ở dải riêng dưới tab bar, không native. |
+| `/settings/reminder` | Banner + native small | Native dưới thẻ cài đặt, cách ≥ 24px, chỉ hiện khi viewport cao ≥ 700px và khung nằm trọn giữa header và tab bar (khi bật nhắc, phần chọn ngày/giờ dài ra thì native tự ẩn). |
 | `QuickSuggestSheet`, `ImportRangeSheet` | Không | Khi sheet mở: **ẩn banner và native** (native vẽ trên WebView sẽ đè lên sheet). |
 
 ## 5. Kiến trúc
@@ -128,7 +129,7 @@ Sửa file hiện có: `main.ts` (gọi `initializeAds()`), `route-meta.d.ts` + 
 
 ## 7. Tiêu chí nghiệm thu / kiểm thử (trên thiết bị)
 
-- Không có quảng cáo ở `/setup`, `/meals/:id`, `/settings/reminder`, `/settings/preferences`, khi bottom sheet mở, khi bàn phím hiện.
+- Không có quảng cáo ở `/setup`, `/meals/:id`, khi bottom sheet mở, khi bàn phím hiện.
 - Banner không che tab bar, nội dung cuối trang cuộn tới được, khoảng cách banner–tab bar ≥ 12px; kiểm tra máy có notch + thanh cử chỉ + thanh điều hướng 3 nút.
 - Native luôn có nhãn "Quảng cáo", AdChoices nhìn thấy, không đè lên header/tab bar/sheet, không có hơn một native mỗi view.
 - Offline, không fill, nền/foreground, xoay màn hình, màn thấp, đổi ngôn ngữ vn/en. Chỉ dùng test ads, không click/impression giả.

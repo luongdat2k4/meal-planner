@@ -17,6 +17,6 @@ export const settingsRoutes: RouteRecordRaw[] = [
     path: '/settings/reminder',
     name: 'settings-reminder',
     component: () => import('./ReminderView.vue'),
-    meta: { title: 'nav.reminder', backTo: { name: 'settings' } },
+    meta: { title: 'nav.reminder', backTo: { name: 'settings' }, ads: { banner: true } },
   },
 ]
