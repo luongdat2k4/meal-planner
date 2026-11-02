@@ -177,7 +177,7 @@ watch(
       </div>
     </div>
 
-    <div v-if="meals.length > 1" class="flex justify-center gap-2" role="tablist">
+    <div v-if="meals.length > 1" class="flex justify-center gap-2 pt-2" role="tablist">
       <button
         v-for="(meal, at) in meals"
         :key="meal.id"

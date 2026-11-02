@@ -52,10 +52,14 @@ function skip() {
 <template>
   <section class="mx-auto flex min-h-dvh max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-[max(env(safe-area-inset-top),1rem)]">
     <header class="flex items-center gap-3">
+      <!-- Always laid out, hidden on the first step, so the progress bar sits in the same place on every step. -->
       <button
-        v-if="step > 0"
         type="button"
         class="-ml-1 rounded-full p-1 text-gray-600 hover:bg-gray-200"
+        :class="step === 0 ? 'invisible' : ''"
+        :disabled="step === 0"
+        :tabindex="step === 0 ? -1 : undefined"
+        :aria-hidden="step === 0"
         :aria-label="t('setup.back')"
         @click="step--"
       >
