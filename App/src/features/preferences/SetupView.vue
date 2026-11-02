@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import { t } from '../../shared/i18n'
-import { useOverlayFlag } from '../ads/adRuntime'
+import { preloadInterstitial, showInterstitial, useOverlayFlag } from '../ads/adRuntime'
 import { regeneratePlan } from '../planner'
 import FieldDiet from './components/FieldDiet.vue'
 import FieldHousehold from './components/FieldHousehold.vue'
@@ -23,6 +23,8 @@ const step = ref(Math.min(state.setupStep, steps.length - 1))
 const generating = ref(false)
 // The banner steps aside while the full-screen "creating your plan" cover is up.
 useOverlayFlag(generating)
+// Load the full-screen ad now, so it is ready when the last step is done.
+void preloadInterstitial()
 
 watch(step, (value) => {
   state.setupStep = value
@@ -42,6 +44,8 @@ async function next() {
   await new Promise((resolve) => setTimeout(resolve, 1100))
   regeneratePlan()
   completeSetup()
+  // One full-screen ad at this natural transition; carries on at once when none is ready.
+  await showInterstitial()
   showToast(t('setup.ready'))
   await router.replace({ name: 'planner' })
 }

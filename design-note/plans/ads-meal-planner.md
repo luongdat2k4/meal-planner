@@ -1,6 +1,6 @@
 # Kế hoạch tích hợp quảng cáo — Meal Planner
 
-Ngày lập: 02/11/2026 (sửa lần 2 cùng ngày: bỏ Interstitial, đối chiếu từng điều khoản policy)  
+Ngày lập: 02/11/2026 (sửa lần 2 cùng ngày: đối chiếu từng điều khoản policy; Interstitial chỉ ở cuối setup)  
 Tham khảo cách làm: [`ads-by-view.md`](./ads-by-view.md). **Chuẩn bắt buộc phải tuân thủ:** [`../ads_policy_interstitial_banner_native.md`](../ads_policy_interstitial_banner_native.md).  
 Phạm vi khảo sát: `App/src` (router, `App.vue`, các view, `BottomSheet`, `sdk.ts` cũ) và API `@alf/app-sdk` 1.9.0 (`AdController`, `ad.types`, `sdk-guide.md`).  
 Chính sách chính thức của AdMob, Google Play, Apple luôn là nguồn quyết định; phải đối chiếu lại trước khi phát hành.
@@ -9,12 +9,12 @@ Chính sách chính thức của AdMob, Google Play, Apple luôn là nguồn quy
 
 | Nội dung | Quyết định |
 |---|---|
-| Interstitial | **Bỏ hoàn toàn.** Không load, không show, không có điểm kích hoạt. |
+| Interstitial | **Một điểm duy nhất:** ngay sau khi hoàn tất bước cuối của `/setup` (tạo kế hoạch xong), trước khi chuyển sang `/planner`. Không có điểm nào khác (không ở đổi tab, Back, "Tạo lại" kế hoạch, mở sheet...). Nút Bỏ qua của setup không kích hoạt. |
 | App Open | **Chưa làm** (chưa nằm trong phạm vi lần này; policy yêu cầu xem xét riêng khi dùng lúc mở app). |
 | Phạm vi view | Chỉ thêm vào **các view hiện có**: banner + native. Không thêm màn/route mới. |
 | Onboarding | **Có** native (màn ngôn ngữ và 3 slide giới thiệu). |
 | Khoá quảng cáo | Dùng **khoá test** hiện có trong `features/ads/adsConfig.ts` (`testAds: true`). Chưa cần khoá thật, chưa xử lý consent/UMP. |
-| Chưa làm trong đợt này | Rewarded, MREC, Offerwall, Interstitial, App Open, khoá thật, consent, gói "bỏ quảng cáo". |
+| Chưa làm trong đợt này | Rewarded, MREC, Offerwall, App Open, khoá thật, consent, gói "bỏ quảng cáo". |
 
 ## 2. Hiện trạng
 
@@ -73,7 +73,7 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 | Không quảng cáo cạnh nội dung bị cấm | App nấu ăn, không thuộc nhóm hạn chế. |
 | Test các tình huống offline/lỗi/nền-foreground/xoay | Mục 7. |
 | Privacy Policy, Data safety, consent (UMP), Families | **Chưa làm** (đang dùng khoá test); là điều kiện chặn phát hành, ghi ở mục 8. |
-| Interstitial/App Open | Không dùng ⇒ các điều khoản về Interstitial không áp dụng. |
+| Interstitial | Một điểm duy nhất, xem mục 9. App Open chưa dùng. |
 
 ## 4. Quảng cáo theo view
 
@@ -82,6 +82,7 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 | `/onboarding/language` | Banner + native small | Dưới danh sách ngôn ngữ, cách danh sách ≥ 24px, nằm trong vùng cuộn; chỉ hiện nếu viewport cao ≥ 760px. Banner ở dải riêng dưới cùng, cách nút Tiếp tục ≥ 12px (nút nằm trong phần trang đã trừ chỗ banner). Cách nút Tiếp tục bởi phần `flex-1` của trang. |
 | `/onboarding` (3 slide) | Banner + native small | **Một** native cố định giữa vùng slide và footer, ngoài vùng vuốt (không tải lại khi đổi slide); chỉ hiện nếu viewport cao ≥ 880px. Banner như màn ngôn ngữ. Cách footer (dots + nút) ≥ 16px. |
 | `/setup` (5 bước) | Banner | Không native (đang nhập dữ liệu cá nhân, wheel giờ). Banner ở dải riêng dưới cùng, nút Tiếp tục nằm trong phần trang đã trừ chỗ banner; ở màn fullscreen cuộn được, dải này dính đáy và có nền đặc để nội dung không trượt xuống dưới banner. |
+| Hoàn tất `/setup` | Interstitial | Tải sẵn khi vào `/setup` (không chờ tải lúc hiện). Hiện **một lần** sau khi kế hoạch đã tạo xong và cờ setup đã lưu; đóng ad (hoặc không có ad / lỗi / offline / app ở nền) thì đi tiếp ngay sang `/planner`. Dùng plugin AdMob trực tiếp với test unit của Google (nhánh `ShowInterstitial` của controller đi qua AppLovin MAX, app chưa cấu hình MAX). Chỉ chạy được trên thiết bị. |
 | Màn phủ "đang tạo kế hoạch" | Không | Banner tạm ẩn khi màn phủ hiện. |
 | `/home` | Banner + native small | Native sau khối "Kế hoạch hôm nay", tách khỏi thẻ món; hiện khi nằm trọn giữa header/avatar và tab bar. |
 | `/planner` | Banner | Lưới thao tác dày, không native. |
@@ -139,3 +140,7 @@ Sửa file hiện có: `main.ts` (gọi `initializeAds()`), `route-meta.d.ts` + 
 ## 8. Điều kiện trước khi phát hành (chưa làm)
 
 Khoá AdMob thật + `testAds: false`; consent theo khu vực (UMP); Privacy Policy; khai báo Data safety / App Privacy; kiểm tra Families nếu áp dụng; đối chiếu lại AdMob policies, Google Play Ads policy (và Apple nếu phát hành iOS); không còn cảnh báo `TEST ADS ON` trong console.
+
+## 9. Ghi chú Interstitial (setup)
+
+Đối chiếu policy §1: hiện ở điểm chuyển tiếp tự nhiên (hoàn tất một tác vụ), không lúc khởi chạy, không sau mỗi thao tác; không chặn điều hướng khi không có ad; chỉ `show` khi đã preload và app đang ở foreground; chỉ một lần trong cả luồng nên không có ad liên tiếp. Trước đây kế hoạch này có cân nhắc bỏ Interstitial; đã đổi theo yêu cầu mới, giới hạn ở điểm này. Khi sau này thêm điểm khác phải kèm giới hạn tần suất (ví dụ ≤ 1 lần/2 phút) vì đây là cấu hình UX chứ không phải ngưỡng bắt buộc của Google.
