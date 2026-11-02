@@ -19,7 +19,7 @@ async function next() {
 </script>
 
 <template>
-  <section class="mx-auto flex min-h-dvh max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
+  <section class="mx-auto flex min-h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
     <header class="flex items-center gap-2 font-semibold">
       <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-white">
         <Icon :icon="ICONS.silverware" class="text-xl" />
@@ -32,7 +32,7 @@ async function next() {
       <h1 class="mb-8 text-3xl font-semibold leading-tight">{{ t('onboarding.languageTitle') }}</h1>
 
       <LanguageList />
-      <InFeedAd name="onboarding-language" :min-viewport-height="700" class="mt-6" />
+      <InFeedAd name="onboarding-language" :min-viewport-height="760" class="mt-6" />
     </main>
 
     <button

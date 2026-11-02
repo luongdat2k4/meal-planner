@@ -38,7 +38,7 @@ router.isReady().then(() => {
 const showChrome = computed(() => ready.value && !route.meta.fullscreen)
 const showHeader = computed(() => showChrome.value && !route.meta.hideHeader)
 // The bottom banner: on routes that ask for it, and never over a sheet or the keyboard.
-const shellBanner = computed(() => showChrome.value && adsAvailable.value && !!route.meta.ads?.banner && !adsSuppressed.value)
+const shellBanner = computed(() => adsAvailable.value && !!route.meta.ads?.banner && !adsSuppressed.value)
 
 const pendingCount = computed(() => shopping.items.filter((item) => !item.checked).length)
 
@@ -170,7 +170,7 @@ router.afterEach((to) => {
     </nav>
 
     <!-- Room for the banner, which the SDK draws over the bottom edge of the screen. -->
-    <div v-if="showChrome" class="h-[var(--ad-bottom,0px)] shrink-0 transition-[height] duration-200" aria-hidden="true" />
+    <div v-if="route.meta.ads?.banner" data-ad-chrome="bottom" class="h-[var(--ad-bottom,0px)] shrink-0 transition-[height] duration-200" aria-hidden="true" />
 
     <BannerAd v-if="shellBanner" />
     <QuickSuggestSheet v-model="suggestOpen" />

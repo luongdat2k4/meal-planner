@@ -79,8 +79,8 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 
 | View / trạng thái | Quảng cáo | Vị trí và điều kiện |
 |---|---|---|
-| `/onboarding/language` | Native small | Dưới danh sách ngôn ngữ, cách danh sách ≥ 24px, nằm trong vùng cuộn; chỉ hiện nếu viewport cao ≥ 700px. Cách nút Tiếp tục bởi phần `flex-1` của trang. |
-| `/onboarding` (3 slide) | Native small | **Một** native cố định giữa vùng slide và footer, ngoài vùng vuốt (không tải lại khi đổi slide); chỉ hiện nếu viewport cao ≥ 820px. Cách footer (dots + nút) ≥ 16px. |
+| `/onboarding/language` | Banner + native small | Dưới danh sách ngôn ngữ, cách danh sách ≥ 24px, nằm trong vùng cuộn; chỉ hiện nếu viewport cao ≥ 760px. Banner ở dải riêng dưới cùng, cách nút Tiếp tục ≥ 12px (nút nằm trong phần trang đã trừ chỗ banner). Cách nút Tiếp tục bởi phần `flex-1` của trang. |
+| `/onboarding` (3 slide) | Banner + native small | **Một** native cố định giữa vùng slide và footer, ngoài vùng vuốt (không tải lại khi đổi slide); chỉ hiện nếu viewport cao ≥ 880px. Banner như màn ngôn ngữ. Cách footer (dots + nút) ≥ 16px. |
 | `/setup` và màn "đang tạo kế hoạch" | Không | Đang nhập dữ liệu cá nhân và wheel giờ. |
 | `/home` | Banner + native small | Native sau khối "Kế hoạch hôm nay", tách khỏi thẻ món; hiện khi nằm trọn giữa header/avatar và tab bar. |
 | `/planner` | Banner | Lưới thao tác dày, không native. |

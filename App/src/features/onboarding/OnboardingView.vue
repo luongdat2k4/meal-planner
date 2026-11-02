@@ -62,7 +62,7 @@ async function next() {
 </script>
 
 <template>
-  <section class="mx-auto flex min-h-dvh max-w-2xl flex-col pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
+  <section class="mx-auto flex min-h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
     <header class="flex items-center justify-between px-5">
       <span class="flex items-center gap-2 font-semibold">
         <span class="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-white">
@@ -98,7 +98,7 @@ async function next() {
       </article>
     </div>
 
-    <InFeedAd name="onboarding" :min-viewport-height="820" class="mx-5 mb-4" />
+    <InFeedAd name="onboarding" :min-viewport-height="880" class="mx-5 mb-4" />
 
     <footer class="space-y-5 px-5 pt-4">
       <div class="flex justify-center gap-2" role="tablist" :aria-label="t('onboarding.pages')">

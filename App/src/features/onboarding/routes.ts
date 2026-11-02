@@ -5,12 +5,12 @@ export const onboardingRoutes: RouteRecordRaw[] = [
     path: '/onboarding/language',
     name: 'welcome-language',
     component: () => import('./LanguageStepView.vue'),
-    meta: { title: 'nav.language', fullscreen: true },
+    meta: { title: 'nav.language', fullscreen: true, ads: { banner: true } },
   },
   {
     path: '/onboarding',
     name: 'onboarding',
     component: () => import('./OnboardingView.vue'),
-    meta: { title: 'nav.onboarding', fullscreen: true },
+    meta: { title: 'nav.onboarding', fullscreen: true, ads: { banner: true } },
   },
 ]
