@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
@@ -49,10 +49,23 @@ const suggestOpen = ref(false)
 
 // Tab screens keep their state (search text, scroll) while switching tabs.
 const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
+
+// Only the area between the title and the tab bar scrolls (`main`, marked data-scroll-root); the header and the tab
+// bar stay put. Tab screens come back at the scroll position they were left at, other screens start at the top.
+const scroller = ref<HTMLElement | null>(null)
+const scrollPositions = new Map<string, number>()
+router.beforeEach((_to, from) => {
+  if (scroller.value) scrollPositions.set(from.fullPath, scroller.value.scrollTop)
+})
+router.afterEach((to) => {
+  void nextTick(() => {
+    if (scroller.value) scroller.value.scrollTop = to.meta.tab ? (scrollPositions.get(to.fullPath) ?? 0) : 0
+  })
+})
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-dvh max-w-2xl flex-col">
+  <div class="mx-auto flex max-w-2xl flex-col" :class="showChrome ? 'h-dvh overflow-hidden' : 'min-h-dvh'">
     <!-- Paints the status bar area when the app is drawn edge to edge (no height where there is no status bar). -->
     <div
       data-ad-chrome="top"
@@ -61,7 +74,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       aria-hidden="true"
     />
 
-    <header v-if="showHeader" data-ad-chrome="top" class="glass sticky top-0 z-20 flex items-center gap-2 bg-white/40 px-5 pb-[15px] pt-[max(env(safe-area-inset-top),1rem)]">
+    <header v-if="showHeader" data-ad-chrome="top" class="flex shrink-0 items-center gap-2 px-5 pb-[15px] pt-[max(env(safe-area-inset-top),1rem)]">
       <RouterLink
         v-if="route.meta.backTo"
         :to="route.meta.backTo"
@@ -89,7 +102,12 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       </RouterLink>
     </div>
 
-    <main class="flex-1" :class="showChrome ? (showHeader ? 'px-5 pb-[calc(8rem+var(--ad-bottom,0px))] pt-3' : 'px-5 pb-[calc(8rem+var(--ad-bottom,0px))]') : ''">
+    <main
+      ref="scroller"
+      data-scroll-root
+      class="flex-1"
+      :class="showChrome ? (showHeader ? 'min-h-0 overflow-y-auto overscroll-contain px-5 pb-6 pt-3' : 'min-h-0 overflow-y-auto overscroll-contain px-5 pb-6') : ''"
+    >
       <RouterView v-slot="{ Component }">
         <KeepAlive :include="cachedViews">
           <component :is="Component" />
@@ -97,7 +115,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       </RouterView>
     </main>
 
-    <nav v-if="showChrome" data-ad-chrome="bottom" class="fixed inset-x-0 bottom-[var(--ad-bottom,0px)] z-30 transition-[bottom] duration-200 mx-auto max-w-2xl px-5 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
+    <nav v-if="showChrome" data-ad-chrome="bottom" class="z-30 w-full shrink-0 px-5 pb-[max(env(safe-area-inset-bottom),0.75rem)] pt-2">
       <ul class="flex items-center justify-between rounded-full bg-white p-2 shadow-[0_12px_36px_rgb(70_80_140/0.18)] ring-1 ring-white/70">
         <li v-for="tab in leftTabs" :key="tab.name">
           <RouterLink :to="{ name: tab.name }" custom v-slot="{ href, navigate, isActive }">
@@ -150,6 +168,9 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
         </li>
       </ul>
     </nav>
+
+    <!-- Room for the banner, which the SDK draws over the bottom edge of the screen. -->
+    <div v-if="showChrome" class="h-[var(--ad-bottom,0px)] shrink-0 transition-[height] duration-200" aria-hidden="true" />
 
     <BannerAd v-if="shellBanner" />
     <QuickSuggestSheet v-model="suggestOpen" />

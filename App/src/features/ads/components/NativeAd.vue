@@ -85,7 +85,7 @@ watch(canShow, track)
 
 onMounted(() => {
   if (!native) return
-  window.addEventListener('scroll', track, { passive: true })
+  document.addEventListener('scroll', track, { capture: true, passive: true })
   window.addEventListener('resize', track)
   // Layout shifts (a banner appearing, the list growing) move the box without a scroll.
   resizeObserver = new ResizeObserver(track)
@@ -106,7 +106,7 @@ onDeactivated(() => {
 
 onBeforeUnmount(() => {
   if (!native) return
-  window.removeEventListener('scroll', track)
+  document.removeEventListener('scroll', track, { capture: true })
   window.removeEventListener('resize', track)
   resizeObserver?.disconnect()
   unsubscribe?.()
