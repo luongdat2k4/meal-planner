@@ -46,7 +46,7 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       aria-hidden="true"
     />
 
-    <header v-if="showHeader" class="glass sticky top-0 z-20 flex items-center gap-2 bg-white/40 px-5 pb-3 pt-[max(env(safe-area-inset-top),1.25rem)]">
+    <header v-if="showHeader" class="glass sticky top-0 z-20 flex items-center gap-2 bg-white/40 px-5 pb-[15px] pt-[max(env(safe-area-inset-top),1rem)]">
       <RouterLink
         v-if="route.meta.backTo"
         :to="route.meta.backTo"
@@ -58,21 +58,22 @@ const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
       <h1 class="text-2xl font-semibold tracking-tight">{{ route.meta.title ? t(route.meta.title) : '' }}</h1>
     </header>
 
-    <!-- Profile and settings button: fixed, so it stays put while a tab screen scrolls. -->
+    <!-- Profile and settings button: fixed, so it stays put while a tab screen scrolls. The negative margin centres
+         the 44px button on the 32px title line of the header. -->
     <div
       v-if="showChrome && route.meta.tab"
-      class="pointer-events-none fixed inset-x-0 top-0 z-30 mx-auto flex max-w-2xl justify-end px-5 pt-[max(env(safe-area-inset-top),1.25rem)]"
+      class="pointer-events-none fixed inset-x-0 top-0 z-30 mx-auto flex max-w-2xl justify-end px-5 pt-[max(env(safe-area-inset-top),1rem)]"
     >
       <RouterLink
         :to="{ name: 'settings' }"
-        class="glass pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
+        class="glass pointer-events-auto -mt-1.5 flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card"
         :aria-label="t('nav.profile')"
       >
         <Icon :icon="ICONS.accountCircle" class="text-3xl text-gray-700" />
       </RouterLink>
     </div>
 
-    <main class="flex-1" :class="showChrome ? (showHeader ? 'px-5 pb-32 pt-2' : 'px-5 pb-32') : ''">
+    <main class="flex-1" :class="showChrome ? (showHeader ? 'px-5 pb-32 pt-3' : 'px-5 pb-32') : ''">
       <RouterView v-slot="{ Component }">
         <KeepAlive :include="cachedViews">
           <component :is="Component" />
