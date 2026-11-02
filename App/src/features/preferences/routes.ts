@@ -5,7 +5,7 @@ export const preferencesRoutes: RouteRecordRaw[] = [
     path: '/setup',
     name: 'setup',
     component: () => import('./SetupView.vue'),
-    meta: { title: 'nav.setup', fullscreen: true },
+    meta: { title: 'nav.setup', fullscreen: true, ads: { banner: true } },
   },
   {
     path: '/settings/preferences',

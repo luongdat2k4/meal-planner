@@ -81,7 +81,8 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 |---|---|---|
 | `/onboarding/language` | Banner + native small | Dưới danh sách ngôn ngữ, cách danh sách ≥ 24px, nằm trong vùng cuộn; chỉ hiện nếu viewport cao ≥ 760px. Banner ở dải riêng dưới cùng, cách nút Tiếp tục ≥ 12px (nút nằm trong phần trang đã trừ chỗ banner). Cách nút Tiếp tục bởi phần `flex-1` của trang. |
 | `/onboarding` (3 slide) | Banner + native small | **Một** native cố định giữa vùng slide và footer, ngoài vùng vuốt (không tải lại khi đổi slide); chỉ hiện nếu viewport cao ≥ 880px. Banner như màn ngôn ngữ. Cách footer (dots + nút) ≥ 16px. |
-| `/setup` và màn "đang tạo kế hoạch" | Không | Đang nhập dữ liệu cá nhân và wheel giờ. |
+| `/setup` (5 bước) | Banner | Không native (đang nhập dữ liệu cá nhân, wheel giờ). Banner ở dải riêng dưới cùng, nút Tiếp tục nằm trong phần trang đã trừ chỗ banner; ở màn fullscreen cuộn được, dải này dính đáy và có nền đặc để nội dung không trượt xuống dưới banner. |
+| Màn phủ "đang tạo kế hoạch" | Không | Banner tạm ẩn khi màn phủ hiện. |
 | `/home` | Banner + native small | Native sau khối "Kế hoạch hôm nay", tách khỏi thẻ món; hiện khi nằm trọn giữa header/avatar và tab bar. |
 | `/planner` | Banner | Lưới thao tác dày, không native. |
 | `/meals` | Banner | Không native: lưới ảo hoá đo chiều cao hàng, và native vẽ đè khi cuộn. |
@@ -129,7 +130,7 @@ Sửa file hiện có: `main.ts` (gọi `initializeAds()`), `route-meta.d.ts` + 
 
 ## 7. Tiêu chí nghiệm thu / kiểm thử (trên thiết bị)
 
-- Không có quảng cáo ở `/setup`, `/meals/:id`, khi bottom sheet mở, khi bàn phím hiện.
+- Không có quảng cáo ở `/meals/:id`, màn phủ "đang tạo kế hoạch", khi bottom sheet mở, khi bàn phím hiện.
 - Banner không che tab bar, nội dung cuối trang cuộn tới được, khoảng cách banner–tab bar ≥ 12px; kiểm tra máy có notch + thanh cử chỉ + thanh điều hướng 3 nút.
 - Native luôn có nhãn "Quảng cáo", AdChoices nhìn thấy, không đè lên header/tab bar/sheet, không có hơn một native mỗi view.
 - Offline, không fill, nền/foreground, xoay màn hình, màn thấp, đổi ngôn ngữ vn/en. Chỉ dùng test ads, không click/impression giả.

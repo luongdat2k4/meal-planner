@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import { t } from '../../shared/i18n'
+import { useOverlayFlag } from '../ads/adRuntime'
 import { regeneratePlan } from '../planner'
 import FieldDiet from './components/FieldDiet.vue'
 import FieldHousehold from './components/FieldHousehold.vue'
@@ -20,6 +21,8 @@ const steps = [{ key: 'household' }, { key: 'diet' }, { key: 'taste' }, { key: '
 
 const step = ref(Math.min(state.setupStep, steps.length - 1))
 const generating = ref(false)
+// The banner steps aside while the full-screen "creating your plan" cover is up.
+useOverlayFlag(generating)
 
 watch(step, (value) => {
   state.setupStep = value
@@ -50,7 +53,7 @@ function skip() {
 </script>
 
 <template>
-  <section class="mx-auto flex min-h-dvh max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-[max(env(safe-area-inset-top),1rem)]">
+  <section class="mx-auto flex min-h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-[max(env(safe-area-inset-top),1rem)]">
     <header class="flex items-center gap-3">
       <!-- Always laid out, hidden on the first step, so the progress bar sits in the same place on every step. -->
       <button
