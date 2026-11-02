@@ -37,6 +37,8 @@ export const router = createRouter({
 // then the app.
 router.beforeEach((to) => {
   const { state } = usePreferences()
+  // Setting the app up for the first time: this run never goes through /begin, not even once setup is finished.
+  if (!state.setupDone) begin.done = true
   if (state.setupDone) {
     // Opening the app again: the launch screen (ads, then a short countdown) comes before the app. On the web it is
     // only reachable by its address, so reloading while developing does not pass through it.

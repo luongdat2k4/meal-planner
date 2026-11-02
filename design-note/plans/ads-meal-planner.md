@@ -153,5 +153,5 @@ Luồng: mở app khi đã xong setup → router chuyển tới `/begin` (chỉ 
 - **Vì sao App Open chứ không phải Interstitial:** policy §1 cấm Interstitial lúc khởi chạy và chỉ ra App Open cho trường hợp này. Dùng plugin AdMob trực tiếp với test unit; sẽ cần ad unit App Open thật khi phát hành.
 - **Banner + native** hiện trên `/begin` (banner ở dải riêng dưới cùng, native nhỏ ở giữa, cách nút ≥ 24px); cả hai tạm ẩn khi App Open đang hiện.
 - **Không khoá người dùng:** không có ad / lỗi / offline / hết 5 giây thì bỏ qua App Open và vào ngay bước đếm; đếm ngược chỉ 3 giây, không phụ thuộc quảng cáo.
-- **Người mới** (chưa xong setup) không qua `/begin`. Quay lại từ nền (không khởi động nguội) cũng không qua `/begin`.
+- **Người mới** (chưa xong setup) không qua `/begin`, kể cả sau khi vừa setup xong trong cùng lần mở app. Quay lại từ nền (không khởi động nguội) cũng không qua `/begin`.
 - Nút đếm ngược chỉ là bước chờ ngắn, không có gì ép bấm vào quảng cáo; vẫn cần xem lại với Google Play về màn chờ trước khi vào app khi phát hành.
