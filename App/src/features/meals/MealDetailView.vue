@@ -148,10 +148,6 @@ function addToPlan() {
         <p v-if="allergenLabels" class="mt-2 text-xs text-amber-700">{{ t('meal.detail.mayContain', { list: allergenLabels }) }}</p>
       </div>
 
-      <p class="rounded-2xl bg-tile-yellow/60 p-3 text-xs text-amber-900">
-        {{ t('meal.detail.sampleNotice') }}
-      </p>
-
       <ul class="grid grid-cols-3 gap-2 text-center">
         <li class="rounded-3xl bg-tile-pink p-3">
           <Icon :icon="ICONS.timerOutline" class="mx-auto text-2xl text-gray-700" />

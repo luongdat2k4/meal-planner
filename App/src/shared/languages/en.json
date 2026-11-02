@@ -69,7 +69,6 @@
       "carbs": "Carbs: {value} g",
       "fat": "Fat: {value} g",
       "mayContain": "⚠️ May contain: {list}",
-      "sampleNotice": "The recipe, nutrition and ingredients below are sample data, not real data.",
       "prep": "Prep",
       "cook": "Cook",
       "level": "Level",
@@ -190,6 +189,14 @@
       "nothingToBuy": "Nothing left to buy",
       "copied": "List copied",
       "copyFailed": "Can't copy on this device"
+    },
+    "range": {
+      "title": "Shop for which days?",
+      "today": "Today",
+      "next3": "Next 3 days",
+      "rest": "Until end of week",
+      "mealCount": "{count} meals",
+      "noMeals": "No meals planned"
     }
   },
   "ingredients": {

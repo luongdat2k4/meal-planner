@@ -1,5 +1,5 @@
 import { findMeal, recipeLines } from '../../backend/catalog'
-import { weekStart } from '../../shared/date'
+import { toDayIndex, weekStart } from '../../shared/date'
 import { usePlanner } from './usePlanner'
 
 export interface PlanIngredient {
@@ -8,11 +8,20 @@ export interface PlanIngredient {
   unit: string
 }
 
-// Ingredients of this week's plan, merged by (ingredient, unit). Each meal's amount is scaled by
-// plan_item.servings / meal.base_servings, and pantry items (oil, salt, spices) are left out.
-export function planIngredients(): { weekStart: string; lines: PlanIngredient[] } {
+// Days of the week to shop for, as day indexes (0 = Monday), both ends included.
+export interface DayRange {
+  from: number
+  to: number
+}
+
+// Ingredients of this week's plan for the given days (the whole week when no range is given), merged by
+// (ingredient, unit). Each meal's amount is scaled by plan_item.servings / meal.base_servings, and pantry
+// items (oil, salt, spices) are left out.
+export function planIngredients(range?: DayRange): { weekStart: string; lines: PlanIngredient[] } {
   const totals = new Map<string, PlanIngredient>()
   for (const item of usePlanner().state.items) {
+    const day = toDayIndex(item.weekday)
+    if (range && (day < range.from || day > range.to)) continue
     const meal = findMeal(item.mealSlug)
     if (!meal) continue
     const scale = item.servings / meal.baseServings

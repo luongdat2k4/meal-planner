@@ -6,7 +6,8 @@ import { assetUrl } from '../../shared/assets'
 import { ICONS } from '../../shared/icons'
 import { t } from '../../shared/i18n'
 import { showToast } from '../../shared/toast'
-import { usePlanner } from '../planner'
+import { usePlanner, type DayRange } from '../planner'
+import ImportRangeSheet from './components/ImportRangeSheet.vue'
 import { STORES } from './stores'
 import { useShopping } from './useShopping'
 
@@ -38,8 +39,10 @@ function pickStore(id: string | null) {
   storeQuery.value = ''
 }
 
-function importFromPlan() {
-  const added = importPlan()
+const rangeOpen = ref(false)
+
+function importFromPlan(range: DayRange) {
+  const added = importPlan(range)
   showToast(added ? t('shopping.toast.importedFromPlan', { count: added }) : t('shopping.toast.planUpToDate'))
 }
 
@@ -130,7 +133,7 @@ async function copyList() {
         type="button"
         class="flex flex-1 items-center justify-center gap-2 rounded-full bg-brand-soft py-2.5 text-sm font-semibold text-brand disabled:opacity-40"
         :disabled="!plannedMealCount"
-        @click="importFromPlan"
+        @click="rangeOpen = true"
       >
         <Icon :icon="ICONS.calendarWeek" class="text-lg" /> {{ t('shopping.fromPlan') }}
       </button>
@@ -189,5 +192,7 @@ async function copyList() {
       <Icon :icon="ICONS.cart" class="mx-auto mb-3 text-5xl text-gray-300" />
       <p class="text-gray-500">{{ t('shopping.empty') }}</p>
     </div>
+
+    <ImportRangeSheet v-model="rangeOpen" @pick="importFromPlan" />
   </section>
 </template>

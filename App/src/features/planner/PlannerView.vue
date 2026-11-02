@@ -10,8 +10,9 @@ import BottomSheet from '../../shared/ui/BottomSheet.vue'
 import ChipTabs from '../../shared/ui/ChipTabs.vue'
 import { getMeal, getRecipe, type Meal } from '../meals'
 import { usePreferences } from '../preferences'
-import { useShopping } from '../shopping'
+import { ImportRangeSheet, useShopping } from '../shopping'
 import { planCost, regeneratePlan, swapCandidates } from './generatePlan'
+import type { DayRange } from './planIngredients'
 import { dayNames } from './types'
 import { usePlanner } from './usePlanner'
 import AppImage from '../../shared/ui/AppImage.vue'
@@ -56,8 +57,10 @@ async function generate() {
   showToast(t('planner.toast.generated'))
 }
 
-function addToShopping() {
-  const added = importFromPlan()
+const rangeOpen = ref(false)
+
+function addToShopping(range: DayRange) {
+  const added = importFromPlan(range)
   showToast(added ? t('planner.toast.addedToShopping', { count: added }) : t('planner.toast.shoppingUpToDate'))
 }
 
@@ -125,7 +128,7 @@ function applySwap(newMealId: string) {
           v-if="plannedMealCount"
           type="button"
           class="flex items-center justify-center gap-2 rounded-full bg-brand-soft px-4 py-3 text-sm font-semibold text-brand transition active:scale-[0.98]"
-          @click="addToShopping"
+          @click="rangeOpen = true"
         >
           <Icon :icon="ICONS.cart" class="text-lg" /> {{ t('planner.shop') }}
         </button>
@@ -203,5 +206,7 @@ function applySwap(newMealId: string) {
         </li>
       </ul>
     </BottomSheet>
+
+    <ImportRangeSheet v-model="rangeOpen" @pick="addToShopping" />
   </section>
 </template>

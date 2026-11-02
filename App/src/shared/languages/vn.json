@@ -69,7 +69,6 @@
       "carbs": "Tinh bột: {value} g",
       "fat": "Béo: {value} g",
       "mayContain": "⚠️ Có thể chứa: {list}",
-      "sampleNotice": "Công thức, dinh dưỡng và nguyên liệu bên dưới là dữ liệu mẫu, chưa phải dữ liệu thật.",
       "prep": "Chuẩn bị",
       "cook": "Nấu",
       "level": "Mức độ",
@@ -190,6 +189,14 @@
       "nothingToBuy": "Không còn món nào cần mua",
       "copied": "Đã sao chép danh sách",
       "copyFailed": "Không thể sao chép trên thiết bị này"
+    },
+    "range": {
+      "title": "Mua đồ cho những ngày nào?",
+      "today": "Hôm nay",
+      "next3": "3 ngày tới",
+      "rest": "Đến hết tuần",
+      "mealCount": "{count} món",
+      "noMeals": "Chưa có món nào"
     }
   },
   "ingredients": {

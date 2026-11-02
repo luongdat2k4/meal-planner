@@ -15,7 +15,7 @@ import {
 import { weekStart } from '../../shared/date'
 import { formatAmount } from '../../shared/format'
 import { createPersistedState } from '../../shared/persisted'
-import { planIngredients } from '../planner'
+import { planIngredients, type DayRange } from '../planner'
 import type { ShoppingItem } from './types'
 
 // shopping_item.store_id is per row, but the app picks one store for the whole list. The pick is kept here,
@@ -77,9 +77,10 @@ export function useShopping() {
     return importShopping(lines.map((line) => ({ ...line, weekStart: weekStart(), storeId: store.storeId })))
   }
 
-  // Gathers this week's plan into the list; lines already there are left as they are. Returns how many were new.
-  function importFromPlan(): number {
-    const { lines } = planIngredients()
+  // Gathers the plan for the given days into the list; lines already there are left as they are.
+  // Returns how many were new.
+  function importFromPlan(range?: DayRange): number {
+    const { lines } = planIngredients(range)
     return addIngredientItems(lines)
   }
 

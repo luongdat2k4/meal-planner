@@ -14,4 +14,7 @@ export function weekStart(date: Date = new Date()): string {
 
 // The app numbers days 0..6 from Monday; the database uses weekday 1..7.
 export const toWeekday = (dayIndex: number) => dayIndex + 1
+// Today as a day index, 0 = Monday.
+export const todayIndex = (date: Date = new Date()) => (date.getDay() + 6) % 7
+
 export const toDayIndex = (weekday: number) => weekday - 1
