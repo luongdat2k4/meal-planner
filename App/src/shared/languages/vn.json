@@ -92,6 +92,10 @@
       "backToList": "Về danh sách món"
     }
   },
+  "begin": {
+    "loading": "Đang tải quảng cáo...",
+    "enter": "Vào app"
+  },
   "ads": {
     "label": "Quảng cáo"
   },
@@ -122,6 +126,7 @@
     "meals": "Món ăn",
     "mealDetail": "Chi tiết món",
     "onboarding": "Giới thiệu",
+    "begin": "Chào mừng bạn quay trở lại",
     "planner": "Kế hoạch tuần",
     "plannerTab": "Lịch",
     "setup": "Thiết lập",

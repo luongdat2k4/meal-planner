@@ -92,6 +92,10 @@
       "backToList": "Back to meals"
     }
   },
+  "begin": {
+    "loading": "Loading ads...",
+    "enter": "Enter the app"
+  },
   "ads": {
     "label": "Ad"
   },
@@ -122,6 +126,7 @@
     "meals": "Meals",
     "mealDetail": "Meal details",
     "onboarding": "Welcome",
+    "begin": "Welcome back",
     "planner": "Weekly plan",
     "plannerTab": "Plan",
     "setup": "Setup",

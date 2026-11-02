@@ -109,3 +109,53 @@ export async function showInterstitial(): Promise<void> {
     interstitialShowing = false
   }
 }
+
+// App Open ad for the launch screen (/begin): the format meant for "ad when the app opens". Everything is bounded by
+// one deadline; a late ad is never shown over the next screen. Resolves when the ad is closed or at once when there
+// is nothing to show. Never rejects.
+const TEST_APP_OPEN = {
+  android: 'ca-app-pub-3940256099942544/9257395921',
+  ios: 'ca-app-pub-3940256099942544/5575463023',
+}
+
+function appOpenUnit(): string | undefined {
+  const platform = Capacitor.getPlatform() === 'ios' ? 'ios' : 'android'
+  return adsConfig.settings?.testAds === true ? TEST_APP_OPEN[platform] : adsConfig.keys?.admob?.[platform]?.openApp || undefined
+}
+
+function withTimeout<T>(operation: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined
+  return Promise.race([operation, new Promise<never>((_, reject) => (timer = setTimeout(() => reject(new Error('ad timed out')), ms)))]).finally(() =>
+    clearTimeout(timer),
+  )
+}
+
+let appOpenAttempted = false
+
+export async function showAppOpenAd(loadWindowMs: number, onShowing?: () => void): Promise<void> {
+  if (appOpenAttempted) return
+  appOpenAttempted = true
+  const deadline = Date.now() + loadWindowMs
+  const within = <T,>(operation: Promise<T>) => withTimeout(operation, Math.max(0, deadline - Date.now()))
+  let handle: { remove: () => Promise<void> | void } | undefined
+  try {
+    await within(initializeAds())
+    const adUnitId = appOpenUnit()
+    if (!adsAvailable.value || !adUnitId || document.hidden) return
+    if (await within(ALF.Instance.Ads.IsAdsRemoved())) return
+    await within(ALFAdMob.loadOpenAppAd({ adUnitId }))
+    if (!(await within(ALFAdMob.isOpenAppAdReady({ adUnitId }))).ready || document.hidden) return
+    let closed!: () => void
+    const dismissed = new Promise<void>((resolve) => (closed = resolve))
+    handle = await within(ALFAdMob.addListener('OnOpenAppAdDismissedEvent', () => closed()))
+    onShowing?.()
+    await ALFAdMob.showOpenAppAd({ adUnitId })
+    // Showing resolves when the ad opens; wait for it to be closed. The watchdog releases the caller if the native
+    // callback is lost.
+    await Promise.race([dismissed, new Promise((resolve) => setTimeout(resolve, 60_000))])
+  } catch (error) {
+    console.warn('[ads] launch ad skipped', error)
+  } finally {
+    void handle?.remove()
+  }
+}

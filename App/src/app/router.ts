@@ -4,6 +4,8 @@ import { ingredientsRoutes } from '../features/ingredients/routes'
 import { mealsRoutes } from '../features/meals/routes'
 import { onboardingRoutes } from '../features/onboarding/routes'
 import { plannerRoutes } from '../features/planner/routes'
+import { Capacitor } from '@capacitor/core'
+import { begin } from '../features/onboarding/begin'
 import { usePreferences } from '../features/preferences'
 import { preferencesRoutes } from '../features/preferences/routes'
 import { settingsRoutes } from '../features/settings/routes'
@@ -31,11 +33,15 @@ export const router = createRouter({
   scrollBehavior: (_to, _from, saved) => saved ?? { top: 0 },
 })
 
-// First run: language (/onboarding/language), welcome slides (/onboarding), preference questions (/setup),
+// Opening the app again (setup done): /begin, then the app. First run: language (/onboarding/language), welcome slides (/onboarding), preference questions (/setup),
 // then the app.
 router.beforeEach((to) => {
   const { state } = usePreferences()
   if (state.setupDone) {
+    // Opening the app again: the launch screen (ads, then a short countdown) comes before the app. On the web it is
+    // only reachable by its address, so reloading while developing does not pass through it.
+    if (to.name === 'begin') return undefined
+    if (!begin.done && Capacitor.isNativePlatform()) return { name: 'begin' }
     return to.name === 'welcome-language' || to.name === 'onboarding' || to.name === 'setup' ? { name: 'home' } : undefined
   }
   if (!state.languageChosen) return to.name === 'welcome-language' ? undefined : { name: 'welcome-language' }

@@ -10,11 +10,11 @@ Chính sách chính thức của AdMob, Google Play, Apple luôn là nguồn quy
 | Nội dung | Quyết định |
 |---|---|
 | Interstitial | **Một điểm duy nhất:** ngay sau khi hoàn tất bước cuối của `/setup` (tạo kế hoạch xong), trước khi chuyển sang `/planner`. Không có điểm nào khác (không ở đổi tab, Back, "Tạo lại" kế hoạch, mở sheet...). Nút Bỏ qua của setup không kích hoạt. |
-| App Open | **Chưa làm** (chưa nằm trong phạm vi lần này; policy yêu cầu xem xét riêng khi dùng lúc mở app). |
+| App Open | **Chỉ ở màn khởi động `/begin`** (xem mục 10). Không dùng ở nơi khác (không khi app quay lại từ nền). |
 | Phạm vi view | Chỉ thêm vào **các view hiện có**: banner + native. Không thêm màn/route mới. |
 | Onboarding | **Có** native (màn ngôn ngữ và 3 slide giới thiệu). |
 | Khoá quảng cáo | Dùng **khoá test** hiện có trong `features/ads/adsConfig.ts` (`testAds: true`). Chưa cần khoá thật, chưa xử lý consent/UMP. |
-| Chưa làm trong đợt này | Rewarded, MREC, Offerwall, App Open, khoá thật, consent, gói "bỏ quảng cáo". |
+| Chưa làm trong đợt này | Rewarded, MREC, Offerwall, khoá thật, consent, gói "bỏ quảng cáo". |
 
 ## 2. Hiện trạng
 
@@ -73,12 +73,13 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 | Không quảng cáo cạnh nội dung bị cấm | App nấu ăn, không thuộc nhóm hạn chế. |
 | Test các tình huống offline/lỗi/nền-foreground/xoay | Mục 7. |
 | Privacy Policy, Data safety, consent (UMP), Families | **Chưa làm** (đang dùng khoá test); là điều kiện chặn phát hành, ghi ở mục 8. |
-| Interstitial | Một điểm duy nhất, xem mục 9. App Open chưa dùng. |
+| Interstitial / App Open | Interstitial: một điểm (mục 9). App Open: một điểm ở `/begin` (mục 10). |
 
 ## 4. Quảng cáo theo view
 
 | View / trạng thái | Quảng cáo | Vị trí và điều kiện |
 |---|---|---|
+| `/begin` (mở lại app) | Banner + native small + App Open | Xem mục 10. |
 | `/onboarding/language` | Banner + native small | Dưới danh sách ngôn ngữ, cách danh sách ≥ 24px, nằm trong vùng cuộn; chỉ hiện nếu viewport cao ≥ 760px. Banner ở dải riêng dưới cùng, cách nút Tiếp tục ≥ 12px (nút nằm trong phần trang đã trừ chỗ banner). Cách nút Tiếp tục bởi phần `flex-1` của trang. |
 | `/onboarding` (3 slide) | Banner + native small | **Một** native cố định giữa vùng slide và footer, ngoài vùng vuốt (không tải lại khi đổi slide); chỉ hiện nếu viewport cao ≥ 880px. Banner như màn ngôn ngữ. Cách footer (dots + nút) ≥ 16px. |
 | `/setup` (5 bước) | Banner | Không native (đang nhập dữ liệu cá nhân, wheel giờ). Banner ở dải riêng dưới cùng, nút Tiếp tục nằm trong phần trang đã trừ chỗ banner; ở màn fullscreen cuộn được, dải này dính đáy và có nền đặc để nội dung không trượt xuống dưới banner. |
@@ -144,3 +145,13 @@ Khoá AdMob thật + `testAds: false`; consent theo khu vực (UMP); Privacy Pol
 ## 9. Ghi chú Interstitial (setup)
 
 Đối chiếu policy §1: hiện ở điểm chuyển tiếp tự nhiên (hoàn tất một tác vụ), không lúc khởi chạy, không sau mỗi thao tác; không chặn điều hướng khi không có ad; chỉ `show` khi đã preload và app đang ở foreground; chỉ một lần trong cả luồng nên không có ad liên tiếp. Trước đây kế hoạch này có cân nhắc bỏ Interstitial; đã đổi theo yêu cầu mới, giới hạn ở điểm này. Khi sau này thêm điểm khác phải kèm giới hạn tần suất (ví dụ ≤ 1 lần/2 phút) vì đây là cấu hình UX chứ không phải ngưỡng bắt buộc của Google.
+
+## 10. Màn khởi động `/begin` (mở lại app)
+
+Luồng: mở app khi đã xong setup → router chuyển tới `/begin` (chỉ trên app native, mỗi lần khởi động nguội một lần; trên web chỉ vào được bằng địa chỉ) → dòng chữ "Đang tải quảng cáo..." (cửa sổ chờ tối đa 5 giây, dòng chữ ẩn đi khi quảng cáo kết thúc) → **App Open** toàn màn hình → đếm 3, 2, 1 (nút khoá) → nút "Vào app" → `/home`.
+
+- **Vì sao App Open chứ không phải Interstitial:** policy §1 cấm Interstitial lúc khởi chạy và chỉ ra App Open cho trường hợp này. Dùng plugin AdMob trực tiếp với test unit; sẽ cần ad unit App Open thật khi phát hành.
+- **Banner + native** hiện trên `/begin` (banner ở dải riêng dưới cùng, native nhỏ ở giữa, cách nút ≥ 24px); cả hai tạm ẩn khi App Open đang hiện.
+- **Không khoá người dùng:** không có ad / lỗi / offline / hết 5 giây thì bỏ qua App Open và vào ngay bước đếm; đếm ngược chỉ 3 giây, không phụ thuộc quảng cáo.
+- **Người mới** (chưa xong setup) không qua `/begin`. Quay lại từ nền (không khởi động nguội) cũng không qua `/begin`.
+- Nút đếm ngược chỉ là bước chờ ngắn, không có gì ép bấm vào quảng cáo; vẫn cần xem lại với Google Play về màn chờ trước khi vào app khi phát hành.
