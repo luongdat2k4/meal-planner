@@ -76,6 +76,11 @@ export async function preloadInterstitial(): Promise<void> {
 
 let interstitialShowing = false
 
+// When a full-screen ad (interstitial or launch ad) was last on screen: the pacing of the interstitials in between
+// (see pacing.ts) counts from it.
+let lastFullScreenAt = 0
+export const msSinceFullScreenAd = () => Date.now() - lastFullScreenAt
+
 /** Resolves when the ad has been closed, or at once when there is nothing to show. Never rejects. */
 export async function showInterstitial(): Promise<void> {
   const adUnitId = interstitialUnit()
@@ -85,6 +90,7 @@ export async function showInterstitial(): Promise<void> {
     if (await ALF.Instance.Ads.IsAdsRemoved()) return
     if (!(await ALFAdMob.isInterstitialReady({ adUnitId })).ready) return
     interstitialShowing = true
+    lastFullScreenAt = Date.now()
     await new Promise<void>((resolve) => {
       // The watchdog releases the caller if the native callback is lost.
       const timer = setTimeout(resolve, 120_000)
@@ -149,6 +155,7 @@ export async function showAppOpenAd(loadWindowMs: number, onShowing?: () => void
     const dismissed = new Promise<void>((resolve) => (closed = resolve))
     handle = await within(ALFAdMob.addListener('OnOpenAppAdDismissedEvent', () => closed()))
     onShowing?.()
+    lastFullScreenAt = Date.now()
     await ALFAdMob.showOpenAppAd({ adUnitId })
     // Showing resolves when the ad opens; wait for it to be closed. The watchdog releases the caller if the native
     // callback is lost.

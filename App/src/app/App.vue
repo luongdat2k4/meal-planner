@@ -5,6 +5,7 @@ import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
 import { adsAvailable, adsSuppressed } from '../features/ads/adRuntime'
 import BannerAd from '../features/ads/components/BannerAd.vue'
+import { startInterstitialPacing } from '../features/ads/pacing'
 import QuickSuggestSheet from '../features/planner/components/QuickSuggestSheet.vue'
 import { lang, t } from '../shared/i18n'
 import { usePreferences } from '../features/preferences'
@@ -16,6 +17,8 @@ import { applyStatusBar, DEFAULT_STATUS_BAR } from './statusBar'
 
 const route = useRoute()
 const router = useRouter()
+// A full-screen ad every 2-3 screen changes, with a time cap (see features/ads/pacing.ts).
+startInterstitialPacing(router)
 const { state: shopping } = useShopping()
 
 // The status bar takes the colour of the current screen.
