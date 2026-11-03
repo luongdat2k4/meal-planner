@@ -79,7 +79,7 @@ function skip() {
       <button type="button" class="text-sm font-medium text-gray-500" @click="skip">{{ t('setup.skip') }}</button>
     </header>
 
-    <main class="flex-1 py-8">
+    <main class="py-8">
       <h1 class="mb-1 text-2xl font-bold leading-tight">{{ t(`setup.steps.${current.key}.title`) }}</h1>
       <p class="mb-6 text-gray-500">{{ t(`setup.steps.${current.key}.subtitle`) }}</p>
       <FieldHousehold v-if="current.key === 'household'" />
@@ -89,16 +89,16 @@ function skip() {
       <FieldReminder v-else-if="current.key === 'reminder'" />
     </main>
 
-    <InFeedAd name="setup" template="mrec" video :min-viewport-height="800" class="mb-4" />
-
     <button
       type="button"
-      class="w-full rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98] disabled:opacity-40"
+      class="mt-2 w-full rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98] disabled:opacity-40"
       :disabled="!canContinue || generating"
       @click="next"
     >
       {{ isLast ? t('setup.create') : t('setup.continue') }}
     </button>
+
+    <InFeedAd name="setup" template="mrec" video :min-viewport-height="800" class="mt-10" />
 
     <div v-if="generating" class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-surface">
       <div class="h-12 w-12 animate-spin rounded-full border-4 border-brand-soft border-t-brand" />
