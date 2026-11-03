@@ -6,6 +6,7 @@ import { ICONS } from '../../shared/icons'
 import { showToast } from '../../shared/toast'
 import { t } from '../../shared/i18n'
 import { preloadInterstitial, showInterstitial, useOverlayFlag } from '../ads/adRuntime'
+import InFeedAd from '../ads/components/InFeedAd.vue'
 import { regeneratePlan } from '../planner'
 import FieldDiet from './components/FieldDiet.vue'
 import FieldHousehold from './components/FieldHousehold.vue'
@@ -87,6 +88,8 @@ function skip() {
       <FieldSchedule v-else-if="current.key === 'schedule'" />
       <FieldReminder v-else-if="current.key === 'reminder'" />
     </main>
+
+    <InFeedAd name="setup" template="mrec" video :min-viewport-height="800" class="mb-4" />
 
     <button
       type="button"

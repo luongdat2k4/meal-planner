@@ -18,23 +18,27 @@ async function next() {
 </script>
 
 <template>
-  <section class="mx-auto flex min-h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
-    <header class="flex items-center gap-2 font-semibold">
+  <section class="mx-auto flex h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1.25rem)] pt-[max(env(safe-area-inset-top),1rem)]">
+    <header class="flex shrink-0 items-center gap-2 font-semibold">
       <img :src="assetUrl('icon-app-tile.png')" alt="" class="h-9 w-9" />
       Meal Planner
     </header>
 
-    <main class="flex-1 py-8">
+    <!-- Only the language list scrolls; the ad below it and the button stay in view. -->
+    <main class="flex min-h-0 flex-1 flex-col pt-8">
       <!-- The heading follows the language selected below, so there is no need for a second line. -->
-      <h1 class="mb-8 text-3xl font-semibold leading-tight">{{ t('onboarding.languageTitle') }}</h1>
+      <h1 class="mb-6 shrink-0 text-3xl font-semibold leading-tight">{{ t('onboarding.languageTitle') }}</h1>
 
-      <LanguageList />
-      <InFeedAd name="onboarding-language" :min-viewport-height="760" class="mt-6" />
+      <div data-scroll-root class="-mx-2 max-h-[min(46dvh,22rem)] min-h-0 overflow-y-auto overscroll-contain px-2 py-2">
+        <LanguageList />
+      </div>
+      <InFeedAd name="onboarding-language" :min-viewport-height="700" class="mt-4 shrink-0" />
     </main>
 
     <button
       type="button"
-      class="w-full rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98]"
+      data-ad-chrome="bottom"
+      class="mt-3 w-full shrink-0 rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98]"
       @click="next"
     >
       {{ t('onboarding.continue') }}

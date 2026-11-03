@@ -8,7 +8,7 @@ import { NATIVE_HEIGHTS } from '../adsConfig'
 // The Google Mobile Ads SDK draws the ad in a native view above the WebView, so this element only reserves the space
 // and reports its rect. That view cannot be clipped by the page, so it is shown only while the whole box sits between
 // the fixed top and bottom chrome (elements marked data-ad-chrome) and nothing else is open above the page.
-const props = withDefaults(defineProps<{ name: string; template?: NativeAdTemplate }>(), { template: 'small' })
+const props = withDefaults(defineProps<{ name: string; template?: NativeAdTemplate; video?: boolean }>(), { template: 'small', video: false })
 const emit = defineEmits<{ failed: [] }>()
 
 const height = computed(() => NATIVE_HEIGHTS[props.template])
@@ -57,7 +57,7 @@ async function sync() {
     } else if (shown) await ads.UpdateAdMobNativeAdRect(place, props.name)
     else {
       everShown = shown = true
-      const ok = await ads.ShowAdMobNativeAd({ slot: props.name, template: props.template, rect: place })
+      const ok = await ads.ShowAdMobNativeAd({ slot: props.name, template: props.template, rect: place, ...(props.video && { video: { startMuted: true } }) })
       if (!ok) fail()
     }
   } catch (error) {

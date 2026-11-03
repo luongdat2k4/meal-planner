@@ -32,12 +32,11 @@ body,
 }
 
 /* Hide the browser's default scrollbar; scrolling still works. */
-html {
+* {
   scrollbar-width: none;
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: none;
 }
 

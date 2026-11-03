@@ -8,9 +8,11 @@ import NativeAd from './NativeAd.vue'
 // A native ad placed in a screen. The "Ad" label sits outside the ad view so the placement stays identifiable even
 // before the creative loads; the SDK's own badge and AdChoices stay inside and are never covered. The space is
 // reserved up front, so the page does not shift when the ad fills, and a failed load takes label and box away.
+// `video` asks for a creative with video (use a template that has a media area: medium or mrec); it starts muted.
 // `minViewportHeight` keeps the ad off screens too short to hold it clear of the buttons.
-const props = withDefaults(defineProps<{ name: string; template?: NativeAdTemplate; minViewportHeight?: number }>(), {
+const props = withDefaults(defineProps<{ name: string; template?: NativeAdTemplate; video?: boolean; minViewportHeight?: number }>(), {
   template: 'small',
+  video: false,
   minViewportHeight: 0,
 })
 
@@ -24,6 +26,6 @@ const visible = computed(() => adsAvailable.value && !failed.value && viewportHe
 <template>
   <div v-if="visible" class="w-full">
     <p class="mb-1.5 px-1 text-xs font-medium text-gray-500">{{ t('ads.label') }}</p>
-    <NativeAd :name="name" :template="template" @failed="failed = true" />
+    <NativeAd :name="name" :template="template" :video="video" @failed="failed = true" />
   </div>
 </template>
