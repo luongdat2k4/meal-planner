@@ -1,0 +1,370 @@
+{
+  "day": {
+    "long": [
+      "月曜日",
+      "火曜日",
+      "水曜日",
+      "木曜日",
+      "金曜日",
+      "土曜日",
+      "日曜日"
+    ],
+    "short": [
+      "月",
+      "火",
+      "水",
+      "木",
+      "金",
+      "土",
+      "日"
+    ]
+  },
+  "meal": {
+    "favorite": "お気に入り",
+    "unfavorite": "お気に入りから削除",
+    "back": "戻る",
+    "level": {
+      "easy": "簡単",
+      "medium": "普通",
+      "hard": "難しい"
+    },
+    "macro": {
+      "energy": "エネルギー",
+      "protein": "たんぱく質",
+      "carbs": "炭水化物",
+      "fat": "脂質"
+    },
+    "steps": {
+      "progress": "{done}/{total} ステップ完了"
+    },
+    "ingredients": {
+      "addAria": "{name}を買い物リストに追加"
+    },
+    "chips": {
+      "all": "すべて",
+      "favorites": "♥ お気に入り"
+    },
+    "search": {
+      "placeholder": "料理を検索..."
+    },
+    "list": {
+      "suggested": "おすすめ",
+      "recent": "最近見た料理",
+      "popular": "人気の料理",
+      "results": "検索結果",
+      "count": "{count}件の料理",
+      "empty": "該当する料理が見つかりません。",
+      "slide": "おすすめ {n}"
+    },
+    "toast": {
+      "added": "{name}を買い物リストに追加しました",
+      "exists": "{name}はすでにリストにあります",
+      "addedMany": "{count}個の食材を買い物リストに追加しました",
+      "existsMany": "これらの食材はすでにリストにあります",
+      "addedToDay": "{day}に追加しました",
+      "viewPlan": "プランを見る"
+    },
+    "detail": {
+      "protein": "たんぱく質: {value} g",
+      "carbs": "炭水化物: {value} g",
+      "fat": "脂質: {value} g",
+      "mayContain": "⚠️ 含まれる可能性: {list}",
+      "prep": "下準備",
+      "cook": "調理",
+      "level": "難易度",
+      "servings": "人数分",
+      "estCost": "予想費用",
+      "nutrition": "1人分の栄養",
+      "ingredients": "材料",
+      "addAll": "すべて追加",
+      "method": "作り方",
+      "yours": "あなたの記録",
+      "cooked": "この料理を作った",
+      "markCooked": "作ったことにする",
+      "rating": "評価",
+      "dislike": "この料理は苦手",
+      "dislikeHint": "自動プランでは提案されません。",
+      "note": "メモ",
+      "notePlaceholder": "例: 辛さ控えめ、ねぎを追加...",
+      "addToPlan": "プランに追加",
+      "addToDay": "{day}に追加",
+      "notFound": "料理が見つかりません。",
+      "backToList": "料理一覧に戻る"
+    }
+  },
+  "begin": {
+    "loading": "広告を読み込み中...",
+    "enter": "アプリを開く"
+  },
+  "ads": {
+    "label": "広告"
+  },
+  "ui": {
+    "close": "閉じる",
+    "decrease": "減らす",
+    "increase": "増やす",
+    "rating": "評価",
+    "stars": "星{n}つ",
+    "hour": "時",
+    "minute": "分",
+    "done": "完了",
+    "am": "午前",
+    "pm": "午後",
+    "period": "午前または午後"
+  },
+  "format": {
+    "minutes": "{count}分",
+    "hours": "{count}時間",
+    "hoursMinutes": "{hours}時間{minutes}分"
+  },
+  "app": {
+    "dbError": "アプリのデータを開けませんでした。ページを再読み込みしてください。"
+  },
+  "nav": {
+    "home": "ホーム",
+    "ingredients": "食材",
+    "meals": "料理",
+    "mealDetail": "料理の詳細",
+    "onboarding": "ようこそ",
+    "begin": "おかえりなさい",
+    "planner": "週間プラン",
+    "plannerTab": "プラン",
+    "setup": "設定",
+    "preferences": "食の好み",
+    "settings": "設定",
+    "shopping": "買い物リスト",
+    "shoppingTab": "買い物",
+    "back": "戻る",
+    "profile": "プロフィールと設定",
+    "quickSuggest": "クイック提案",
+    "language": "言語",
+    "reminder": "プランのリマインダー"
+  },
+  "planner": {
+    "summary": {
+      "cost": "予想費用",
+      "budget": "週の予算",
+      "over": "予算を{amount}超えています。",
+      "emptyTitle": "今週のプランはまだありません",
+      "emptyHintBefore": "好みから自動作成するか、",
+      "emptyHintLink": "好みを編集"
+    },
+    "generating": "作成中...",
+    "regenerate": "再作成",
+    "generate": "プランを自動作成",
+    "shop": "買い物",
+    "clearDay": "この日をクリア",
+    "swap": "料理を交換",
+    "removeFromPlan": "プランから削除",
+    "noMealsForDay": "{day}の料理はありません。",
+    "pickMeals": "料理を選ぶ",
+    "noSwapOptions": "好みに合う代わりの料理がありません。",
+    "toast": {
+      "generated": "新しいプランを作成しました",
+      "addedToShopping": "{count}個の食材を買い物リストに追加しました",
+      "shoppingUpToDate": "買い物リストにはすべての食材がすでにあります",
+      "swapped": "料理を交換しました"
+    },
+    "quick": {
+      "title": "クイック提案",
+      "intro": "食事制限、アレルギー、予算、調理時間をもとにしています。",
+      "regenerateWeek": "週間プランを再作成",
+      "generateWeek": "週間プランを作成",
+      "confirmReplace": "現在のプランが置き換えられます。もう一度タップして確定します。",
+      "pickDays": "料理する日の料理を選ぶ",
+      "suggestOne": "料理を提案",
+      "suggestOneHint": "今のあなたに合う料理を見る",
+      "editPrefs": "好みを編集",
+      "editPrefsHint": "世帯人数、食事、予算...",
+      "weekGenerated": "新しい週間プランを作成しました",
+      "noSuggestion": "好みに合う料理が見つかりませんでした"
+    }
+  },
+  "shopping": {
+    "store": "スーパー",
+    "noStore": "未選択",
+    "searchStore": "スーパーを検索...",
+    "clearStore": "クリア",
+    "noStoreMatch": "該当するスーパーがありません。",
+    "addPlaceholder": "買うものを追加...",
+    "add": "追加",
+    "fromPlan": "プランから取り込む",
+    "copy": "コピー",
+    "pickFromIngredients": "食材から選ぶ",
+    "bought": "購入済み {checked}/{total}",
+    "clearBought": "購入済みを削除",
+    "uncheck": "チェックを外す",
+    "check": "購入済みにする",
+    "remove": "削除",
+    "empty": "買い物リストは空です。",
+    "copyHeader": "買い物リスト",
+    "toast": {
+      "importedFromPlan": "週間プランから{count}個の食材を追加しました",
+      "planUpToDate": "プランの食材はすべてリストにあります",
+      "nothingToBuy": "買うものはもうありません",
+      "copied": "リストをコピーしました",
+      "copyFailed": "この端末ではコピーできません"
+    },
+    "range": {
+      "title": "何日分を買いますか?",
+      "today": "今日",
+      "next3": "今後3日間",
+      "rest": "週末まで",
+      "mealCount": "{count}件の料理",
+      "noMeals": "料理の予定なし"
+    }
+  },
+  "ingredients": {
+    "search": "食材を検索...",
+    "count": "{count}個の食材",
+    "inList": "買い物リストに追加済み",
+    "addToList": "{name}を買い物リストに追加",
+    "notFound": "該当する食材が見つかりません。"
+  },
+  "home": {
+    "greeting": "こんにちは 👋",
+    "titleLine1": "今日は何を",
+    "titleLine2": "食べる?",
+    "search": "料理を検索...",
+    "weekGlance": "今週のまとめ",
+    "tilePlan": "プラン",
+    "tilePlanHint": "今週の料理",
+    "tileFavorites": "お気に入り",
+    "tileFavoritesHint": "保存した料理",
+    "tileShopping": "買い物",
+    "tileShoppingHint": "買うもの",
+    "todayPlan": "今日のプラン",
+    "viewAll": "すべて見る",
+    "noMealsToday": "今日の料理の予定はありません。",
+    "makePlan": "プランを作る"
+  },
+  "setup": {
+    "back": "戻る",
+    "skip": "スキップ",
+    "continue": "続ける",
+    "create": "プランを作成",
+    "generating": "プランを作成中...",
+    "ready": "週間プランができました",
+    "steps": {
+      "household": {
+        "title": "何人分を作りますか?",
+        "subtitle": "分量と費用の計算に使います。"
+      },
+      "diet": {
+        "title": "食事制限とアレルギー",
+        "subtitle": "合わない料理は提案されません。"
+      },
+      "taste": {
+        "title": "あなたの好み",
+        "subtitle": "好きなたんぱく源と最長の調理時間を選びます。"
+      },
+      "schedule": {
+        "title": "調理スケジュールと予算",
+        "subtitle": "今週料理する日を選びます。"
+      },
+      "reminder": {
+        "title": "プランのリマインダー",
+        "subtitle": "毎週のリマインダーで忘れずに計画できます。"
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "新しい好みでプランを再作成しました",
+    "intro": "変更は自動で保存されます。新しい好みを反映するにはプランを再作成してください。",
+    "household": "世帯人数",
+    "diet": "食事",
+    "taste": "好み",
+    "schedule": "調理スケジュールと予算",
+    "reminder": "リマインダー",
+    "generating": "作成中...",
+    "save": "保存してプランを再作成",
+    "cookTime": {
+      "15": "15分以内",
+      "30": "30分以内",
+      "45": "45分以内",
+      "60": "1時間以内",
+      "90": "制限なし"
+    },
+    "fieldDiet": {
+      "diet": "食事",
+      "allergy": "アレルギー"
+    },
+    "fieldHousehold": {
+      "note": "1食あたり{people}人で食べます。分量と費用はこの人数で計算されます。"
+    },
+    "fieldReminder": {
+      "title": "毎週プランを立てるよう通知",
+      "subtitle": "選んだ曜日と時間に通知が届きます。",
+      "toggle": "週間プランのリマインダー",
+      "day": "通知する曜日",
+      "time": "通知時刻",
+      "minDay": "1日以上選んでください。",
+      "webNote": "通知はスマホアプリから送られます。ここでは設定のみ保存されます。"
+    },
+    "fieldSchedule": {
+      "days": "料理する日",
+      "minDay": "1日以上選択してください。",
+      "budget": "週の予算",
+      "perPerson": "1食1人あたり約{amount}です。"
+    },
+    "fieldTaste": {
+      "protein": "好きなたんぱく源は?",
+      "anyNote": "何も選ばない場合はどの料理でもOKです。",
+      "maxTime": "最長の調理時間"
+    }
+  },
+  "onboarding": {
+    "skip": "スキップ",
+    "continue": "続ける",
+    "start": "はじめる",
+    "pages": "紹介ページ",
+    "page": "ページ {n}",
+    "slides": {
+      "suggest": {
+        "title": "好みに合う料理",
+        "text": "食事、アレルギー、好きなたんぱく源を選ぶと、アプリがぴったりの料理を選びます。",
+        "chip": "あなた専用"
+      },
+      "plan": {
+        "title": "あっという間に週間プラン",
+        "text": "予算と調理時間に合わせてプランを作り、ワンタップで料理を交換できます。",
+        "chip": "1週間分が完成"
+      },
+      "shop": {
+        "title": "すっきり買い物",
+        "text": "1週間の食材を1つのリストにまとめます。店を選んで、買ったらチェックしましょう。",
+        "chip": "リストは1つだけ"
+      }
+    },
+    "languageTitle": "言語を選択"
+  },
+  "settings": {
+    "preferenceSummary": "{people}人 · 調理{days}日 · {budget}/週",
+    "reminderOn": "{days} {time}",
+    "reminderOff": "オフ",
+    "stats": {
+      "meals": "料理",
+      "ingredients": "食材",
+      "stores": "店舗",
+      "planned": "予定の料理"
+    },
+    "resetConfirm": "この端末のすべてのデータ（プラン、買い物、お気に入り、好み）を削除しますか?",
+    "resetDone": "データを削除しました",
+    "preferences": "食の好み",
+    "language": "言語",
+    "languageSubtitle": "画面、料理名、食材、作り方",
+    "reminder": "プランのリマインダー",
+    "reminderToggle": "週間プランのリマインダー",
+    "reset": "この端末のデータを削除",
+    "cancel": "キャンセル",
+    "resetAction": "データを削除"
+  },
+  "reminder": {
+    "title": "献立を立てる時間です",
+    "body": "今週の料理を計画して、買い物リストを作りましょう。",
+    "channel": "プランのリマインダー",
+    "denied": "通知がブロックされています。スマホの設定で許可してください。",
+    "test": "テスト通知を送信",
+    "testSent": "テスト通知を送信しました"
+  }
+}

@@ -1,0 +1,370 @@
+{
+  "day": {
+    "long": [
+      "Pazartesi",
+      "Salı",
+      "Çarşamba",
+      "Perşembe",
+      "Cuma",
+      "Cumartesi",
+      "Pazar"
+    ],
+    "short": [
+      "Pzt",
+      "Sal",
+      "Çar",
+      "Per",
+      "Cum",
+      "Cmt",
+      "Paz"
+    ]
+  },
+  "meal": {
+    "favorite": "Favori",
+    "unfavorite": "Favorilerden çıkar",
+    "back": "Geri",
+    "level": {
+      "easy": "Kolay",
+      "medium": "Orta",
+      "hard": "Zor"
+    },
+    "macro": {
+      "energy": "Enerji",
+      "protein": "Protein",
+      "carbs": "Karbonhidrat",
+      "fat": "Yağ"
+    },
+    "steps": {
+      "progress": "{done}/{total} adım tamamlandı"
+    },
+    "ingredients": {
+      "addAria": "{name} öğesini alışveriş listesine ekle"
+    },
+    "chips": {
+      "all": "Tümü",
+      "favorites": "♥ Favoriler"
+    },
+    "search": {
+      "placeholder": "Yemek ara..."
+    },
+    "list": {
+      "suggested": "Sana özel öneriler",
+      "recent": "Son görüntülenenler",
+      "popular": "Popüler yemekler",
+      "results": "Sonuçlar",
+      "count": "{count} yemek",
+      "empty": "Eşleşen yemek bulunamadı.",
+      "slide": "Öneri {n}"
+    },
+    "toast": {
+      "added": "{name} alışveriş listene eklendi",
+      "exists": "{name} zaten listede",
+      "addedMany": "{count} malzeme alışveriş listene eklendi",
+      "existsMany": "Bu malzemeler zaten listede",
+      "addedToDay": "{day} gününe eklendi",
+      "viewPlan": "Planı gör"
+    },
+    "detail": {
+      "protein": "Protein: {value} g",
+      "carbs": "Karbonhidrat: {value} g",
+      "fat": "Yağ: {value} g",
+      "mayContain": "⚠️ İçerebilir: {list}",
+      "prep": "Hazırlık",
+      "cook": "Pişirme",
+      "level": "Seviye",
+      "servings": "Porsiyon",
+      "estCost": "Tahmini maliyet",
+      "nutrition": "Porsiyon başına besin değeri",
+      "ingredients": "Malzemeler",
+      "addAll": "Hepsini ekle",
+      "method": "Yapılışı",
+      "yours": "Senin",
+      "cooked": "Bu yemeği pişirdim",
+      "markCooked": "Pişirildi olarak işaretle",
+      "rating": "Puan",
+      "dislike": "Bu yemeği beğenmedim",
+      "dislikeHint": "Otomatik planlarda önerilmeyecek.",
+      "note": "Notlar",
+      "notePlaceholder": "ör. az acılı, taze soğan ekle...",
+      "addToPlan": "Plana ekle",
+      "addToDay": "{day} gününe ekle",
+      "notFound": "Yemek bulunamadı.",
+      "backToList": "Yemeklere dön"
+    }
+  },
+  "begin": {
+    "loading": "Reklamlar yükleniyor...",
+    "enter": "Uygulamaya gir"
+  },
+  "ads": {
+    "label": "Reklam"
+  },
+  "ui": {
+    "close": "Kapat",
+    "decrease": "Azalt",
+    "increase": "Artır",
+    "rating": "Puan",
+    "stars": "{n} yıldız",
+    "hour": "Saat",
+    "minute": "Dakika",
+    "done": "Tamam",
+    "am": "ÖÖ",
+    "pm": "ÖS",
+    "period": "ÖÖ veya ÖS"
+  },
+  "format": {
+    "minutes": "{count} dk",
+    "hours": "{count} sa",
+    "hoursMinutes": "{hours} sa {minutes} dk"
+  },
+  "app": {
+    "dbError": "Uygulama verileri açılamadı. Lütfen sayfayı yenile."
+  },
+  "nav": {
+    "home": "Ana sayfa",
+    "ingredients": "Malzemeler",
+    "meals": "Yemekler",
+    "mealDetail": "Yemek ayrıntıları",
+    "onboarding": "Hoş geldin",
+    "begin": "Tekrar hoş geldin",
+    "planner": "Haftalık plan",
+    "plannerTab": "Plan",
+    "setup": "Kurulum",
+    "preferences": "Yemek tercihleri",
+    "settings": "Ayarlar",
+    "shopping": "Alışveriş listesi",
+    "shoppingTab": "Alışveriş",
+    "back": "Geri",
+    "profile": "Profil ve ayarlar",
+    "quickSuggest": "Hızlı öneriler",
+    "language": "Dil",
+    "reminder": "Planlama hatırlatıcısı"
+  },
+  "planner": {
+    "summary": {
+      "cost": "Tahmini maliyet",
+      "budget": "Haftalık bütçe",
+      "over": "Bütçe {amount} aşıldı.",
+      "emptyTitle": "Bu hafta için henüz plan yok",
+      "emptyHintBefore": "Tercihlerine göre bir plan oluştur veya",
+      "emptyHintLink": "tercihleri düzenle"
+    },
+    "generating": "Oluşturuluyor...",
+    "regenerate": "Yeniden oluştur",
+    "generate": "Planı otomatik oluştur",
+    "shop": "Alışveriş",
+    "clearDay": "Günü temizle",
+    "swap": "Yemeği değiştir",
+    "removeFromPlan": "Plandan çıkar",
+    "noMealsForDay": "{day} için planlanmış yemek yok.",
+    "pickMeals": "Yemek seç",
+    "noSwapOptions": "Tercihlerine uyan başka yemek yok.",
+    "toast": {
+      "generated": "Yeni plan oluşturuldu",
+      "addedToShopping": "{count} malzeme alışveriş listene eklendi",
+      "shoppingUpToDate": "Alışveriş listende tüm malzemeler zaten var",
+      "swapped": "Yemek değiştirildi"
+    },
+    "quick": {
+      "title": "Hızlı öneriler",
+      "intro": "Diyetine, alerjilerine, bütçene ve pişirme süreni temel alır.",
+      "regenerateWeek": "Haftalık planı yeniden oluştur",
+      "generateWeek": "Haftalık plan oluştur",
+      "confirmReplace": "Bu, mevcut planını değiştirecek. Onaylamak için tekrar dokun.",
+      "pickDays": "Yemek yaptığın günler için yemek seç",
+      "suggestOne": "Bir yemek öner",
+      "suggestOneHint": "Şu an sana uygun bir yemek gör",
+      "editPrefs": "Tercihleri düzenle",
+      "editPrefsHint": "Kişi sayısı, diyet, bütçe...",
+      "weekGenerated": "Yeni haftalık plan oluşturuldu",
+      "noSuggestion": "Tercihlerine uyan bir yemek bulunamadı"
+    }
+  },
+  "shopping": {
+    "store": "Market",
+    "noStore": "Seçilmedi",
+    "searchStore": "Market ara...",
+    "clearStore": "Temizle",
+    "noStoreMatch": "Eşleşen market yok.",
+    "addPlaceholder": "Alınacak bir ürün ekle...",
+    "add": "Ekle",
+    "fromPlan": "Plandan aktar",
+    "copy": "Kopyala",
+    "pickFromIngredients": "Malzemelerden seç",
+    "bought": "Alınan {checked}/{total}",
+    "clearBought": "Alınanları temizle",
+    "uncheck": "İşareti kaldır",
+    "check": "Alındı olarak işaretle",
+    "remove": "Kaldır",
+    "empty": "Alışveriş listen boş.",
+    "copyHeader": "Alışveriş listesi",
+    "toast": {
+      "importedFromPlan": "Haftalık planından {count} malzeme eklendi",
+      "planUpToDate": "Listende plandaki tüm malzemeler zaten var",
+      "nothingToBuy": "Alınacak bir şey kalmadı",
+      "copied": "Liste kopyalandı",
+      "copyFailed": "Bu cihazda kopyalanamıyor"
+    },
+    "range": {
+      "title": "Hangi günler için alışveriş?",
+      "today": "Bugün",
+      "next3": "Önümüzdeki 3 gün",
+      "rest": "Hafta sonuna kadar",
+      "mealCount": "{count} yemek",
+      "noMeals": "Planlanmış yemek yok"
+    }
+  },
+  "ingredients": {
+    "search": "Malzeme ara...",
+    "count": "{count} malzeme",
+    "inList": "Alışveriş listende zaten var",
+    "addToList": "{name} öğesini alışveriş listesine ekle",
+    "notFound": "Eşleşen malzeme bulunamadı."
+  },
+  "home": {
+    "greeting": "Merhaba 👋",
+    "titleLine1": "Bugün ne",
+    "titleLine2": "yesek?",
+    "search": "Yemek ara...",
+    "weekGlance": "Bu haftaya genel bakış",
+    "tilePlan": "Plan",
+    "tilePlanHint": "bu haftaki yemek",
+    "tileFavorites": "Favoriler",
+    "tileFavoritesHint": "kayıtlı yemek",
+    "tileShopping": "Alışveriş",
+    "tileShoppingHint": "alınacak ürün",
+    "todayPlan": "Bugünün planı",
+    "viewAll": "Tümünü gör",
+    "noMealsToday": "Bugün için planlanmış yemeğin yok.",
+    "makePlan": "Plan yap"
+  },
+  "setup": {
+    "back": "Geri",
+    "skip": "Atla",
+    "continue": "Devam",
+    "create": "Planımı oluştur",
+    "generating": "Planın oluşturuluyor...",
+    "ready": "Haftalık planın hazır",
+    "steps": {
+      "household": {
+        "title": "Kaç kişi için yemek yapıyorsun?",
+        "subtitle": "Porsiyon ve maliyet hesabı için kullanılır."
+      },
+      "diet": {
+        "title": "Diyet ve alerjiler",
+        "subtitle": "Uygun olmayan yemekler önerilmeyecek."
+      },
+      "taste": {
+        "title": "Damak tadın",
+        "subtitle": "Sevdiğin proteinleri ve en uzun pişirme süresini seç."
+      },
+      "schedule": {
+        "title": "Yemek programı ve bütçe",
+        "subtitle": "Bu hafta yemek yapmak istediğin günleri seç."
+      },
+      "reminder": {
+        "title": "Planlama hatırlatıcısı",
+        "subtitle": "Hiç kaçırmamak için haftalık hatırlatma al."
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "Plan yeni tercihlerinle yeniden oluşturuldu",
+    "intro": "Değişiklikler otomatik kaydedilir. Yeni tercihleri uygulamak için planı yeniden oluştur.",
+    "household": "Hane halkı",
+    "diet": "Diyet",
+    "taste": "Damak tadı",
+    "schedule": "Yemek programı ve bütçe",
+    "reminder": "Hatırlatıcı",
+    "generating": "Oluşturuluyor...",
+    "save": "Kaydet ve planı yeniden oluştur",
+    "cookTime": {
+      "15": "≤ 15 dk",
+      "30": "≤ 30 dk",
+      "45": "≤ 45 dk",
+      "60": "≤ 1 saat",
+      "90": "Sınırsız"
+    },
+    "fieldDiet": {
+      "diet": "Diyet",
+      "allergy": "Alerjiler"
+    },
+    "fieldHousehold": {
+      "note": "Her öğünde {people} kişi yemek yer. Porsiyon ve maliyet bu sayıyla çarpılır."
+    },
+    "fieldReminder": {
+      "title": "Her hafta plan yapmamı hatırlat",
+      "subtitle": "Seçtiğin gün ve saatte bildirim al.",
+      "toggle": "Haftalık planlama hatırlatıcısı",
+      "day": "Şu günlerde hatırlat",
+      "time": "Hatırlatma saati",
+      "minDay": "En az bir gün seç.",
+      "webNote": "Bildirimleri telefon uygulaması gönderir. Burada ayar yalnızca kaydedilir."
+    },
+    "fieldSchedule": {
+      "days": "Yemek yaptığın günler",
+      "minDay": "Lütfen en az bir gün seç.",
+      "budget": "Haftalık bütçe",
+      "perPerson": "Öğün başına kişi başı yaklaşık {amount}."
+    },
+    "fieldTaste": {
+      "protein": "Hangi proteinleri seversin?",
+      "anyNote": "Hiçbir şey seçmemek, her yemeğin uygun olduğu anlamına gelir.",
+      "maxTime": "En uzun pişirme süresi"
+    }
+  },
+  "onboarding": {
+    "skip": "Atla",
+    "continue": "Devam",
+    "start": "Başla",
+    "pages": "Tanıtım sayfaları",
+    "page": "Sayfa {n}",
+    "slides": {
+      "suggest": {
+        "title": "Damak tadına uygun yemekler",
+        "text": "Diyetini, alerjilerini ve sevdiğin proteinleri seç. Uygulama sana uygun yemekleri seçer.",
+        "chip": "Sana özel"
+      },
+      "plan": {
+        "title": "Saniyeler içinde haftalık plan",
+        "text": "Bütçene ve pişirme sürene göre plan oluştur, yemekleri tek dokunuşla değiştir.",
+        "chip": "Tüm hafta hazır"
+      },
+      "shop": {
+        "title": "Düzenli market alışverişi",
+        "text": "Haftanın malzemeleri tek listede toplanır. Bir market seç ve aldıkça işaretle.",
+        "chip": "Tek bir liste"
+      }
+    },
+    "languageTitle": "Dilini seç"
+  },
+  "settings": {
+    "preferenceSummary": "{people} kişi · {days} yemek günü · {budget}/hafta",
+    "reminderOn": "{days}, saat {time}",
+    "reminderOff": "Kapalı",
+    "stats": {
+      "meals": "Yemekler",
+      "ingredients": "Malzemeler",
+      "stores": "Marketler",
+      "planned": "Planlanan yemekler"
+    },
+    "resetConfirm": "Bu cihazdaki tüm veriler silinsin mi (plan, alışveriş, favoriler, tercihler)?",
+    "resetDone": "Veriler silindi",
+    "preferences": "Yemek tercihleri",
+    "language": "Dil",
+    "languageSubtitle": "Arayüz, yemek adları, malzemeler ve pişirme adımları",
+    "reminder": "Planlama hatırlatıcısı",
+    "reminderToggle": "Haftalık planlama hatırlatıcısı",
+    "reset": "Bu cihazdaki verileri sil",
+    "cancel": "İptal",
+    "resetAction": "Verileri sil"
+  },
+  "reminder": {
+    "title": "Yemeklerini planlama zamanı",
+    "body": "Bu haftanın yemeklerini planla ve alışveriş listeni oluştur.",
+    "channel": "Planlama hatırlatıcısı",
+    "denied": "Bildirimler engellendi. Telefon ayarlarından izin ver.",
+    "test": "Test bildirimi gönder",
+    "testSent": "Test bildirimi yolda"
+  }
+}

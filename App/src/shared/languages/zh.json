@@ -1,0 +1,370 @@
+{
+  "day": {
+    "long": [
+      "星期一",
+      "星期二",
+      "星期三",
+      "星期四",
+      "星期五",
+      "星期六",
+      "星期日"
+    ],
+    "short": [
+      "周一",
+      "周二",
+      "周三",
+      "周四",
+      "周五",
+      "周六",
+      "周日"
+    ]
+  },
+  "meal": {
+    "favorite": "收藏",
+    "unfavorite": "取消收藏",
+    "back": "返回",
+    "level": {
+      "easy": "简单",
+      "medium": "中等",
+      "hard": "困难"
+    },
+    "macro": {
+      "energy": "热量",
+      "protein": "蛋白质",
+      "carbs": "碳水",
+      "fat": "脂肪"
+    },
+    "steps": {
+      "progress": "已完成 {done}/{total} 步"
+    },
+    "ingredients": {
+      "addAria": "将{name}加入购物清单"
+    },
+    "chips": {
+      "all": "全部",
+      "favorites": "♥ 收藏"
+    },
+    "search": {
+      "placeholder": "搜索菜肴..."
+    },
+    "list": {
+      "suggested": "为你推荐",
+      "recent": "最近浏览",
+      "popular": "热门菜肴",
+      "results": "结果",
+      "count": "{count} 道菜",
+      "empty": "未找到匹配的菜肴。",
+      "slide": "推荐 {n}"
+    },
+    "toast": {
+      "added": "已将{name}加入购物清单",
+      "exists": "{name}已在清单中",
+      "addedMany": "已将 {count} 种食材加入购物清单",
+      "existsMany": "这些食材已在清单中",
+      "addedToDay": "已添加到{day}",
+      "viewPlan": "查看计划"
+    },
+    "detail": {
+      "protein": "蛋白质：{value} 克",
+      "carbs": "碳水：{value} 克",
+      "fat": "脂肪：{value} 克",
+      "mayContain": "⚠️ 可能含有：{list}",
+      "prep": "准备",
+      "cook": "烹饪",
+      "level": "难度",
+      "servings": "份数",
+      "estCost": "预估费用",
+      "nutrition": "每份营养",
+      "ingredients": "食材",
+      "addAll": "全部添加",
+      "method": "做法",
+      "yours": "我的",
+      "cooked": "已做过这道菜",
+      "markCooked": "标记为已做",
+      "rating": "评分",
+      "dislike": "不喜欢这道菜",
+      "dislikeHint": "自动计划中将不再推荐。",
+      "note": "备注",
+      "notePlaceholder": "例如：少辣，加葱花...",
+      "addToPlan": "加入计划",
+      "addToDay": "添加到{day}",
+      "notFound": "未找到该菜肴。",
+      "backToList": "返回菜肴列表"
+    }
+  },
+  "begin": {
+    "loading": "正在加载广告...",
+    "enter": "进入应用"
+  },
+  "ads": {
+    "label": "广告"
+  },
+  "ui": {
+    "close": "关闭",
+    "decrease": "减少",
+    "increase": "增加",
+    "rating": "评分",
+    "stars": "{n} 星",
+    "hour": "时",
+    "minute": "分",
+    "done": "完成",
+    "am": "上午",
+    "pm": "下午",
+    "period": "上午或下午"
+  },
+  "format": {
+    "minutes": "{count} 分钟",
+    "hours": "{count} 小时",
+    "hoursMinutes": "{hours} 小时 {minutes} 分钟"
+  },
+  "app": {
+    "dbError": "无法打开应用数据，请重新加载页面。"
+  },
+  "nav": {
+    "home": "首页",
+    "ingredients": "食材",
+    "meals": "菜肴",
+    "mealDetail": "菜肴详情",
+    "onboarding": "欢迎",
+    "begin": "欢迎回来",
+    "planner": "每周计划",
+    "plannerTab": "计划",
+    "setup": "设置",
+    "preferences": "饮食偏好",
+    "settings": "设置",
+    "shopping": "购物清单",
+    "shoppingTab": "购物",
+    "back": "返回",
+    "profile": "个人资料和设置",
+    "quickSuggest": "快速推荐",
+    "language": "语言",
+    "reminder": "计划提醒"
+  },
+  "planner": {
+    "summary": {
+      "cost": "预估费用",
+      "budget": "每周预算",
+      "over": "超出预算 {amount}。",
+      "emptyTitle": "本周还没有计划",
+      "emptyHintBefore": "根据你的偏好生成一个，或",
+      "emptyHintLink": "编辑偏好"
+    },
+    "generating": "生成中...",
+    "regenerate": "重新生成",
+    "generate": "自动生成计划",
+    "shop": "购物",
+    "clearDay": "清空当天",
+    "swap": "更换菜肴",
+    "removeFromPlan": "从计划中移除",
+    "noMealsForDay": "{day}没有安排菜肴。",
+    "pickMeals": "选择菜肴",
+    "noSwapOptions": "没有符合你偏好的替换菜肴。",
+    "toast": {
+      "generated": "已创建新计划",
+      "addedToShopping": "已将 {count} 种食材加入购物清单",
+      "shoppingUpToDate": "购物清单已包含所有食材",
+      "swapped": "已更换菜肴"
+    },
+    "quick": {
+      "title": "快速推荐",
+      "intro": "根据你的饮食、过敏、预算和烹饪时间。",
+      "regenerateWeek": "重新生成每周计划",
+      "generateWeek": "生成每周计划",
+      "confirmReplace": "这将替换当前计划。再点一次确认。",
+      "pickDays": "为你下厨的日子选择菜肴",
+      "suggestOne": "推荐一道菜",
+      "suggestOneHint": "看看现在适合你的菜肴",
+      "editPrefs": "编辑偏好",
+      "editPrefsHint": "家庭人数、饮食、预算...",
+      "weekGenerated": "已创建新的每周计划",
+      "noSuggestion": "未找到符合你偏好的菜肴"
+    }
+  },
+  "shopping": {
+    "store": "超市",
+    "noStore": "未选择",
+    "searchStore": "搜索超市...",
+    "clearStore": "清除",
+    "noStoreMatch": "没有匹配的超市。",
+    "addPlaceholder": "添加要买的物品...",
+    "add": "添加",
+    "fromPlan": "从计划导入",
+    "copy": "复制",
+    "pickFromIngredients": "从食材中选择",
+    "bought": "已买 {checked}/{total}",
+    "clearBought": "清除已买",
+    "uncheck": "取消标记",
+    "check": "标记为已买",
+    "remove": "移除",
+    "empty": "你的购物清单是空的。",
+    "copyHeader": "购物清单",
+    "toast": {
+      "importedFromPlan": "已从每周计划添加 {count} 种食材",
+      "planUpToDate": "清单已包含计划中的所有食材",
+      "nothingToBuy": "没有需要购买的了",
+      "copied": "清单已复制",
+      "copyFailed": "此设备无法复制"
+    },
+    "range": {
+      "title": "购买哪几天的食材？",
+      "today": "今天",
+      "next3": "未来 3 天",
+      "rest": "到本周末",
+      "mealCount": "{count} 道菜",
+      "noMeals": "没有安排菜肴"
+    }
+  },
+  "ingredients": {
+    "search": "搜索食材...",
+    "count": "{count} 种食材",
+    "inList": "已在购物清单中",
+    "addToList": "将{name}加入购物清单",
+    "notFound": "未找到匹配的食材。"
+  },
+  "home": {
+    "greeting": "你好 👋",
+    "titleLine1": "今天",
+    "titleLine2": "吃什么？",
+    "search": "搜索菜肴...",
+    "weekGlance": "本周概览",
+    "tilePlan": "计划",
+    "tilePlanHint": "本周菜肴",
+    "tileFavorites": "收藏",
+    "tileFavoritesHint": "已收藏菜肴",
+    "tileShopping": "购物",
+    "tileShoppingHint": "待买物品",
+    "todayPlan": "今日计划",
+    "viewAll": "查看全部",
+    "noMealsToday": "今天没有安排菜肴。",
+    "makePlan": "制定计划"
+  },
+  "setup": {
+    "back": "返回",
+    "skip": "跳过",
+    "continue": "继续",
+    "create": "创建我的计划",
+    "generating": "正在创建你的计划...",
+    "ready": "你的每周计划已准备好",
+    "steps": {
+      "household": {
+        "title": "你为几个人做饭？",
+        "subtitle": "用于计算份量和费用。"
+      },
+      "diet": {
+        "title": "饮食和过敏",
+        "subtitle": "不适合的菜肴将不会被推荐。"
+      },
+      "taste": {
+        "title": "你的口味",
+        "subtitle": "选择喜欢的蛋白质和最长烹饪时间。"
+      },
+      "schedule": {
+        "title": "烹饪安排和预算",
+        "subtitle": "选择本周想下厨的日子。"
+      },
+      "reminder": {
+        "title": "计划提醒",
+        "subtitle": "每周收到提醒，不再错过。"
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "已按新偏好重新生成计划",
+    "intro": "更改会自动保存。重新生成计划以应用新偏好。",
+    "household": "家庭人数",
+    "diet": "饮食",
+    "taste": "口味",
+    "schedule": "烹饪安排和预算",
+    "reminder": "提醒",
+    "generating": "创建中...",
+    "save": "保存并重新生成计划",
+    "cookTime": {
+      "15": "≤ 15 分钟",
+      "30": "≤ 30 分钟",
+      "45": "≤ 45 分钟",
+      "60": "≤ 1 小时",
+      "90": "不限"
+    },
+    "fieldDiet": {
+      "diet": "饮食",
+      "allergy": "过敏"
+    },
+    "fieldHousehold": {
+      "note": "每餐 {people} 人用餐。份量和费用将乘以此人数。"
+    },
+    "fieldReminder": {
+      "title": "每周提醒我制定计划",
+      "subtitle": "在你选择的日期和时间收到通知。",
+      "toggle": "每周计划提醒",
+      "day": "提醒日期",
+      "time": "提醒时间",
+      "minDay": "请至少选择一天。",
+      "webNote": "通知由手机应用发送。在此仅保存设置。"
+    },
+    "fieldSchedule": {
+      "days": "下厨的日子",
+      "minDay": "请至少选择一天。",
+      "budget": "每周预算",
+      "perPerson": "每人每餐约 {amount}。"
+    },
+    "fieldTaste": {
+      "protein": "你喜欢哪些蛋白质？",
+      "anyNote": "不选择表示任何菜肴都可以。",
+      "maxTime": "最长烹饪时间"
+    }
+  },
+  "onboarding": {
+    "skip": "跳过",
+    "continue": "继续",
+    "start": "开始使用",
+    "pages": "介绍页",
+    "page": "第 {n} 页",
+    "slides": {
+      "suggest": {
+        "title": "符合你口味的菜肴",
+        "text": "选择你的饮食、过敏和喜爱的蛋白质，应用会挑选适合你的菜肴。",
+        "chip": "为你定制"
+      },
+      "plan": {
+        "title": "几秒生成每周计划",
+        "text": "根据预算和烹饪时间制定计划，一键更换菜肴。",
+        "chip": "整周安排好"
+      },
+      "shop": {
+        "title": "井井有条的采购",
+        "text": "一周所需食材汇总为一份清单。选择超市，买完一项勾掉一项。",
+        "chip": "一份清单"
+      }
+    },
+    "languageTitle": "选择你的语言"
+  },
+  "settings": {
+    "preferenceSummary": "{people} 人 · {days} 天下厨 · {budget}/周",
+    "reminderOn": "{days} {time}",
+    "reminderOff": "关闭",
+    "stats": {
+      "meals": "菜肴",
+      "ingredients": "食材",
+      "stores": "商店",
+      "planned": "已安排菜肴"
+    },
+    "resetConfirm": "删除此设备上的所有数据（计划、购物、收藏、偏好）？",
+    "resetDone": "数据已删除",
+    "preferences": "饮食偏好",
+    "language": "语言",
+    "languageSubtitle": "界面、菜名、食材和烹饪步骤",
+    "reminder": "计划提醒",
+    "reminderToggle": "每周计划提醒",
+    "reset": "删除此设备上的数据",
+    "cancel": "取消",
+    "resetAction": "删除数据"
+  },
+  "reminder": {
+    "title": "该制定餐食计划了",
+    "body": "规划本周菜肴并建立购物清单。",
+    "channel": "计划提醒",
+    "denied": "通知已被阻止。请在手机设置中允许。",
+    "test": "发送测试通知",
+    "testSent": "测试通知已发送"
+  }
+}

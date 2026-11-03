@@ -1,0 +1,370 @@
+{
+  "day": {
+    "long": [
+      "Maandag",
+      "Dinsdag",
+      "Woensdag",
+      "Donderdag",
+      "Vrijdag",
+      "Zaterdag",
+      "Zondag"
+    ],
+    "short": [
+      "Ma",
+      "Di",
+      "Wo",
+      "Do",
+      "Vr",
+      "Za",
+      "Zo"
+    ]
+  },
+  "meal": {
+    "favorite": "Favoriet",
+    "unfavorite": "Verwijderen uit favorieten",
+    "back": "Terug",
+    "level": {
+      "easy": "Makkelijk",
+      "medium": "Gemiddeld",
+      "hard": "Moeilijk"
+    },
+    "macro": {
+      "energy": "Energie",
+      "protein": "Eiwit",
+      "carbs": "Koolhydraten",
+      "fat": "Vet"
+    },
+    "steps": {
+      "progress": "{done}/{total} stappen klaar"
+    },
+    "ingredients": {
+      "addAria": "{name} toevoegen aan boodschappenlijst"
+    },
+    "chips": {
+      "all": "Alles",
+      "favorites": "♥ Favorieten"
+    },
+    "search": {
+      "placeholder": "Maaltijden zoeken..."
+    },
+    "list": {
+      "suggested": "Voor jou voorgesteld",
+      "recent": "Recent bekeken",
+      "popular": "Populaire maaltijden",
+      "results": "Resultaten",
+      "count": "{count} maaltijden",
+      "empty": "Geen passende maaltijden gevonden.",
+      "slide": "Suggestie {n}"
+    },
+    "toast": {
+      "added": "{name} toegevoegd aan je boodschappenlijst",
+      "exists": "{name} staat al op de lijst",
+      "addedMany": "{count} ingrediënten toegevoegd aan je boodschappenlijst",
+      "existsMany": "Deze ingrediënten staan al op de lijst",
+      "addedToDay": "Toegevoegd aan {day}",
+      "viewPlan": "Plan bekijken"
+    },
+    "detail": {
+      "protein": "Eiwit: {value} g",
+      "carbs": "Koolhydraten: {value} g",
+      "fat": "Vet: {value} g",
+      "mayContain": "⚠️ Kan bevatten: {list}",
+      "prep": "Voorbereiding",
+      "cook": "Koken",
+      "level": "Niveau",
+      "servings": "Porties",
+      "estCost": "Geschatte kosten",
+      "nutrition": "Voeding per portie",
+      "ingredients": "Ingrediënten",
+      "addAll": "Alles toevoegen",
+      "method": "Bereiding",
+      "yours": "Van jou",
+      "cooked": "Deze maaltijd gekookt",
+      "markCooked": "Markeren als gekookt",
+      "rating": "Beoordeling",
+      "dislike": "Deze maaltijd vind ik niet lekker",
+      "dislikeHint": "Wordt niet voorgesteld in automatische plannen.",
+      "note": "Notities",
+      "notePlaceholder": "bijv. minder pittig, lente-ui toevoegen...",
+      "addToPlan": "Aan plan toevoegen",
+      "addToDay": "Toevoegen aan {day}",
+      "notFound": "Maaltijd niet gevonden.",
+      "backToList": "Terug naar maaltijden"
+    }
+  },
+  "begin": {
+    "loading": "Advertenties laden...",
+    "enter": "Naar de app"
+  },
+  "ads": {
+    "label": "Advertentie"
+  },
+  "ui": {
+    "close": "Sluiten",
+    "decrease": "Verlagen",
+    "increase": "Verhogen",
+    "rating": "Beoordeling",
+    "stars": "{n} sterren",
+    "hour": "Uur",
+    "minute": "Minuut",
+    "done": "Klaar",
+    "am": "AM",
+    "pm": "PM",
+    "period": "AM of PM"
+  },
+  "format": {
+    "minutes": "{count} min",
+    "hours": "{count} u",
+    "hoursMinutes": "{hours} u {minutes} min"
+  },
+  "app": {
+    "dbError": "Kan de gegevens van de app niet openen. Laad de pagina opnieuw."
+  },
+  "nav": {
+    "home": "Start",
+    "ingredients": "Ingrediënten",
+    "meals": "Maaltijden",
+    "mealDetail": "Maaltijddetails",
+    "onboarding": "Welkom",
+    "begin": "Welkom terug",
+    "planner": "Weekplan",
+    "plannerTab": "Plan",
+    "setup": "Instellen",
+    "preferences": "Voedingsvoorkeuren",
+    "settings": "Instellingen",
+    "shopping": "Boodschappenlijst",
+    "shoppingTab": "Boodschappen",
+    "back": "Terug",
+    "profile": "Profiel en instellingen",
+    "quickSuggest": "Snelle suggesties",
+    "language": "Taal",
+    "reminder": "Planningsherinnering"
+  },
+  "planner": {
+    "summary": {
+      "cost": "Geschatte kosten",
+      "budget": "Weekbudget",
+      "over": "{amount} over het budget.",
+      "emptyTitle": "Nog geen plan voor deze week",
+      "emptyHintBefore": "Maak er een op basis van je voorkeuren, of",
+      "emptyHintLink": "pas voorkeuren aan"
+    },
+    "generating": "Genereren...",
+    "regenerate": "Opnieuw genereren",
+    "generate": "Plan automatisch maken",
+    "shop": "Boodschappen",
+    "clearDay": "Dag wissen",
+    "swap": "Maaltijd wisselen",
+    "removeFromPlan": "Uit plan verwijderen",
+    "noMealsForDay": "Geen maaltijden gepland voor {day}.",
+    "pickMeals": "Maaltijden kiezen",
+    "noSwapOptions": "Geen vervangende maaltijden die bij je voorkeuren passen.",
+    "toast": {
+      "generated": "Nieuw plan gemaakt",
+      "addedToShopping": "{count} ingrediënten toegevoegd aan je boodschappenlijst",
+      "shoppingUpToDate": "Je boodschappenlijst bevat al alle ingrediënten",
+      "swapped": "Maaltijd gewisseld"
+    },
+    "quick": {
+      "title": "Snelle suggesties",
+      "intro": "Op basis van je dieet, allergieën, budget en kooktijd.",
+      "regenerateWeek": "Weekplan opnieuw maken",
+      "generateWeek": "Weekplan maken",
+      "confirmReplace": "Dit vervangt je huidige plan. Tik nogmaals om te bevestigen.",
+      "pickDays": "Kies maaltijden voor de dagen dat je kookt",
+      "suggestOne": "Maaltijd voorstellen",
+      "suggestOneHint": "Zie een maaltijd die nu bij je past",
+      "editPrefs": "Voorkeuren aanpassen",
+      "editPrefsHint": "Huishouden, dieet, budget...",
+      "weekGenerated": "Nieuw weekplan gemaakt",
+      "noSuggestion": "Geen maaltijd gevonden die bij je voorkeuren past"
+    }
+  },
+  "shopping": {
+    "store": "Supermarkt",
+    "noStore": "Niet geselecteerd",
+    "searchStore": "Supermarkten zoeken...",
+    "clearStore": "Wissen",
+    "noStoreMatch": "Geen passende supermarkten.",
+    "addPlaceholder": "Voeg een product toe...",
+    "add": "Toevoegen",
+    "fromPlan": "Importeren uit plan",
+    "copy": "Kopiëren",
+    "pickFromIngredients": "Kiezen uit ingrediënten",
+    "bought": "Gekocht {checked}/{total}",
+    "clearBought": "Gekochte wissen",
+    "uncheck": "Markering opheffen",
+    "check": "Markeren als gekocht",
+    "remove": "Verwijderen",
+    "empty": "Je boodschappenlijst is leeg.",
+    "copyHeader": "Boodschappenlijst",
+    "toast": {
+      "importedFromPlan": "{count} ingrediënten uit je weekplan toegevoegd",
+      "planUpToDate": "Je lijst bevat al alle ingrediënten van het plan",
+      "nothingToBuy": "Niets meer te kopen",
+      "copied": "Lijst gekopieerd",
+      "copyFailed": "Kopiëren niet mogelijk op dit apparaat"
+    },
+    "range": {
+      "title": "Boodschappen voor welke dagen?",
+      "today": "Vandaag",
+      "next3": "Komende 3 dagen",
+      "rest": "Tot het einde van de week",
+      "mealCount": "{count} maaltijden",
+      "noMeals": "Geen maaltijden gepland"
+    }
+  },
+  "ingredients": {
+    "search": "Ingrediënten zoeken...",
+    "count": "{count} ingrediënten",
+    "inList": "Staat al op je boodschappenlijst",
+    "addToList": "{name} toevoegen aan boodschappenlijst",
+    "notFound": "Geen passende ingrediënten gevonden."
+  },
+  "home": {
+    "greeting": "Hallo 👋",
+    "titleLine1": "Wat eten we",
+    "titleLine2": "vandaag?",
+    "search": "Maaltijden zoeken...",
+    "weekGlance": "Deze week in een oogopslag",
+    "tilePlan": "Plan",
+    "tilePlanHint": "maaltijden deze week",
+    "tileFavorites": "Favorieten",
+    "tileFavoritesHint": "opgeslagen maaltijden",
+    "tileShopping": "Boodschappen",
+    "tileShoppingHint": "producten te kopen",
+    "todayPlan": "Plan van vandaag",
+    "viewAll": "Alles bekijken",
+    "noMealsToday": "Je hebt vandaag geen maaltijden gepland.",
+    "makePlan": "Plan maken"
+  },
+  "setup": {
+    "back": "Terug",
+    "skip": "Overslaan",
+    "continue": "Doorgaan",
+    "create": "Mijn plan maken",
+    "generating": "Je plan wordt gemaakt...",
+    "ready": "Je weekplan is klaar",
+    "steps": {
+      "household": {
+        "title": "Voor hoeveel personen kook je?",
+        "subtitle": "Wordt gebruikt om porties en kosten te berekenen."
+      },
+      "diet": {
+        "title": "Dieet en allergieën",
+        "subtitle": "Ongeschikte maaltijden worden niet voorgesteld."
+      },
+      "taste": {
+        "title": "Jouw smaak",
+        "subtitle": "Kies je favoriete eiwitten en de langste kooktijd."
+      },
+      "schedule": {
+        "title": "Kookschema en budget",
+        "subtitle": "Kies de dagen waarop je deze week wilt koken."
+      },
+      "reminder": {
+        "title": "Planningsherinnering",
+        "subtitle": "Ontvang een wekelijkse herinnering zodat je niets mist."
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "Plan opnieuw gemaakt met je nieuwe voorkeuren",
+    "intro": "Wijzigingen worden automatisch opgeslagen. Maak je plan opnieuw om nieuwe voorkeuren toe te passen.",
+    "household": "Huishoudgrootte",
+    "diet": "Dieet",
+    "taste": "Smaak",
+    "schedule": "Kookschema en budget",
+    "reminder": "Herinnering",
+    "generating": "Maken...",
+    "save": "Opslaan en plan opnieuw maken",
+    "cookTime": {
+      "15": "≤ 15 min",
+      "30": "≤ 30 min",
+      "45": "≤ 45 min",
+      "60": "≤ 1 uur",
+      "90": "Geen limiet"
+    },
+    "fieldDiet": {
+      "diet": "Dieet",
+      "allergy": "Allergieën"
+    },
+    "fieldHousehold": {
+      "note": "{people} personen eten elke maaltijd. Porties en kosten worden met dit aantal vermenigvuldigd."
+    },
+    "fieldReminder": {
+      "title": "Herinner me elke week om te plannen",
+      "subtitle": "Ontvang een melding op de dagen en het tijdstip dat je kiest.",
+      "toggle": "Wekelijkse planningsherinnering",
+      "day": "Herinner me op",
+      "time": "Tijdstip van herinnering",
+      "minDay": "Kies minstens één dag.",
+      "webNote": "Meldingen worden verstuurd door de telefoon-app. Hier wordt de instelling alleen opgeslagen."
+    },
+    "fieldSchedule": {
+      "days": "Dagen waarop je kookt",
+      "minDay": "Selecteer minstens één dag.",
+      "budget": "Weekbudget",
+      "perPerson": "Ongeveer {amount} per persoon per maaltijd."
+    },
+    "fieldTaste": {
+      "protein": "Welke eiwitten vind je lekker?",
+      "anyNote": "Niets selecteren betekent dat elke maaltijd goed is.",
+      "maxTime": "Maximale kooktijd"
+    }
+  },
+  "onboarding": {
+    "skip": "Overslaan",
+    "continue": "Doorgaan",
+    "start": "Aan de slag",
+    "pages": "Introductiepagina's",
+    "page": "Pagina {n}",
+    "slides": {
+      "suggest": {
+        "title": "Maaltijden die bij je smaak passen",
+        "text": "Kies je dieet, allergieën en favoriete eiwitten. De app kiest de maaltijden die bij je passen.",
+        "chip": "Speciaal voor jou"
+      },
+      "plan": {
+        "title": "Een weekplan in seconden",
+        "text": "Maak een plan op basis van je budget en kooktijd, en wissel maaltijden met één tik.",
+        "chip": "Hele week klaar"
+      },
+      "shop": {
+        "title": "Overzichtelijk boodschappen doen",
+        "text": "De ingrediënten van de week staan in één lijst. Kies een winkel en vink producten af terwijl je ze koopt.",
+        "chip": "Eén enkele lijst"
+      }
+    },
+    "languageTitle": "Kies je taal"
+  },
+  "settings": {
+    "preferenceSummary": "{people} personen · {days} kookdagen · {budget}/week",
+    "reminderOn": "{days} om {time}",
+    "reminderOff": "Uit",
+    "stats": {
+      "meals": "Maaltijden",
+      "ingredients": "Ingrediënten",
+      "stores": "Winkels",
+      "planned": "Geplande maaltijden"
+    },
+    "resetConfirm": "Alle gegevens op dit apparaat verwijderen (plan, boodschappen, favorieten, voorkeuren)?",
+    "resetDone": "Gegevens verwijderd",
+    "preferences": "Voedingsvoorkeuren",
+    "language": "Taal",
+    "languageSubtitle": "Interface, maaltijdnamen, ingrediënten en bereidingsstappen",
+    "reminder": "Planningsherinnering",
+    "reminderToggle": "Wekelijkse planningsherinnering",
+    "reset": "Gegevens op dit apparaat verwijderen",
+    "cancel": "Annuleren",
+    "resetAction": "Gegevens verwijderen"
+  },
+  "reminder": {
+    "title": "Tijd om je maaltijden te plannen",
+    "body": "Plan de maaltijden van deze week en maak je boodschappenlijst.",
+    "channel": "Planningsherinnering",
+    "denied": "Meldingen zijn geblokkeerd. Sta ze toe in de telefooninstellingen.",
+    "test": "Testmelding versturen",
+    "testSent": "Testmelding onderweg"
+  }
+}

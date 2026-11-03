@@ -1,0 +1,370 @@
+{
+  "day": {
+    "long": [
+      "Lundi",
+      "Mardi",
+      "Mercredi",
+      "Jeudi",
+      "Vendredi",
+      "Samedi",
+      "Dimanche"
+    ],
+    "short": [
+      "Lun",
+      "Mar",
+      "Mer",
+      "Jeu",
+      "Ven",
+      "Sam",
+      "Dim"
+    ]
+  },
+  "meal": {
+    "favorite": "Favori",
+    "unfavorite": "Retirer des favoris",
+    "back": "Retour",
+    "level": {
+      "easy": "Facile",
+      "medium": "Moyen",
+      "hard": "Difficile"
+    },
+    "macro": {
+      "energy": "Énergie",
+      "protein": "Protéines",
+      "carbs": "Glucides",
+      "fat": "Lipides"
+    },
+    "steps": {
+      "progress": "{done}/{total} étapes terminées"
+    },
+    "ingredients": {
+      "addAria": "Ajouter {name} à la liste de courses"
+    },
+    "chips": {
+      "all": "Tous",
+      "favorites": "♥ Favoris"
+    },
+    "search": {
+      "placeholder": "Rechercher des repas..."
+    },
+    "list": {
+      "suggested": "Suggestions pour vous",
+      "recent": "Vus récemment",
+      "popular": "Repas populaires",
+      "results": "Résultats",
+      "count": "{count} repas",
+      "empty": "Aucun repas correspondant.",
+      "slide": "Suggestion {n}"
+    },
+    "toast": {
+      "added": "{name} ajouté à votre liste de courses",
+      "exists": "{name} est déjà dans la liste",
+      "addedMany": "{count} ingrédients ajoutés à votre liste de courses",
+      "existsMany": "Ces ingrédients sont déjà dans la liste",
+      "addedToDay": "Ajouté à {day}",
+      "viewPlan": "Voir le plan"
+    },
+    "detail": {
+      "protein": "Protéines : {value} g",
+      "carbs": "Glucides : {value} g",
+      "fat": "Lipides : {value} g",
+      "mayContain": "⚠️ Peut contenir : {list}",
+      "prep": "Préparation",
+      "cook": "Cuisson",
+      "level": "Niveau",
+      "servings": "Portions",
+      "estCost": "Coût estimé",
+      "nutrition": "Nutrition par portion",
+      "ingredients": "Ingrédients",
+      "addAll": "Tout ajouter",
+      "method": "Préparation",
+      "yours": "Le vôtre",
+      "cooked": "Repas cuisiné",
+      "markCooked": "Marquer comme cuisiné",
+      "rating": "Note",
+      "dislike": "Je n'aime pas ce repas",
+      "dislikeHint": "Il ne sera pas suggéré dans les plans automatiques.",
+      "note": "Notes",
+      "notePlaceholder": "ex. moins épicé, ajouter de la ciboule...",
+      "addToPlan": "Ajouter au plan",
+      "addToDay": "Ajouter à {day}",
+      "notFound": "Repas introuvable.",
+      "backToList": "Retour aux repas"
+    }
+  },
+  "begin": {
+    "loading": "Chargement des pubs...",
+    "enter": "Entrer dans l'app"
+  },
+  "ads": {
+    "label": "Pub"
+  },
+  "ui": {
+    "close": "Fermer",
+    "decrease": "Diminuer",
+    "increase": "Augmenter",
+    "rating": "Note",
+    "stars": "{n} étoiles",
+    "hour": "Heure",
+    "minute": "Minute",
+    "done": "Terminé",
+    "am": "AM",
+    "pm": "PM",
+    "period": "AM ou PM"
+  },
+  "format": {
+    "minutes": "{count} min",
+    "hours": "{count} h",
+    "hoursMinutes": "{hours} h {minutes} min"
+  },
+  "app": {
+    "dbError": "Impossible d'ouvrir les données de l'app. Veuillez recharger la page."
+  },
+  "nav": {
+    "home": "Accueil",
+    "ingredients": "Ingrédients",
+    "meals": "Repas",
+    "mealDetail": "Détails du repas",
+    "onboarding": "Bienvenue",
+    "begin": "Bon retour",
+    "planner": "Plan de la semaine",
+    "plannerTab": "Plan",
+    "setup": "Configuration",
+    "preferences": "Préférences alimentaires",
+    "settings": "Réglages",
+    "shopping": "Liste de courses",
+    "shoppingTab": "Courses",
+    "back": "Retour",
+    "profile": "Profil et réglages",
+    "quickSuggest": "Suggestions rapides",
+    "language": "Langue",
+    "reminder": "Rappel de planification"
+  },
+  "planner": {
+    "summary": {
+      "cost": "Coût estimé",
+      "budget": "Budget hebdomadaire",
+      "over": "Budget dépassé de {amount}.",
+      "emptyTitle": "Pas encore de plan pour cette semaine",
+      "emptyHintBefore": "Générez-en un selon vos préférences, ou",
+      "emptyHintLink": "modifiez vos préférences"
+    },
+    "generating": "Génération...",
+    "regenerate": "Régénérer",
+    "generate": "Générer le plan automatiquement",
+    "shop": "Courses",
+    "clearDay": "Vider la journée",
+    "swap": "Changer de repas",
+    "removeFromPlan": "Retirer du plan",
+    "noMealsForDay": "Aucun repas prévu pour {day}.",
+    "pickMeals": "Choisir des repas",
+    "noSwapOptions": "Aucun repas de remplacement ne correspond à vos préférences.",
+    "toast": {
+      "generated": "Nouveau plan créé",
+      "addedToShopping": "{count} ingrédients ajoutés à votre liste de courses",
+      "shoppingUpToDate": "Votre liste de courses contient déjà tous les ingrédients",
+      "swapped": "Repas changé"
+    },
+    "quick": {
+      "title": "Suggestions rapides",
+      "intro": "Selon votre régime, vos allergies, votre budget et votre temps de cuisine.",
+      "regenerateWeek": "Régénérer le plan de la semaine",
+      "generateWeek": "Générer le plan de la semaine",
+      "confirmReplace": "Cela remplacera votre plan actuel. Appuyez à nouveau pour confirmer.",
+      "pickDays": "Choisissez les repas des jours où vous cuisinez",
+      "suggestOne": "Suggérer un repas",
+      "suggestOneHint": "Découvrez un repas qui vous convient maintenant",
+      "editPrefs": "Modifier les préférences",
+      "editPrefsHint": "Foyer, régime, budget...",
+      "weekGenerated": "Nouveau plan de la semaine créé",
+      "noSuggestion": "Aucun repas ne correspond à vos préférences"
+    }
+  },
+  "shopping": {
+    "store": "Supermarché",
+    "noStore": "Non sélectionné",
+    "searchStore": "Rechercher des supermarchés...",
+    "clearStore": "Effacer",
+    "noStoreMatch": "Aucun supermarché correspondant.",
+    "addPlaceholder": "Ajouter un article à acheter...",
+    "add": "Ajouter",
+    "fromPlan": "Importer depuis le plan",
+    "copy": "Copier",
+    "pickFromIngredients": "Choisir parmi les ingrédients",
+    "bought": "Acheté {checked}/{total}",
+    "clearBought": "Effacer les achetés",
+    "uncheck": "Décocher",
+    "check": "Marquer comme acheté",
+    "remove": "Supprimer",
+    "empty": "Votre liste de courses est vide.",
+    "copyHeader": "Liste de courses",
+    "toast": {
+      "importedFromPlan": "{count} ingrédients ajoutés depuis votre plan de la semaine",
+      "planUpToDate": "Votre liste contient déjà tous les ingrédients du plan",
+      "nothingToBuy": "Plus rien à acheter",
+      "copied": "Liste copiée",
+      "copyFailed": "Copie impossible sur cet appareil"
+    },
+    "range": {
+      "title": "Courses pour quels jours ?",
+      "today": "Aujourd'hui",
+      "next3": "3 prochains jours",
+      "rest": "Jusqu'à la fin de la semaine",
+      "mealCount": "{count} repas",
+      "noMeals": "Aucun repas prévu"
+    }
+  },
+  "ingredients": {
+    "search": "Rechercher des ingrédients...",
+    "count": "{count} ingrédients",
+    "inList": "Déjà dans votre liste de courses",
+    "addToList": "Ajouter {name} à la liste de courses",
+    "notFound": "Aucun ingrédient correspondant."
+  },
+  "home": {
+    "greeting": "Bonjour 👋",
+    "titleLine1": "Que manger",
+    "titleLine2": "aujourd'hui ?",
+    "search": "Rechercher des repas...",
+    "weekGlance": "Cette semaine en un coup d'œil",
+    "tilePlan": "Plan",
+    "tilePlanHint": "repas cette semaine",
+    "tileFavorites": "Favoris",
+    "tileFavoritesHint": "repas enregistrés",
+    "tileShopping": "Courses",
+    "tileShoppingHint": "articles à acheter",
+    "todayPlan": "Plan du jour",
+    "viewAll": "Tout voir",
+    "noMealsToday": "Aucun repas prévu aujourd'hui.",
+    "makePlan": "Créer un plan"
+  },
+  "setup": {
+    "back": "Retour",
+    "skip": "Passer",
+    "continue": "Continuer",
+    "create": "Créer mon plan",
+    "generating": "Création de votre plan...",
+    "ready": "Votre plan de la semaine est prêt",
+    "steps": {
+      "household": {
+        "title": "Pour combien de personnes cuisinez-vous ?",
+        "subtitle": "Sert à calculer les portions et le coût."
+      },
+      "diet": {
+        "title": "Régime et allergies",
+        "subtitle": "Les repas inadaptés ne seront pas suggérés."
+      },
+      "taste": {
+        "title": "Vos goûts",
+        "subtitle": "Choisissez vos protéines préférées et le temps de cuisson maximal."
+      },
+      "schedule": {
+        "title": "Planning de cuisine et budget",
+        "subtitle": "Choisissez les jours où vous voulez cuisiner cette semaine."
+      },
+      "reminder": {
+        "title": "Rappel de planification",
+        "subtitle": "Recevez un rappel hebdomadaire pour ne rien oublier."
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "Plan régénéré avec vos nouvelles préférences",
+    "intro": "Les modifications sont enregistrées automatiquement. Régénérez votre plan pour appliquer les nouvelles préférences.",
+    "household": "Taille du foyer",
+    "diet": "Régime",
+    "taste": "Goûts",
+    "schedule": "Planning de cuisine et budget",
+    "reminder": "Rappel",
+    "generating": "Création...",
+    "save": "Enregistrer et régénérer le plan",
+    "cookTime": {
+      "15": "≤ 15 min",
+      "30": "≤ 30 min",
+      "45": "≤ 45 min",
+      "60": "≤ 1 heure",
+      "90": "Sans limite"
+    },
+    "fieldDiet": {
+      "diet": "Régime",
+      "allergy": "Allergies"
+    },
+    "fieldHousehold": {
+      "note": "{people} personnes mangent chaque repas. Les portions et le coût sont multipliés par ce nombre."
+    },
+    "fieldReminder": {
+      "title": "Me rappeler de planifier chaque semaine",
+      "subtitle": "Recevez une notification aux jours et à l'heure de votre choix.",
+      "toggle": "Rappel hebdomadaire de planification",
+      "day": "Me rappeler le",
+      "time": "Heure du rappel",
+      "minDay": "Choisissez au moins un jour.",
+      "webNote": "Les notifications sont envoyées par l'app mobile. Ici, le réglage est seulement enregistré."
+    },
+    "fieldSchedule": {
+      "days": "Jours où vous cuisinez",
+      "minDay": "Veuillez sélectionner au moins un jour.",
+      "budget": "Budget hebdomadaire",
+      "perPerson": "Environ {amount} par personne et par repas."
+    },
+    "fieldTaste": {
+      "protein": "Quelles protéines aimez-vous ?",
+      "anyNote": "Ne rien sélectionner signifie que tous les repas conviennent.",
+      "maxTime": "Temps de cuisson maximal"
+    }
+  },
+  "onboarding": {
+    "skip": "Passer",
+    "continue": "Continuer",
+    "start": "Commencer",
+    "pages": "Pages d'introduction",
+    "page": "Page {n}",
+    "slides": {
+      "suggest": {
+        "title": "Des repas selon vos goûts",
+        "text": "Choisissez votre régime, vos allergies et vos protéines préférées. L'app sélectionne les repas qui vous conviennent.",
+        "chip": "Fait pour vous"
+      },
+      "plan": {
+        "title": "Un plan hebdomadaire en quelques secondes",
+        "text": "Créez un plan selon votre budget et votre temps de cuisine, et changez de repas d'une simple pression.",
+        "chip": "Toute la semaine prête"
+      },
+      "shop": {
+        "title": "Des courses bien organisées",
+        "text": "Les ingrédients de la semaine sont réunis dans une seule liste. Choisissez un magasin et cochez au fil de vos achats.",
+        "chip": "Une seule liste"
+      }
+    },
+    "languageTitle": "Choisissez votre langue"
+  },
+  "settings": {
+    "preferenceSummary": "{people} personnes · {days} jours de cuisine · {budget}/semaine",
+    "reminderOn": "{days} à {time}",
+    "reminderOff": "Désactivé",
+    "stats": {
+      "meals": "Repas",
+      "ingredients": "Ingrédients",
+      "stores": "Magasins",
+      "planned": "Repas planifiés"
+    },
+    "resetConfirm": "Supprimer toutes les données de cet appareil (plan, courses, favoris, préférences) ?",
+    "resetDone": "Données supprimées",
+    "preferences": "Préférences alimentaires",
+    "language": "Langue",
+    "languageSubtitle": "Interface, noms des repas, ingrédients et étapes de cuisson",
+    "reminder": "Rappel de planification",
+    "reminderToggle": "Rappel hebdomadaire de planification",
+    "reset": "Supprimer les données de cet appareil",
+    "cancel": "Annuler",
+    "resetAction": "Supprimer les données"
+  },
+  "reminder": {
+    "title": "C'est l'heure de planifier vos repas",
+    "body": "Planifiez les repas de la semaine et préparez votre liste de courses.",
+    "channel": "Rappel de planification",
+    "denied": "Les notifications sont bloquées. Autorisez-les dans les réglages du téléphone.",
+    "test": "Envoyer une notification de test",
+    "testSent": "Notification de test envoyée"
+  }
+}

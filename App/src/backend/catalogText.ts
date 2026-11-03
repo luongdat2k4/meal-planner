@@ -27,7 +27,7 @@ async function loadOne(id: Lang) {
     const response = await fetch(`${base}i18n/${id}.json`, { cache: 'no-cache' })
     if (response.ok) catalog = (await response.json()) as CatalogStrings
   } catch {
-    // Keep the empty catalog; text() falls back to the other language, then to the key.
+    // Keep the empty catalog; text() falls back to English, then to the key.
   }
   strings.value = { ...strings.value, [id]: catalog }
 }
@@ -47,8 +47,7 @@ function lookup(source: CatalogStrings | undefined, path: string[]): string | un
 
 function translate(path: string[]): string | undefined {
   // Reading `lang` here keeps templates reactive to the language switch.
-  const fallback: Lang = lang.value === 'vn' ? 'en' : 'vn'
-  return lookup(strings.value[lang.value], path) ?? lookup(strings.value[fallback], path)
+  return lookup(strings.value[lang.value], path) ?? lookup(strings.value.en, path)
 }
 
 /** Name of a meal, ingredient, category, dietary, allergen, unit or ingredient section: `language.key = slug`. */

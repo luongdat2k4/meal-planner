@@ -1,0 +1,370 @@
+{
+  "day": {
+    "long": [
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+      "Minggu"
+    ],
+    "short": [
+      "Sen",
+      "Sel",
+      "Rab",
+      "Kam",
+      "Jum",
+      "Sab",
+      "Min"
+    ]
+  },
+  "meal": {
+    "favorite": "Favorit",
+    "unfavorite": "Hapus dari favorit",
+    "back": "Kembali",
+    "level": {
+      "easy": "Mudah",
+      "medium": "Sedang",
+      "hard": "Sulit"
+    },
+    "macro": {
+      "energy": "Energi",
+      "protein": "Protein",
+      "carbs": "Karbohidrat",
+      "fat": "Lemak"
+    },
+    "steps": {
+      "progress": "{done}/{total} langkah selesai"
+    },
+    "ingredients": {
+      "addAria": "Tambahkan {name} ke daftar belanja"
+    },
+    "chips": {
+      "all": "Semua",
+      "favorites": "♥ Favorit"
+    },
+    "search": {
+      "placeholder": "Cari menu..."
+    },
+    "list": {
+      "suggested": "Disarankan untukmu",
+      "recent": "Baru dilihat",
+      "popular": "Menu populer",
+      "results": "Hasil",
+      "count": "{count} menu",
+      "empty": "Tidak ada menu yang cocok.",
+      "slide": "Saran {n}"
+    },
+    "toast": {
+      "added": "{name} ditambahkan ke daftar belanja",
+      "exists": "{name} sudah ada di daftar",
+      "addedMany": "{count} bahan ditambahkan ke daftar belanja",
+      "existsMany": "Bahan-bahan ini sudah ada di daftar",
+      "addedToDay": "Ditambahkan ke {day}",
+      "viewPlan": "Lihat rencana"
+    },
+    "detail": {
+      "protein": "Protein: {value} g",
+      "carbs": "Karbohidrat: {value} g",
+      "fat": "Lemak: {value} g",
+      "mayContain": "⚠️ Mungkin mengandung: {list}",
+      "prep": "Persiapan",
+      "cook": "Memasak",
+      "level": "Tingkat",
+      "servings": "Porsi",
+      "estCost": "Perkiraan biaya",
+      "nutrition": "Gizi per porsi",
+      "ingredients": "Bahan",
+      "addAll": "Tambah semua",
+      "method": "Cara membuat",
+      "yours": "Milikmu",
+      "cooked": "Sudah dimasak",
+      "markCooked": "Tandai sudah dimasak",
+      "rating": "Penilaian",
+      "dislike": "Tidak suka menu ini",
+      "dislikeHint": "Menu ini tidak akan disarankan dalam rencana otomatis.",
+      "note": "Catatan",
+      "notePlaceholder": "mis. kurang pedas, tambah daun bawang...",
+      "addToPlan": "Tambah ke rencana",
+      "addToDay": "Tambah ke {day}",
+      "notFound": "Menu tidak ditemukan.",
+      "backToList": "Kembali ke menu"
+    }
+  },
+  "begin": {
+    "loading": "Memuat iklan...",
+    "enter": "Masuk ke aplikasi"
+  },
+  "ads": {
+    "label": "Iklan"
+  },
+  "ui": {
+    "close": "Tutup",
+    "decrease": "Kurangi",
+    "increase": "Tambah",
+    "rating": "Penilaian",
+    "stars": "{n} bintang",
+    "hour": "Jam",
+    "minute": "Menit",
+    "done": "Selesai",
+    "am": "AM",
+    "pm": "PM",
+    "period": "AM atau PM"
+  },
+  "format": {
+    "minutes": "{count} mnt",
+    "hours": "{count} j",
+    "hoursMinutes": "{hours} j {minutes} mnt"
+  },
+  "app": {
+    "dbError": "Tidak dapat membuka data aplikasi. Silakan muat ulang halaman."
+  },
+  "nav": {
+    "home": "Beranda",
+    "ingredients": "Bahan",
+    "meals": "Menu",
+    "mealDetail": "Detail menu",
+    "onboarding": "Selamat datang",
+    "begin": "Selamat datang kembali",
+    "planner": "Rencana mingguan",
+    "plannerTab": "Rencana",
+    "setup": "Pengaturan awal",
+    "preferences": "Preferensi makanan",
+    "settings": "Pengaturan",
+    "shopping": "Daftar belanja",
+    "shoppingTab": "Belanja",
+    "back": "Kembali",
+    "profile": "Profil dan pengaturan",
+    "quickSuggest": "Saran cepat",
+    "language": "Bahasa",
+    "reminder": "Pengingat rencana"
+  },
+  "planner": {
+    "summary": {
+      "cost": "Perkiraan biaya",
+      "budget": "Anggaran mingguan",
+      "over": "Melebihi anggaran sebesar {amount}.",
+      "emptyTitle": "Belum ada rencana untuk minggu ini",
+      "emptyHintBefore": "Buat dari preferensimu, atau",
+      "emptyHintLink": "ubah preferensi"
+    },
+    "generating": "Membuat...",
+    "regenerate": "Buat ulang",
+    "generate": "Buat rencana otomatis",
+    "shop": "Belanja",
+    "clearDay": "Kosongkan hari",
+    "swap": "Ganti menu",
+    "removeFromPlan": "Hapus dari rencana",
+    "noMealsForDay": "Tidak ada menu terencana untuk {day}.",
+    "pickMeals": "Pilih menu",
+    "noSwapOptions": "Tidak ada menu pengganti yang cocok dengan preferensimu.",
+    "toast": {
+      "generated": "Rencana baru dibuat",
+      "addedToShopping": "{count} bahan ditambahkan ke daftar belanja",
+      "shoppingUpToDate": "Daftar belanjamu sudah memuat semua bahan",
+      "swapped": "Menu diganti"
+    },
+    "quick": {
+      "title": "Saran cepat",
+      "intro": "Berdasarkan diet, alergi, anggaran, dan waktu memasakmu.",
+      "regenerateWeek": "Buat ulang rencana mingguan",
+      "generateWeek": "Buat rencana mingguan",
+      "confirmReplace": "Ini akan menggantikan rencanamu saat ini. Ketuk lagi untuk konfirmasi.",
+      "pickDays": "Pilih menu untuk hari kamu memasak",
+      "suggestOne": "Sarankan satu menu",
+      "suggestOneHint": "Lihat menu yang cocok untukmu sekarang",
+      "editPrefs": "Ubah preferensi",
+      "editPrefsHint": "Jumlah anggota, diet, anggaran...",
+      "weekGenerated": "Rencana mingguan baru dibuat",
+      "noSuggestion": "Tidak menemukan menu yang cocok dengan preferensimu"
+    }
+  },
+  "shopping": {
+    "store": "Supermarket",
+    "noStore": "Belum dipilih",
+    "searchStore": "Cari supermarket...",
+    "clearStore": "Hapus",
+    "noStoreMatch": "Tidak ada supermarket yang cocok.",
+    "addPlaceholder": "Tambah barang yang akan dibeli...",
+    "add": "Tambah",
+    "fromPlan": "Impor dari rencana",
+    "copy": "Salin",
+    "pickFromIngredients": "Pilih dari bahan",
+    "bought": "Dibeli {checked}/{total}",
+    "clearBought": "Hapus yang dibeli",
+    "uncheck": "Batalkan tanda",
+    "check": "Tandai sudah dibeli",
+    "remove": "Hapus",
+    "empty": "Daftar belanjamu kosong.",
+    "copyHeader": "Daftar belanja",
+    "toast": {
+      "importedFromPlan": "{count} bahan dari rencana mingguan ditambahkan",
+      "planUpToDate": "Daftarmu sudah memuat semua bahan rencana",
+      "nothingToBuy": "Tidak ada lagi yang perlu dibeli",
+      "copied": "Daftar disalin",
+      "copyFailed": "Tidak dapat menyalin di perangkat ini"
+    },
+    "range": {
+      "title": "Belanja untuk hari apa?",
+      "today": "Hari ini",
+      "next3": "3 hari ke depan",
+      "rest": "Sampai akhir minggu",
+      "mealCount": "{count} menu",
+      "noMeals": "Tidak ada menu terencana"
+    }
+  },
+  "ingredients": {
+    "search": "Cari bahan...",
+    "count": "{count} bahan",
+    "inList": "Sudah ada di daftar belanja",
+    "addToList": "Tambahkan {name} ke daftar belanja",
+    "notFound": "Tidak ada bahan yang cocok."
+  },
+  "home": {
+    "greeting": "Halo 👋",
+    "titleLine1": "Makan apa",
+    "titleLine2": "hari ini?",
+    "search": "Cari menu...",
+    "weekGlance": "Sekilas minggu ini",
+    "tilePlan": "Rencana",
+    "tilePlanHint": "menu minggu ini",
+    "tileFavorites": "Favorit",
+    "tileFavoritesHint": "menu tersimpan",
+    "tileShopping": "Belanja",
+    "tileShoppingHint": "barang untuk dibeli",
+    "todayPlan": "Rencana hari ini",
+    "viewAll": "Lihat semua",
+    "noMealsToday": "Kamu belum punya menu terencana untuk hari ini.",
+    "makePlan": "Buat rencana"
+  },
+  "setup": {
+    "back": "Kembali",
+    "skip": "Lewati",
+    "continue": "Lanjut",
+    "create": "Buat rencanaku",
+    "generating": "Membuat rencanamu...",
+    "ready": "Rencana mingguanmu sudah siap",
+    "steps": {
+      "household": {
+        "title": "Memasak untuk berapa orang?",
+        "subtitle": "Dipakai untuk menghitung porsi dan biaya."
+      },
+      "diet": {
+        "title": "Diet dan alergi",
+        "subtitle": "Menu yang tidak cocok tidak akan disarankan."
+      },
+      "taste": {
+        "title": "Seleramu",
+        "subtitle": "Pilih protein favorit dan waktu memasak terlama."
+      },
+      "schedule": {
+        "title": "Jadwal memasak dan anggaran",
+        "subtitle": "Pilih hari kamu ingin memasak minggu ini."
+      },
+      "reminder": {
+        "title": "Pengingat rencana",
+        "subtitle": "Dapatkan pengingat mingguan agar tidak terlewat."
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "Rencana dibuat ulang dengan preferensi barumu",
+    "intro": "Perubahan disimpan otomatis. Buat ulang rencanamu untuk menerapkan preferensi baru.",
+    "household": "Jumlah anggota keluarga",
+    "diet": "Diet",
+    "taste": "Selera",
+    "schedule": "Jadwal memasak dan anggaran",
+    "reminder": "Pengingat",
+    "generating": "Membuat...",
+    "save": "Simpan dan buat ulang rencana",
+    "cookTime": {
+      "15": "≤ 15 mnt",
+      "30": "≤ 30 mnt",
+      "45": "≤ 45 mnt",
+      "60": "≤ 1 jam",
+      "90": "Tanpa batas"
+    },
+    "fieldDiet": {
+      "diet": "Diet",
+      "allergy": "Alergi"
+    },
+    "fieldHousehold": {
+      "note": "{people} orang makan setiap menu. Porsi dan biaya dikalikan dengan angka ini."
+    },
+    "fieldReminder": {
+      "title": "Ingatkan aku merencanakan setiap minggu",
+      "subtitle": "Dapatkan notifikasi pada hari dan jam yang kamu pilih.",
+      "toggle": "Pengingat rencana mingguan",
+      "day": "Ingatkan aku pada",
+      "time": "Jam pengingat",
+      "minDay": "Pilih setidaknya satu hari.",
+      "webNote": "Notifikasi dikirim oleh aplikasi ponsel. Di sini pengaturan hanya disimpan."
+    },
+    "fieldSchedule": {
+      "days": "Hari kamu memasak",
+      "minDay": "Pilih setidaknya satu hari.",
+      "budget": "Anggaran mingguan",
+      "perPerson": "Sekitar {amount} per orang per makan."
+    },
+    "fieldTaste": {
+      "protein": "Protein apa yang kamu suka?",
+      "anyNote": "Jika tidak memilih apa pun, menu apa saja boleh.",
+      "maxTime": "Waktu memasak maksimum"
+    }
+  },
+  "onboarding": {
+    "skip": "Lewati",
+    "continue": "Lanjut",
+    "start": "Mulai",
+    "pages": "Halaman pengantar",
+    "page": "Halaman {n}",
+    "slides": {
+      "suggest": {
+        "title": "Menu yang sesuai seleramu",
+        "text": "Pilih diet, alergi, dan protein favoritmu. Aplikasi memilihkan menu yang cocok untukmu.",
+        "chip": "Dibuat untukmu"
+      },
+      "plan": {
+        "title": "Rencana mingguan dalam sekejap",
+        "text": "Susun rencana sesuai anggaran dan waktu memasakmu, lalu ganti menu dengan satu ketukan.",
+        "chip": "Seminggu siap"
+      },
+      "shop": {
+        "title": "Belanja yang rapi",
+        "text": "Bahan seminggu dikumpulkan dalam satu daftar. Pilih toko dan centang barang saat membeli.",
+        "chip": "Satu daftar saja"
+      }
+    },
+    "languageTitle": "Pilih bahasamu"
+  },
+  "settings": {
+    "preferenceSummary": "{people} orang · {days} hari memasak · {budget}/minggu",
+    "reminderOn": "{days} pukul {time}",
+    "reminderOff": "Mati",
+    "stats": {
+      "meals": "Menu",
+      "ingredients": "Bahan",
+      "stores": "Toko",
+      "planned": "Menu terencana"
+    },
+    "resetConfirm": "Hapus semua data di perangkat ini (rencana, belanja, favorit, preferensi)?",
+    "resetDone": "Data dihapus",
+    "preferences": "Preferensi makanan",
+    "language": "Bahasa",
+    "languageSubtitle": "Antarmuka, nama menu, bahan, dan langkah memasak",
+    "reminder": "Pengingat rencana",
+    "reminderToggle": "Pengingat rencana mingguan",
+    "reset": "Hapus data di perangkat ini",
+    "cancel": "Batal",
+    "resetAction": "Hapus data"
+  },
+  "reminder": {
+    "title": "Saatnya merencanakan menumu",
+    "body": "Rencanakan menu minggu ini dan susun daftar belanjamu.",
+    "channel": "Pengingat rencana",
+    "denied": "Notifikasi diblokir. Izinkan di pengaturan ponsel.",
+    "test": "Kirim notifikasi uji coba",
+    "testSent": "Notifikasi uji coba sedang dikirim"
+  }
+}

@@ -1,0 +1,370 @@
+{
+  "day": {
+    "long": [
+      "월요일",
+      "화요일",
+      "수요일",
+      "목요일",
+      "금요일",
+      "토요일",
+      "일요일"
+    ],
+    "short": [
+      "월",
+      "화",
+      "수",
+      "목",
+      "금",
+      "토",
+      "일"
+    ]
+  },
+  "meal": {
+    "favorite": "즐겨찾기",
+    "unfavorite": "즐겨찾기 해제",
+    "back": "뒤로",
+    "level": {
+      "easy": "쉬움",
+      "medium": "보통",
+      "hard": "어려움"
+    },
+    "macro": {
+      "energy": "에너지",
+      "protein": "단백질",
+      "carbs": "탄수화물",
+      "fat": "지방"
+    },
+    "steps": {
+      "progress": "{total}단계 중 {done}단계 완료"
+    },
+    "ingredients": {
+      "addAria": "{name}을(를) 장바구니 목록에 추가"
+    },
+    "chips": {
+      "all": "전체",
+      "favorites": "♥ 즐겨찾기"
+    },
+    "search": {
+      "placeholder": "요리 검색..."
+    },
+    "list": {
+      "suggested": "회원님을 위한 추천",
+      "recent": "최근 본 요리",
+      "popular": "인기 요리",
+      "results": "검색 결과",
+      "count": "요리 {count}개",
+      "empty": "일치하는 요리가 없어요.",
+      "slide": "추천 {n}"
+    },
+    "toast": {
+      "added": "{name}을(를) 장보기 목록에 추가했어요",
+      "exists": "{name}은(는) 이미 목록에 있어요",
+      "addedMany": "재료 {count}개를 장보기 목록에 추가했어요",
+      "existsMany": "이 재료들은 이미 목록에 있어요",
+      "addedToDay": "{day}에 추가했어요",
+      "viewPlan": "계획 보기"
+    },
+    "detail": {
+      "protein": "단백질: {value} g",
+      "carbs": "탄수화물: {value} g",
+      "fat": "지방: {value} g",
+      "mayContain": "⚠️ 포함 가능: {list}",
+      "prep": "준비",
+      "cook": "조리",
+      "level": "난이도",
+      "servings": "인분",
+      "estCost": "예상 비용",
+      "nutrition": "1인분 영양 정보",
+      "ingredients": "재료",
+      "addAll": "모두 추가",
+      "method": "조리 방법",
+      "yours": "내 기록",
+      "cooked": "이 요리를 만들었어요",
+      "markCooked": "조리 완료로 표시",
+      "rating": "평점",
+      "dislike": "이 요리 싫어요",
+      "dislikeHint": "자동 계획에서 추천하지 않아요.",
+      "note": "메모",
+      "notePlaceholder": "예: 덜 맵게, 쪽파 추가...",
+      "addToPlan": "계획에 추가",
+      "addToDay": "{day}에 추가",
+      "notFound": "요리를 찾을 수 없어요.",
+      "backToList": "요리 목록으로"
+    }
+  },
+  "begin": {
+    "loading": "광고 불러오는 중...",
+    "enter": "앱 시작하기"
+  },
+  "ads": {
+    "label": "광고"
+  },
+  "ui": {
+    "close": "닫기",
+    "decrease": "줄이기",
+    "increase": "늘리기",
+    "rating": "평점",
+    "stars": "별 {n}개",
+    "hour": "시",
+    "minute": "분",
+    "done": "완료",
+    "am": "오전",
+    "pm": "오후",
+    "period": "오전 또는 오후"
+  },
+  "format": {
+    "minutes": "{count}분",
+    "hours": "{count}시간",
+    "hoursMinutes": "{hours}시간 {minutes}분"
+  },
+  "app": {
+    "dbError": "앱 데이터를 열 수 없어요. 페이지를 새로고침해 주세요."
+  },
+  "nav": {
+    "home": "홈",
+    "ingredients": "재료",
+    "meals": "요리",
+    "mealDetail": "요리 상세",
+    "onboarding": "환영합니다",
+    "begin": "다시 오신 것을 환영해요",
+    "planner": "주간 계획",
+    "plannerTab": "계획",
+    "setup": "설정",
+    "preferences": "음식 취향",
+    "settings": "설정",
+    "shopping": "장보기 목록",
+    "shoppingTab": "장보기",
+    "back": "뒤로",
+    "profile": "프로필 및 설정",
+    "quickSuggest": "빠른 추천",
+    "language": "언어",
+    "reminder": "계획 알림"
+  },
+  "planner": {
+    "summary": {
+      "cost": "예상 비용",
+      "budget": "주간 예산",
+      "over": "예산을 {amount} 초과했어요.",
+      "emptyTitle": "이번 주 계획이 아직 없어요",
+      "emptyHintBefore": "취향에 맞춰 계획을 만들거나,",
+      "emptyHintLink": "취향 수정"
+    },
+    "generating": "생성 중...",
+    "regenerate": "다시 생성",
+    "generate": "계획 자동 생성",
+    "shop": "장보기",
+    "clearDay": "하루 비우기",
+    "swap": "요리 교체",
+    "removeFromPlan": "계획에서 삭제",
+    "noMealsForDay": "{day}에 계획된 요리가 없어요.",
+    "pickMeals": "요리 고르기",
+    "noSwapOptions": "취향에 맞는 대체 요리가 없어요.",
+    "toast": {
+      "generated": "새 계획을 만들었어요",
+      "addedToShopping": "재료 {count}개를 장보기 목록에 추가했어요",
+      "shoppingUpToDate": "장보기 목록에 모든 재료가 이미 있어요",
+      "swapped": "요리를 교체했어요"
+    },
+    "quick": {
+      "title": "빠른 추천",
+      "intro": "식단, 알레르기, 예산, 조리 시간을 기준으로 해요.",
+      "regenerateWeek": "주간 계획 다시 생성",
+      "generateWeek": "주간 계획 생성",
+      "confirmReplace": "현재 계획이 대체돼요. 확인하려면 한 번 더 누르세요.",
+      "pickDays": "요리할 날의 요리를 고르세요",
+      "suggestOne": "요리 추천받기",
+      "suggestOneHint": "지금 딱 맞는 요리를 확인해요",
+      "editPrefs": "취향 수정",
+      "editPrefsHint": "가구원 수, 식단, 예산...",
+      "weekGenerated": "새 주간 계획을 만들었어요",
+      "noSuggestion": "취향에 맞는 요리를 찾지 못했어요"
+    }
+  },
+  "shopping": {
+    "store": "마트",
+    "noStore": "선택 안 함",
+    "searchStore": "마트 검색...",
+    "clearStore": "지우기",
+    "noStoreMatch": "일치하는 마트가 없어요.",
+    "addPlaceholder": "살 품목 추가...",
+    "add": "추가",
+    "fromPlan": "계획에서 가져오기",
+    "copy": "복사",
+    "pickFromIngredients": "재료에서 고르기",
+    "bought": "구매 {checked}/{total}",
+    "clearBought": "구매 완료 항목 삭제",
+    "uncheck": "표시 해제",
+    "check": "구매 완료로 표시",
+    "remove": "삭제",
+    "empty": "장보기 목록이 비어 있어요.",
+    "copyHeader": "장보기 목록",
+    "toast": {
+      "importedFromPlan": "주간 계획에서 재료 {count}개를 추가했어요",
+      "planUpToDate": "계획의 모든 재료가 이미 목록에 있어요",
+      "nothingToBuy": "더 살 것이 없어요",
+      "copied": "목록을 복사했어요",
+      "copyFailed": "이 기기에서는 복사할 수 없어요"
+    },
+    "range": {
+      "title": "며칠 치를 장볼까요?",
+      "today": "오늘",
+      "next3": "앞으로 3일",
+      "rest": "이번 주 끝까지",
+      "mealCount": "요리 {count}개",
+      "noMeals": "계획된 요리 없음"
+    }
+  },
+  "ingredients": {
+    "search": "재료 검색...",
+    "count": "재료 {count}개",
+    "inList": "이미 장보기 목록에 있어요",
+    "addToList": "{name}을(를) 장보기 목록에 추가",
+    "notFound": "일치하는 재료가 없어요."
+  },
+  "home": {
+    "greeting": "안녕하세요 👋",
+    "titleLine1": "오늘",
+    "titleLine2": "뭐 먹을까요?",
+    "search": "요리 검색...",
+    "weekGlance": "이번 주 한눈에 보기",
+    "tilePlan": "계획",
+    "tilePlanHint": "이번 주 요리",
+    "tileFavorites": "즐겨찾기",
+    "tileFavoritesHint": "저장한 요리",
+    "tileShopping": "장보기",
+    "tileShoppingHint": "살 품목",
+    "todayPlan": "오늘의 계획",
+    "viewAll": "전체 보기",
+    "noMealsToday": "오늘 계획된 요리가 없어요.",
+    "makePlan": "계획 만들기"
+  },
+  "setup": {
+    "back": "뒤로",
+    "skip": "건너뛰기",
+    "continue": "계속",
+    "create": "내 계획 만들기",
+    "generating": "계획을 만드는 중...",
+    "ready": "주간 계획이 준비됐어요",
+    "steps": {
+      "household": {
+        "title": "몇 명을 위해 요리하나요?",
+        "subtitle": "분량과 비용 계산에 사용돼요."
+      },
+      "diet": {
+        "title": "식단 및 알레르기",
+        "subtitle": "맞지 않는 요리는 추천하지 않아요."
+      },
+      "taste": {
+        "title": "나의 취향",
+        "subtitle": "좋아하는 단백질과 최대 조리 시간을 골라 주세요."
+      },
+      "schedule": {
+        "title": "요리 일정 및 예산",
+        "subtitle": "이번 주에 요리할 요일을 선택하세요."
+      },
+      "reminder": {
+        "title": "계획 알림",
+        "subtitle": "매주 알림을 받아 놓치지 마세요."
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "새 취향으로 계획을 다시 만들었어요",
+    "intro": "변경 사항은 자동으로 저장돼요. 새 취향을 적용하려면 계획을 다시 생성하세요.",
+    "household": "가구원 수",
+    "diet": "식단",
+    "taste": "취향",
+    "schedule": "요리 일정 및 예산",
+    "reminder": "알림",
+    "generating": "생성 중...",
+    "save": "저장 후 계획 다시 생성",
+    "cookTime": {
+      "15": "≤ 15분",
+      "30": "≤ 30분",
+      "45": "≤ 45분",
+      "60": "≤ 1시간",
+      "90": "제한 없음"
+    },
+    "fieldDiet": {
+      "diet": "식단",
+      "allergy": "알레르기"
+    },
+    "fieldHousehold": {
+      "note": "한 끼에 {people}명이 먹어요. 분량과 비용에 이 숫자가 곱해져요."
+    },
+    "fieldReminder": {
+      "title": "매주 계획 알림 받기",
+      "subtitle": "선택한 요일과 시간에 알림을 받아요.",
+      "toggle": "주간 계획 알림",
+      "day": "알림 요일",
+      "time": "알림 시간",
+      "minDay": "요일을 하나 이상 선택하세요.",
+      "webNote": "알림은 휴대폰 앱에서 전송돼요. 여기서는 설정만 저장돼요."
+    },
+    "fieldSchedule": {
+      "days": "요리하는 요일",
+      "minDay": "요일을 하나 이상 선택해 주세요.",
+      "budget": "주간 예산",
+      "perPerson": "한 끼 1인당 약 {amount}이에요."
+    },
+    "fieldTaste": {
+      "protein": "어떤 단백질을 좋아하세요?",
+      "anyNote": "선택하지 않으면 어떤 요리든 괜찮아요.",
+      "maxTime": "최대 조리 시간"
+    }
+  },
+  "onboarding": {
+    "skip": "건너뛰기",
+    "continue": "계속",
+    "start": "시작하기",
+    "pages": "소개 페이지",
+    "page": "{n}페이지",
+    "slides": {
+      "suggest": {
+        "title": "내 입맛에 맞는 요리",
+        "text": "식단, 알레르기, 좋아하는 단백질을 고르세요. 앱이 어울리는 요리를 골라 드려요.",
+        "chip": "나를 위한 추천"
+      },
+      "plan": {
+        "title": "몇 초 만에 만드는 주간 계획",
+        "text": "예산과 조리 시간에 맞춰 계획을 세우고, 한 번의 터치로 요리를 교체하세요.",
+        "chip": "일주일 준비 완료"
+      },
+      "shop": {
+        "title": "깔끔한 장보기",
+        "text": "한 주의 재료가 하나의 목록으로 모여요. 마트를 고르고 구매한 항목에 체크하세요.",
+        "chip": "하나의 목록"
+      }
+    },
+    "languageTitle": "언어를 선택하세요"
+  },
+  "settings": {
+    "preferenceSummary": "{people}명 · 요리일 {days}일 · 주 {budget}",
+    "reminderOn": "{days} {time}",
+    "reminderOff": "꺼짐",
+    "stats": {
+      "meals": "요리",
+      "ingredients": "재료",
+      "stores": "마트",
+      "planned": "계획된 요리"
+    },
+    "resetConfirm": "이 기기의 모든 데이터(계획, 장보기, 즐겨찾기, 취향)를 삭제할까요?",
+    "resetDone": "데이터를 삭제했어요",
+    "preferences": "음식 취향",
+    "language": "언어",
+    "languageSubtitle": "인터페이스, 요리명, 재료, 조리 단계",
+    "reminder": "계획 알림",
+    "reminderToggle": "주간 계획 알림",
+    "reset": "이 기기의 데이터 삭제",
+    "cancel": "취소",
+    "resetAction": "데이터 삭제"
+  },
+  "reminder": {
+    "title": "요리 계획을 세울 시간이에요",
+    "body": "이번 주 요리를 계획하고 장보기 목록을 만들어 보세요.",
+    "channel": "계획 알림",
+    "denied": "알림이 차단되어 있어요. 휴대폰 설정에서 허용해 주세요.",
+    "test": "테스트 알림 보내기",
+    "testSent": "테스트 알림을 보냈어요"
+  }
+}

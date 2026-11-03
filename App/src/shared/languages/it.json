@@ -1,0 +1,370 @@
+{
+  "day": {
+    "long": [
+      "Lunedì",
+      "Martedì",
+      "Mercoledì",
+      "Giovedì",
+      "Venerdì",
+      "Sabato",
+      "Domenica"
+    ],
+    "short": [
+      "Lun",
+      "Mar",
+      "Mer",
+      "Gio",
+      "Ven",
+      "Sab",
+      "Dom"
+    ]
+  },
+  "meal": {
+    "favorite": "Preferito",
+    "unfavorite": "Rimuovi dai preferiti",
+    "back": "Indietro",
+    "level": {
+      "easy": "Facile",
+      "medium": "Medio",
+      "hard": "Difficile"
+    },
+    "macro": {
+      "energy": "Energia",
+      "protein": "Proteine",
+      "carbs": "Carboidrati",
+      "fat": "Grassi"
+    },
+    "steps": {
+      "progress": "{done}/{total} passaggi completati"
+    },
+    "ingredients": {
+      "addAria": "Aggiungi {name} alla lista della spesa"
+    },
+    "chips": {
+      "all": "Tutti",
+      "favorites": "♥ Preferiti"
+    },
+    "search": {
+      "placeholder": "Cerca piatti..."
+    },
+    "list": {
+      "suggested": "Consigliati per te",
+      "recent": "Visti di recente",
+      "popular": "Piatti popolari",
+      "results": "Risultati",
+      "count": "{count} piatti",
+      "empty": "Nessun piatto trovato.",
+      "slide": "Suggerimento {n}"
+    },
+    "toast": {
+      "added": "{name} aggiunto alla lista della spesa",
+      "exists": "{name} è già nella lista",
+      "addedMany": "{count} ingredienti aggiunti alla lista della spesa",
+      "existsMany": "Questi ingredienti sono già nella lista",
+      "addedToDay": "Aggiunto a {day}",
+      "viewPlan": "Vedi piano"
+    },
+    "detail": {
+      "protein": "Proteine: {value} g",
+      "carbs": "Carboidrati: {value} g",
+      "fat": "Grassi: {value} g",
+      "mayContain": "⚠️ Può contenere: {list}",
+      "prep": "Preparazione",
+      "cook": "Cottura",
+      "level": "Livello",
+      "servings": "Porzioni",
+      "estCost": "Costo stimato",
+      "nutrition": "Valori nutrizionali per porzione",
+      "ingredients": "Ingredienti",
+      "addAll": "Aggiungi tutti",
+      "method": "Procedimento",
+      "yours": "Tuo",
+      "cooked": "Hai cucinato questo piatto",
+      "markCooked": "Segna come cucinato",
+      "rating": "Valutazione",
+      "dislike": "Non mi piace questo piatto",
+      "dislikeHint": "Non verrà suggerito nei piani automatici.",
+      "note": "Note",
+      "notePlaceholder": "es. meno piccante, aggiungi cipollotto...",
+      "addToPlan": "Aggiungi al piano",
+      "addToDay": "Aggiungi a {day}",
+      "notFound": "Piatto non trovato.",
+      "backToList": "Torna ai piatti"
+    }
+  },
+  "begin": {
+    "loading": "Caricamento annunci...",
+    "enter": "Entra nell'app"
+  },
+  "ads": {
+    "label": "Annuncio"
+  },
+  "ui": {
+    "close": "Chiudi",
+    "decrease": "Diminuisci",
+    "increase": "Aumenta",
+    "rating": "Valutazione",
+    "stars": "{n} stelle",
+    "hour": "Ora",
+    "minute": "Minuti",
+    "done": "Fatto",
+    "am": "AM",
+    "pm": "PM",
+    "period": "AM o PM"
+  },
+  "format": {
+    "minutes": "{count} min",
+    "hours": "{count} h",
+    "hoursMinutes": "{hours} h {minutes} min"
+  },
+  "app": {
+    "dbError": "Impossibile aprire i dati dell'app. Ricarica la pagina."
+  },
+  "nav": {
+    "home": "Home",
+    "ingredients": "Ingredienti",
+    "meals": "Piatti",
+    "mealDetail": "Dettagli del piatto",
+    "onboarding": "Benvenuto",
+    "begin": "Bentornato",
+    "planner": "Piano settimanale",
+    "plannerTab": "Piano",
+    "setup": "Configurazione",
+    "preferences": "Preferenze alimentari",
+    "settings": "Impostazioni",
+    "shopping": "Lista della spesa",
+    "shoppingTab": "Spesa",
+    "back": "Indietro",
+    "profile": "Profilo e impostazioni",
+    "quickSuggest": "Suggerimenti rapidi",
+    "language": "Lingua",
+    "reminder": "Promemoria del piano"
+  },
+  "planner": {
+    "summary": {
+      "cost": "Costo stimato",
+      "budget": "Budget settimanale",
+      "over": "Superi il budget di {amount}.",
+      "emptyTitle": "Nessun piano per questa settimana",
+      "emptyHintBefore": "Generane uno dalle tue preferenze, oppure",
+      "emptyHintLink": "modifica le preferenze"
+    },
+    "generating": "Generazione...",
+    "regenerate": "Rigenera",
+    "generate": "Genera piano automatico",
+    "shop": "Spesa",
+    "clearDay": "Svuota giorno",
+    "swap": "Cambia piatto",
+    "removeFromPlan": "Rimuovi dal piano",
+    "noMealsForDay": "Nessun piatto in programma per {day}.",
+    "pickMeals": "Scegli piatti",
+    "noSwapOptions": "Nessun piatto alternativo corrisponde alle tue preferenze.",
+    "toast": {
+      "generated": "Nuovo piano creato",
+      "addedToShopping": "{count} ingredienti aggiunti alla lista della spesa",
+      "shoppingUpToDate": "La lista della spesa contiene già tutti gli ingredienti",
+      "swapped": "Piatto cambiato"
+    },
+    "quick": {
+      "title": "Suggerimenti rapidi",
+      "intro": "In base a dieta, allergie, budget e tempo di cottura.",
+      "regenerateWeek": "Rigenera piano settimanale",
+      "generateWeek": "Genera piano settimanale",
+      "confirmReplace": "Questo sostituirà il piano attuale. Tocca di nuovo per confermare.",
+      "pickDays": "Scegli i piatti per i giorni in cui cucini",
+      "suggestOne": "Suggerisci un piatto",
+      "suggestOneHint": "Scopri un piatto adatto a te adesso",
+      "editPrefs": "Modifica preferenze",
+      "editPrefsHint": "Persone, dieta, budget...",
+      "weekGenerated": "Nuovo piano settimanale creato",
+      "noSuggestion": "Nessun piatto corrisponde alle tue preferenze"
+    }
+  },
+  "shopping": {
+    "store": "Supermercato",
+    "noStore": "Non selezionato",
+    "searchStore": "Cerca supermercati...",
+    "clearStore": "Cancella",
+    "noStoreMatch": "Nessun supermercato trovato.",
+    "addPlaceholder": "Aggiungi un articolo da comprare...",
+    "add": "Aggiungi",
+    "fromPlan": "Importa dal piano",
+    "copy": "Copia",
+    "pickFromIngredients": "Scegli dagli ingredienti",
+    "bought": "Comprati {checked}/{total}",
+    "clearBought": "Rimuovi comprati",
+    "uncheck": "Deseleziona",
+    "check": "Segna come comprato",
+    "remove": "Rimuovi",
+    "empty": "La tua lista della spesa è vuota.",
+    "copyHeader": "Lista della spesa",
+    "toast": {
+      "importedFromPlan": "{count} ingredienti aggiunti dal piano settimanale",
+      "planUpToDate": "La lista contiene già tutti gli ingredienti del piano",
+      "nothingToBuy": "Non resta nulla da comprare",
+      "copied": "Lista copiata",
+      "copyFailed": "Impossibile copiare su questo dispositivo"
+    },
+    "range": {
+      "title": "Spesa per quali giorni?",
+      "today": "Oggi",
+      "next3": "Prossimi 3 giorni",
+      "rest": "Fino a fine settimana",
+      "mealCount": "{count} piatti",
+      "noMeals": "Nessun piatto in programma"
+    }
+  },
+  "ingredients": {
+    "search": "Cerca ingredienti...",
+    "count": "{count} ingredienti",
+    "inList": "Già nella lista della spesa",
+    "addToList": "Aggiungi {name} alla lista della spesa",
+    "notFound": "Nessun ingrediente trovato."
+  },
+  "home": {
+    "greeting": "Ciao 👋",
+    "titleLine1": "Cosa mangiare",
+    "titleLine2": "oggi?",
+    "search": "Cerca piatti...",
+    "weekGlance": "La settimana in breve",
+    "tilePlan": "Piano",
+    "tilePlanHint": "piatti questa settimana",
+    "tileFavorites": "Preferiti",
+    "tileFavoritesHint": "piatti salvati",
+    "tileShopping": "Spesa",
+    "tileShoppingHint": "articoli da comprare",
+    "todayPlan": "Piano di oggi",
+    "viewAll": "Vedi tutto",
+    "noMealsToday": "Non hai piatti in programma per oggi.",
+    "makePlan": "Crea un piano"
+  },
+  "setup": {
+    "back": "Indietro",
+    "skip": "Salta",
+    "continue": "Continua",
+    "create": "Crea il mio piano",
+    "generating": "Creazione del piano...",
+    "ready": "Il tuo piano settimanale è pronto",
+    "steps": {
+      "household": {
+        "title": "Per quante persone cucini?",
+        "subtitle": "Serve a calcolare porzioni e costi."
+      },
+      "diet": {
+        "title": "Dieta e allergie",
+        "subtitle": "I piatti non adatti non verranno suggeriti."
+      },
+      "taste": {
+        "title": "I tuoi gusti",
+        "subtitle": "Scegli le proteine preferite e il tempo massimo di cottura."
+      },
+      "schedule": {
+        "title": "Giorni di cucina e budget",
+        "subtitle": "Scegli i giorni in cui vuoi cucinare questa settimana."
+      },
+      "reminder": {
+        "title": "Promemoria del piano",
+        "subtitle": "Ricevi un promemoria settimanale per non dimenticarlo."
+      }
+    }
+  },
+  "preferences": {
+    "regenerated": "Piano rigenerato con le nuove preferenze",
+    "intro": "Le modifiche vengono salvate automaticamente. Rigenera il piano per applicare le nuove preferenze.",
+    "household": "Persone in casa",
+    "diet": "Dieta",
+    "taste": "Gusti",
+    "schedule": "Giorni di cucina e budget",
+    "reminder": "Promemoria",
+    "generating": "Creazione...",
+    "save": "Salva e rigenera il piano",
+    "cookTime": {
+      "15": "≤ 15 min",
+      "30": "≤ 30 min",
+      "45": "≤ 45 min",
+      "60": "≤ 1 ora",
+      "90": "Nessun limite"
+    },
+    "fieldDiet": {
+      "diet": "Dieta",
+      "allergy": "Allergie"
+    },
+    "fieldHousehold": {
+      "note": "{people} persone mangiano a ogni pasto. Porzioni e costi vengono moltiplicati per questo numero."
+    },
+    "fieldReminder": {
+      "title": "Ricordami di pianificare ogni settimana",
+      "subtitle": "Ricevi una notifica nei giorni e all'ora che scegli.",
+      "toggle": "Promemoria settimanale del piano",
+      "day": "Ricordamelo il",
+      "time": "Ora del promemoria",
+      "minDay": "Scegli almeno un giorno.",
+      "webNote": "Le notifiche sono inviate dall'app per telefono. Qui l'impostazione viene solo salvata."
+    },
+    "fieldSchedule": {
+      "days": "Giorni in cui cucini",
+      "minDay": "Seleziona almeno un giorno.",
+      "budget": "Budget settimanale",
+      "perPerson": "Circa {amount} a persona per pasto."
+    },
+    "fieldTaste": {
+      "protein": "Quali proteine ti piacciono?",
+      "anyNote": "Se non selezioni nulla, va bene qualsiasi piatto.",
+      "maxTime": "Tempo massimo di cottura"
+    }
+  },
+  "onboarding": {
+    "skip": "Salta",
+    "continue": "Continua",
+    "start": "Inizia",
+    "pages": "Pagine introduttive",
+    "page": "Pagina {n}",
+    "slides": {
+      "suggest": {
+        "title": "Piatti in linea con i tuoi gusti",
+        "text": "Scegli dieta, allergie e proteine preferite. L'app seleziona i piatti adatti a te.",
+        "chip": "Fatto per te"
+      },
+      "plan": {
+        "title": "Un piano settimanale in pochi secondi",
+        "text": "Crea un piano in base a budget e tempo di cottura, e cambia i piatti con un tocco.",
+        "chip": "Settimana pronta"
+      },
+      "shop": {
+        "title": "Spesa sempre in ordine",
+        "text": "Gli ingredienti della settimana sono raccolti in un'unica lista. Scegli un negozio e spunta gli articoli mentre li compri.",
+        "chip": "Una sola lista"
+      }
+    },
+    "languageTitle": "Scegli la tua lingua"
+  },
+  "settings": {
+    "preferenceSummary": "{people} persone · {days} giorni di cucina · {budget}/settimana",
+    "reminderOn": "{days} alle {time}",
+    "reminderOff": "Disattivato",
+    "stats": {
+      "meals": "Piatti",
+      "ingredients": "Ingredienti",
+      "stores": "Negozi",
+      "planned": "Piatti in programma"
+    },
+    "resetConfirm": "Eliminare tutti i dati su questo dispositivo (piano, spesa, preferiti, preferenze)?",
+    "resetDone": "Dati eliminati",
+    "preferences": "Preferenze alimentari",
+    "language": "Lingua",
+    "languageSubtitle": "Interfaccia, nomi dei piatti, ingredienti e passaggi di cottura",
+    "reminder": "Promemoria del piano",
+    "reminderToggle": "Promemoria settimanale del piano",
+    "reset": "Elimina i dati su questo dispositivo",
+    "cancel": "Annulla",
+    "resetAction": "Elimina dati"
+  },
+  "reminder": {
+    "title": "È ora di pianificare i pasti",
+    "body": "Pianifica i pasti di questa settimana e crea la tua lista della spesa.",
+    "channel": "Promemoria del piano",
+    "denied": "Le notifiche sono bloccate. Consentile nelle impostazioni del telefono.",
+    "test": "Invia una notifica di prova",
+    "testSent": "Notifica di prova in arrivo"
+  }
+}
