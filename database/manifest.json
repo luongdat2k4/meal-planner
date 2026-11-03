@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
-  "catalogVersion": "2026-10-30.6",
-  "generatedAt": "2026-10-30T10:29:55.851Z",
+  "catalogVersion": "2026-11-03.1",
+  "generatedAt": "2026-11-03T10:47:28.712Z",
   "dbFiles": [
     {
       "name": "catalog/catalog.db",
@@ -13,8 +13,8 @@
         "meal",
         "meal_ingredient"
       ],
-      "sha256": "25263edd7d1d14bd08238709af912b824b08ea2758942580d45a30d0483ef454",
-      "sizeBytes": 2023424
+      "sha256": "6b9a698429209b4677fdc11a098f14b4bb582627b410ce09210dede53b308228",
+      "sizeBytes": 2560000
     },
     {
       "name": "runtime-template.db",
