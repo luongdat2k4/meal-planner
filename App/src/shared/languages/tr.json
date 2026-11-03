@@ -251,7 +251,11 @@
         "subtitle": "Porsiyon ve maliyet hesabı için kullanılır."
       },
       "diet": {
-        "title": "Diyet ve alerjiler",
+        "title": "Diyet",
+        "subtitle": "Uygun olmayan yemekler önerilmeyecek."
+      },
+      "allergy": {
+        "title": "Alerjiler",
         "subtitle": "Uygun olmayan yemekler önerilmeyecek."
       },
       "taste": {

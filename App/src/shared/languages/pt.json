@@ -251,7 +251,11 @@
         "subtitle": "Usado para calcular porções e custo."
       },
       "diet": {
-        "title": "Dieta e alergias",
+        "title": "Dieta",
+        "subtitle": "Refeições inadequadas não serão sugeridas."
+      },
+      "allergy": {
+        "title": "Alergias",
         "subtitle": "Refeições inadequadas não serão sugeridas."
       },
       "taste": {

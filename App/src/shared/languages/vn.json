@@ -251,7 +251,11 @@
         "subtitle": "Dùng để tính khẩu phần và chi phí."
       },
       "diet": {
-        "title": "Chế độ ăn và dị ứng",
+        "title": "Chế độ ăn",
+        "subtitle": "Món không phù hợp sẽ không được gợi ý."
+      },
+      "allergy": {
+        "title": "Dị ứng",
         "subtitle": "Món không phù hợp sẽ không được gợi ý."
       },
       "taste": {

@@ -251,7 +251,11 @@
         "subtitle": "Dipakai untuk menghitung porsi dan biaya."
       },
       "diet": {
-        "title": "Diet dan alergi",
+        "title": "Diet",
+        "subtitle": "Menu yang tidak cocok tidak akan disarankan."
+      },
+      "allergy": {
+        "title": "Alergi",
         "subtitle": "Menu yang tidak cocok tidak akan disarankan."
       },
       "taste": {

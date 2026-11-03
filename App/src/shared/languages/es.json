@@ -251,7 +251,11 @@
         "subtitle": "Sirve para calcular raciones y coste."
       },
       "diet": {
-        "title": "Dieta y alergias",
+        "title": "Dieta",
+        "subtitle": "No se sugerirán las comidas que no sean adecuadas."
+      },
+      "allergy": {
+        "title": "Alergias",
         "subtitle": "No se sugerirán las comidas que no sean adecuadas."
       },
       "taste": {

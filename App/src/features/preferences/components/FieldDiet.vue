@@ -7,6 +7,8 @@ import { DIETARY } from '../dietary'
 import { ALLERGENS } from '../options'
 import { usePreferences } from '../usePreferences'
 
+// `part` shows only the diets or only the allergies (the setup has a screen for each); the heading is then the screen's title.
+const props = withDefaults(defineProps<{ part?: 'both' | 'diet' | 'allergy' }>(), { part: 'both' })
 const { state } = usePreferences()
 
 const allergenOptions = computed(() => ALLERGENS.map((allergen) => ({ id: allergen.id, label: `${allergen.emoji} ${allergen.label}` })))
@@ -18,8 +20,8 @@ function toggleDiet(id: string) {
 
 <template>
   <div class="space-y-5">
-    <div>
-      <h3 class="mb-2 font-semibold">{{ t('preferences.fieldDiet.diet') }}</h3>
+    <div v-if="props.part !== 'allergy'">
+      <h3 v-if="props.part === 'both'" class="mb-2 font-semibold">{{ t('preferences.fieldDiet.diet') }}</h3>
       <div class="grid grid-cols-2 gap-3">
         <button
           v-for="diet in DIETARY"
@@ -36,8 +38,8 @@ function toggleDiet(id: string) {
       </div>
     </div>
 
-    <div>
-      <h3 class="mb-2 font-semibold">{{ t('preferences.fieldDiet.allergy') }}</h3>
+    <div v-if="props.part !== 'diet'">
+      <h3 v-if="props.part === 'both'" class="mb-2 font-semibold">{{ t('preferences.fieldDiet.allergy') }}</h3>
       <ChipGroup v-model="state.allergenIds" :options="allergenOptions" />
     </div>
   </div>

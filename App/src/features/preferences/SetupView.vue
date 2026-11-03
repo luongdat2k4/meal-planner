@@ -18,7 +18,7 @@ import { usePreferences } from './usePreferences'
 const router = useRouter()
 const { state, completeSetup } = usePreferences()
 
-const steps = [{ key: 'household' }, { key: 'diet' }, { key: 'taste' }, { key: 'schedule' }, { key: 'reminder' }] as const
+const steps = [{ key: 'household' }, { key: 'diet' }, { key: 'allergy' }, { key: 'taste' }, { key: 'schedule' }, { key: 'reminder' }] as const
 
 const step = ref(Math.min(state.setupStep, steps.length - 1))
 const generating = ref(false)
@@ -58,8 +58,8 @@ function skip() {
 </script>
 
 <template>
-  <section class="mx-auto flex min-h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-[max(env(safe-area-inset-top),1rem)]">
-    <header class="flex items-center gap-3">
+  <section class="mx-auto flex h-[calc(100dvh-var(--ad-bottom,0px))] max-w-2xl flex-col px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-[max(env(safe-area-inset-top),1rem)]">
+    <header class="flex shrink-0 items-center gap-3">
       <!-- Always laid out, hidden on the first step, so the progress bar sits in the same place on every step. -->
       <button
         type="button"
@@ -79,11 +79,14 @@ function skip() {
       <button type="button" class="text-sm font-medium text-gray-500" @click="skip">{{ t('setup.skip') }}</button>
     </header>
 
-    <main class="py-8">
+    <!-- The screen is exactly one viewport tall: the step scrolls inside its own area when it is tall, so the button and
+         the ad below it never leave the screen. -->
+    <main data-scroll-root class="min-h-0 overflow-y-auto overscroll-contain py-6">
       <h1 class="mb-1 text-2xl font-bold leading-tight">{{ t(`setup.steps.${current.key}.title`) }}</h1>
       <p class="mb-6 text-gray-500">{{ t(`setup.steps.${current.key}.subtitle`) }}</p>
       <FieldHousehold v-if="current.key === 'household'" />
-      <FieldDiet v-else-if="current.key === 'diet'" />
+      <FieldDiet v-else-if="current.key === 'diet'" part="diet" />
+      <FieldDiet v-else-if="current.key === 'allergy'" part="allergy" />
       <FieldTaste v-else-if="current.key === 'taste'" />
       <FieldSchedule v-else-if="current.key === 'schedule'" />
       <FieldReminder v-else-if="current.key === 'reminder'" />
@@ -91,14 +94,14 @@ function skip() {
 
     <button
       type="button"
-      class="mt-2 w-full rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98] disabled:opacity-40"
+      class="mt-2 w-full shrink-0 rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98] disabled:opacity-40"
       :disabled="!canContinue || generating"
       @click="next"
     >
       {{ isLast ? t('setup.create') : t('setup.continue') }}
     </button>
 
-    <InFeedAd name="setup" template="mrec" video :min-viewport-height="800" class="mt-10" />
+    <InFeedAd :key="current.key" :name="`setup-${current.key}`" template="mrec" video :min-viewport-height="740" class="mt-6 shrink-0" />
 
     <div v-if="generating" class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-surface">
       <div class="h-12 w-12 animate-spin rounded-full border-4 border-brand-soft border-t-brand" />

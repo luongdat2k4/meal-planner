@@ -251,7 +251,11 @@
         "subtitle": "Wordt gebruikt om porties en kosten te berekenen."
       },
       "diet": {
-        "title": "Dieet en allergieën",
+        "title": "Dieet",
+        "subtitle": "Ongeschikte maaltijden worden niet voorgesteld."
+      },
+      "allergy": {
+        "title": "Allergieën",
         "subtitle": "Ongeschikte maaltijden worden niet voorgesteld."
       },
       "taste": {

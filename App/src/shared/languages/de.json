@@ -251,7 +251,11 @@
         "subtitle": "Zur Berechnung von Portionen und Kosten."
       },
       "diet": {
-        "title": "Ernährung und Allergien",
+        "title": "Ernährung",
+        "subtitle": "Ungeeignete Gerichte werden nicht vorgeschlagen."
+      },
+      "allergy": {
+        "title": "Allergien",
         "subtitle": "Ungeeignete Gerichte werden nicht vorgeschlagen."
       },
       "taste": {

@@ -251,7 +251,11 @@
         "subtitle": "用于计算份量和费用。"
       },
       "diet": {
-        "title": "饮食和过敏",
+        "title": "饮食",
+        "subtitle": "不适合的菜肴将不会被推荐。"
+      },
+      "allergy": {
+        "title": "过敏",
         "subtitle": "不适合的菜肴将不会被推荐。"
       },
       "taste": {

@@ -251,7 +251,11 @@
         "subtitle": "Sert à calculer les portions et le coût."
       },
       "diet": {
-        "title": "Régime et allergies",
+        "title": "Régime",
+        "subtitle": "Les repas inadaptés ne seront pas suggérés."
+      },
+      "allergy": {
+        "title": "Allergies",
         "subtitle": "Les repas inadaptés ne seront pas suggérés."
       },
       "taste": {

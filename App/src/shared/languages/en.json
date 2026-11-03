@@ -251,7 +251,11 @@
         "subtitle": "Used to calculate portions and cost."
       },
       "diet": {
-        "title": "Diet and allergies",
+        "title": "Diet",
+        "subtitle": "Unsuitable meals won't be suggested."
+      },
+      "allergy": {
+        "title": "Allergies",
         "subtitle": "Unsuitable meals won't be suggested."
       },
       "taste": {
