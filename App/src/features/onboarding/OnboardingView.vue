@@ -5,12 +5,15 @@ import { useRouter } from 'vue-router'
 import { assetUrl, thumbUrl } from '../../shared/assets'
 import { t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
+import { preloadInterstitial, showInterstitial } from '../ads/adRuntime'
 import { getMeal } from '../meals'
 import { usePreferences } from '../preferences'
 
 const router = useRouter()
 const { completeOnboarding } = usePreferences()
 const scroller = useTemplateRef<HTMLElement>('scroller')
+
+void preloadInterstitial()
 
 const slides = [
   {
@@ -56,7 +59,11 @@ async function finish() {
 }
 
 async function next() {
-  if (isLast.value) await finish()
+  if (isLast.value) {
+    // Full-screen ad when the intro ends with "Get started"; Skip goes straight on, and setup shows its own at the end.
+    await showInterstitial()
+    await finish()
+  }
   else goTo(active.value + 1)
 }
 </script>
