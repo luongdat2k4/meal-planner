@@ -8,7 +8,7 @@ export function assetUrl(path: string): string {
 const THUMBNAILED = ['assets_meals_', 'assets_ingredients_']
 
 export function thumbUrl(path: string): string {
-  const match = /^images\/([^/]+)\.(?:jpe?g|png)$/i.exec(path)
+  const match = /^images\/([^/]+)\.(?:jpe?g|png|webp)$/i.exec(path)
   if (!match || !THUMBNAILED.some((prefix) => match[1]!.startsWith(prefix))) return assetUrl(path)
   return assetUrl(`images/thumbnails/${match[1]}.webp`)
 }
