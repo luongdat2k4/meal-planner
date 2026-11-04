@@ -10,7 +10,7 @@
     "cap:sync": "npm run build && cap sync android"
   },
   "dependencies": {
-    "@alf/app-sdk": "file:../alf-app-sdk-1.9.0.tgz",
+    "@alf/app-sdk": "file:../alf-app-sdk-3.0.0.tgz",
     "@capacitor/android": "^8.6.0",
     "@capacitor/core": "^8.6.0",
     "@capacitor/local-notifications": "^8.3.1",
