@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, watch } from 'vue'
 import { Capacitor } from '@capacitor/core'
-import { ALF, type NativeAdTemplate } from '@alf/app-sdk'
+import { ALF, ALFAppLovinMAX, type NativeAdTemplate } from '@alf/app-sdk'
 import { adsAvailable, adsSuppressed } from '../adRuntime'
-import { NATIVE_HEIGHTS } from '../adsConfig'
+import { maxUnit, NATIVE_HEIGHTS } from '../adsConfig'
 
-// The Google Mobile Ads SDK draws the ad in a native view above the WebView, so this element only reserves the space
+// The ad is drawn in a native view above the WebView (an AppLovin MAX MREC for the mrec template while MAX has a unit,
+// otherwise the Google Mobile Ads native ad), so this element only reserves the space
 // and reports its rect. That view cannot be clipped by the page, so it is shown only while the whole box sits between
 // the fixed top and bottom chrome (elements marked data-ad-chrome) and nothing else is open above the page.
 const props = withDefaults(defineProps<{ name: string; template?: NativeAdTemplate; video?: boolean }>(), { template: 'small', video: false })
@@ -17,6 +18,9 @@ const native = Capacitor.isNativePlatform()
 const active = ref(true)
 const canShow = computed(() => adsAvailable.value && !adsSuppressed.value && active.value)
 
+// MAX MREC first for the mrec template; flips to false (AdMob native takes over) if MAX cannot create the view.
+let useMax = props.template === 'mrec' && !!maxUnit('mrec')
+let maxCreated = false
 let shown = false
 let everShown = false
 let frame = 0
@@ -52,16 +56,39 @@ async function sync() {
     if (!place) {
       if (shown) {
         shown = false
-        await ads.HideAdMobNativeAd(props.name)
+        if (useMax) await ALFAppLovinMAX.hideMRec({ adUnitId: maxUnit('mrec')! })
+        else await ads.HideAdMobNativeAd(props.name)
       }
-    } else if (shown) await ads.UpdateAdMobNativeAdRect(place, props.name)
-    else {
+    } else if (shown) {
+      if (useMax) await ALFAppLovinMAX.updateMRecRect({ adUnitId: maxUnit('mrec')!, rect: place })
+      else await ads.UpdateAdMobNativeAdRect(place, props.name)
+    } else if (useMax && (await showMax(place))) {
+      shown = true
+    } else {
+      useMax = false
       everShown = shown = true
       const ok = await ads.ShowAdMobNativeAd({ slot: props.name, template: props.template, rect: place, ...(props.video && { video: { startMuted: true } }) })
       if (!ok) fail()
     }
   } catch (error) {
     console.warn('[ads] native failed', error)
+  }
+}
+
+async function showMax(place: { x: number; y: number; width: number; height: number }): Promise<boolean> {
+  const adUnitId = maxUnit('mrec')!
+  try {
+    if (maxCreated) {
+      await ALFAppLovinMAX.updateMRecRect({ adUnitId, rect: place })
+      await ALFAppLovinMAX.showMRec({ adUnitId })
+    } else {
+      await ALFAppLovinMAX.createMRec({ adUnitId, position: 'CENTER', rect: place })
+      maxCreated = true
+    }
+    return true
+  } catch (error) {
+    console.warn('[ads] MAX MREC failed, using AdMob', error)
+    return false
   }
 }
 
@@ -111,6 +138,7 @@ onBeforeUnmount(() => {
   resizeObserver?.disconnect()
   unsubscribe?.()
   if (frame) cancelAnimationFrame(frame)
+  if (maxCreated) void queue.then(() => ALFAppLovinMAX.destroyMRec({ adUnitId: maxUnit('mrec')! }))
   if (everShown) void queue.then(() => ALF.Instance.Ads.DestroyAdMobNativeAd(props.name))
 })
 </script>

@@ -1,7 +1,7 @@
 import { computed, onBeforeUnmount, ref, watch, type Ref } from 'vue'
 import { Capacitor } from '@capacitor/core'
-import { ALF, ALFAdMob } from '@alf/app-sdk'
-import { adsConfig, initAds } from './adsConfig'
+import { ALF, ALFAdMob, ALFAppLovinMAX } from '@alf/app-sdk'
+import { adsConfig, initAds, maxUnit } from './adsConfig'
 
 // Shared state of the ad layer. Ads only exist in the native app: on the web `adsAvailable` stays false, so no ad
 // box, label or reserved space is drawn.
@@ -51,26 +51,31 @@ if (Capacitor.isNativePlatform()) {
   })
 }
 
-// Full-screen interstitial. Shown only at a natural transition (finishing setup), loaded ahead of time so the
-// transition never waits for it, and skipped silently when it is not ready: the caller always carries on afterwards.
+// Full-screen interstitial. Shown only at natural transitions (setup, onboarding, every few screens), loaded ahead of
+// time so the transition never waits for it, and skipped silently when it is not ready: the caller always carries on
+// afterwards. AppLovin MAX goes first; AdMob is used only when MAX has no ad ready.
 const TEST_INTERSTITIAL = {
   android: 'ca-app-pub-3940256099942544/1033173712',
   ios: 'ca-app-pub-3940256099942544/4411468910',
 }
 
+const platformKey = () => (Capacitor.getPlatform() === 'ios' ? 'ios' : 'android')
+
 function interstitialUnit(): string | undefined {
-  const platform = Capacitor.getPlatform() === 'ios' ? 'ios' : 'android'
+  const platform = platformKey()
   return adsConfig.settings?.testAds === true ? TEST_INTERSTITIAL[platform] : adsConfig.keys?.admob?.[platform]?.interstitial || undefined
 }
 
 export async function preloadInterstitial(): Promise<void> {
   await initializeAds()
-  const adUnitId = interstitialUnit()
-  if (!adsAvailable.value || !adUnitId) return
-  try {
-    await ALFAdMob.loadInterstitial({ adUnitId })
-  } catch (error) {
-    console.warn('[ads] interstitial not loaded', error)
+  if (!adsAvailable.value) return
+  const maxInterstitial = maxUnit('interstitial')
+  const admobUnit = interstitialUnit()
+  const loads: Array<Promise<unknown>> = []
+  if (maxInterstitial) loads.push(ALFAppLovinMAX.loadInterstitial({ adUnitId: maxInterstitial }))
+  if (admobUnit) loads.push(ALFAdMob.loadInterstitial({ adUnitId: admobUnit }))
+  for (const result of await Promise.allSettled(loads)) {
+    if (result.status === 'rejected') console.warn('[ads] interstitial not loaded', result.reason)
   }
 }
 
@@ -81,33 +86,63 @@ let interstitialShowing = false
 let lastFullScreenAt = 0
 export const msSinceFullScreenAd = () => Date.now() - lastFullScreenAt
 
+type Handle = { remove: () => Promise<void> | void }
+
+// Shows one interstitial and resolves when it has been closed or failed to show. The watchdog releases the caller if
+// the native callback is lost.
+function present(
+  listen: (done: () => void, handles: Handle[]) => Promise<void>,
+  show: () => Promise<unknown>,
+  handles: Handle[],
+): Promise<void> {
+  return new Promise<void>((resolve) => {
+    const timer = setTimeout(resolve, 120_000)
+    const done = () => {
+      clearTimeout(timer)
+      resolve()
+    }
+    void (async () => {
+      try {
+        await listen(done, handles)
+        await show()
+      } catch {
+        done()
+      }
+    })()
+  })
+}
+
 /** Resolves when the ad has been closed, or at once when there is nothing to show. Never rejects. */
 export async function showInterstitial(): Promise<void> {
-  const adUnitId = interstitialUnit()
-  if (!adsAvailable.value || !adUnitId || interstitialShowing || document.hidden) return
-  const handles: Array<{ remove: () => Promise<void> | void }> = []
+  const maxInterstitial = maxUnit('interstitial')
+  const admobUnit = interstitialUnit()
+  if (!adsAvailable.value || (!maxInterstitial && !admobUnit) || interstitialShowing || document.hidden) return
+  const handles: Handle[] = []
   try {
     if (await ALF.Instance.Ads.IsAdsRemoved()) return
-    if (!(await ALFAdMob.isInterstitialReady({ adUnitId })).ready) return
-    interstitialShowing = true
-    lastFullScreenAt = Date.now()
-    await new Promise<void>((resolve) => {
-      // The watchdog releases the caller if the native callback is lost.
-      const timer = setTimeout(resolve, 120_000)
-      const done = () => {
-        clearTimeout(timer)
-        resolve()
-      }
-      void (async () => {
-        try {
-          handles.push(await ALFAdMob.addListener('OnInterstitialAdDismissedEvent', done))
-          handles.push(await ALFAdMob.addListener('OnInterstitialAdFailedToShowEvent', done))
-          await ALFAdMob.showInterstitial({ adUnitId })
-        } catch {
-          done()
-        }
-      })()
-    })
+    if (maxInterstitial && (await ALFAppLovinMAX.isInterstitialReady({ adUnitId: maxInterstitial })).ready) {
+      interstitialShowing = true
+      lastFullScreenAt = Date.now()
+      await present(
+        async (done, list) => {
+          list.push(await ALFAppLovinMAX.addListener('OnInterstitialAdHiddenEvent', done))
+          list.push(await ALFAppLovinMAX.addListener('OnInterstitialAdDisplayFailedEvent', done))
+        },
+        () => ALFAppLovinMAX.showInterstitial({ adUnitId: maxInterstitial, placement: 'app_flow' }),
+        handles,
+      )
+    } else if (admobUnit && (await ALFAdMob.isInterstitialReady({ adUnitId: admobUnit })).ready) {
+      interstitialShowing = true
+      lastFullScreenAt = Date.now()
+      await present(
+        async (done, list) => {
+          list.push(await ALFAdMob.addListener('OnInterstitialAdDismissedEvent', done))
+          list.push(await ALFAdMob.addListener('OnInterstitialAdFailedToShowEvent', done))
+        },
+        () => ALFAdMob.showInterstitial({ adUnitId: admobUnit }),
+        handles,
+      )
+    }
   } catch (error) {
     console.warn('[ads] interstitial skipped', error)
   } finally {
