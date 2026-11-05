@@ -13,7 +13,7 @@ export const NATIVE_HEIGHTS = { small: 120, medium: 320, mrec: 250 } as const
 // Ad networks, in priority order: AppLovin MAX first (banner, MREC, interstitial), AdMob after it (native ads, the
 // launch ad, and the fallback when MAX has nothing to show). The MAX ad unit ids come from the AppLovin dashboard;
 // the SDK key is on its Account > Keys page and MAX does not start without it.
-const APPLOVIN_SDK_KEY = 'eQt0q3679KmUyKeNcSzqC01eB-lILmfTnJoufGxpSn__n1NVhHLeMgxZOaICke451El4ZBfuZum9Qw4WxzpW52'
+const APPLOVIN_SDK_KEY: string = 'eQt0q3679KmUyKeNcSzqC01eB-lILmfTnJoufGxpSn__n1NVhHLeMgxZOaICke451El4ZBfuZum9Qw4WxzpW52'
 
 const applovinAndroid = {
   sdkKey: APPLOVIN_SDK_KEY,
