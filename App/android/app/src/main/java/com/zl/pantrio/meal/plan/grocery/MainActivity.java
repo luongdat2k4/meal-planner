@@ -1,4 +1,4 @@
-package com.alf.mealplanner;
+package com.zl.pantrio.meal.plan.grocery;
 
 import android.os.Bundle;
 import android.webkit.WebView;

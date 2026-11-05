@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'com.alf.mealplanner',
+  appId: 'com.zl.pantrio.meal.plan.grocery',
   appName: 'Meal Planner',
   webDir: 'dist',
   // server: {
