@@ -175,7 +175,7 @@ router.afterEach((to) => {
     <!-- Room for the banner, which the SDK draws over the bottom edge of the screen. -->
     <div v-if="route.meta.ads?.banner" data-ad-chrome="bottom" class="h-[var(--ad-bottom,0px)] shrink-0 transition-[height] duration-200" :class="showChrome ? '' : 'sticky bottom-0 z-30 bg-surface'" aria-hidden="true" />
 
-    <BannerAd v-if="shellBanner" />
+    <BannerAd v-if="adsAvailable" :visible="shellBanner" />
     <QuickSuggestSheet v-model="suggestOpen" />
     <ToastHost />
   </div>

@@ -2,6 +2,7 @@ import { computed, onBeforeUnmount, ref, watch, type Ref } from 'vue'
 import { Capacitor } from '@capacitor/core'
 import { ALF, ALFAdMob, ALFAppLovinMAX } from '@alf/app-sdk'
 import { adsConfig, initAds, maxUnit } from './adsConfig'
+import { preloadMrec } from './mrec'
 
 // Shared state of the ad layer. Ads only exist in the native app: on the web `adsAvailable` stays false, so no ad
 // box, label or reserved space is drawn.
@@ -21,6 +22,7 @@ export function initializeAds(): Promise<void> {
   return (initialization ??= initAds()
     .then(() => {
       initialized.value = true
+      void preloadMrec()
     })
     .catch((error) => console.warn('[ads] init failed', error)))
 }
@@ -151,9 +153,10 @@ export async function showInterstitial(): Promise<void> {
   }
 }
 
-// App Open ad for the launch screen (/begin): the format meant for "ad when the app opens". Everything is bounded by
-// one deadline; a late ad is never shown over the next screen. Resolves when the ad is closed or at once when there
-// is nothing to show. Never rejects.
+// Full-screen ad for the launch screen (/begin). AppLovin MAX goes first, as a full-screen interstitial (the MAX app
+// open unit is not set up); AdMob's App Open ad is the fallback. Everything is bounded by one deadline; a late ad is
+// never shown over the next screen. Resolves when the ad is closed or at once when there is nothing to show. Never
+// rejects.
 const TEST_APP_OPEN = {
   android: 'ca-app-pub-3940256099942544/9257395921',
   ios: 'ca-app-pub-3940256099942544/5575463023',
@@ -171,6 +174,40 @@ function withTimeout<T>(operation: Promise<T>, ms: number): Promise<T> {
   )
 }
 
+// Loads the MAX interstitial and shows it once ready. False when MAX has no unit or no ad within the deadline.
+async function showMaxLaunchAd(within: <T>(operation: Promise<T>) => Promise<T>, onShowing?: () => void): Promise<boolean> {
+  const adUnitId = maxUnit('interstitial')
+  if (!adUnitId) return false
+  const handles: Handle[] = []
+  try {
+    await within(ALFAppLovinMAX.loadInterstitial({ adUnitId }))
+    // The load call returns before the ad has arrived: wait for it until the deadline.
+    for (;;) {
+      if ((await within(ALFAppLovinMAX.isInterstitialReady({ adUnitId }))).ready) break
+      await within(new Promise((resolve) => setTimeout(resolve, 250)))
+    }
+    if (document.hidden) return false
+    interstitialShowing = true
+    onShowing?.()
+    lastFullScreenAt = Date.now()
+    await present(
+      async (done, list) => {
+        list.push(await ALFAppLovinMAX.addListener('OnInterstitialAdHiddenEvent', done))
+        list.push(await ALFAppLovinMAX.addListener('OnInterstitialAdDisplayFailedEvent', done))
+      },
+      () => ALFAppLovinMAX.showInterstitial({ adUnitId, placement: 'app_launch' }),
+      handles,
+    )
+    return true
+  } catch (error) {
+    console.warn('[ads] MAX launch ad skipped', error)
+    return false
+  } finally {
+    for (const handle of handles) void handle.remove()
+    interstitialShowing = false
+  }
+}
+
 let appOpenAttempted = false
 
 export async function showAppOpenAd(loadWindowMs: number, onShowing?: () => void): Promise<void> {
@@ -181,9 +218,11 @@ export async function showAppOpenAd(loadWindowMs: number, onShowing?: () => void
   let handle: { remove: () => Promise<void> | void } | undefined
   try {
     await within(initializeAds())
-    const adUnitId = appOpenUnit()
-    if (!adsAvailable.value || !adUnitId || document.hidden) return
+    if (!adsAvailable.value || document.hidden) return
     if (await within(ALF.Instance.Ads.IsAdsRemoved())) return
+    if (await showMaxLaunchAd(within, onShowing)) return
+    const adUnitId = appOpenUnit()
+    if (!adUnitId) return
     await within(ALFAdMob.loadOpenAppAd({ adUnitId }))
     if (!(await within(ALFAdMob.isOpenAppAdReady({ adUnitId }))).ready || document.hidden) return
     let closed!: () => void

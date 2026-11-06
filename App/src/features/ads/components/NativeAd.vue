@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, onActivated, onBeforeUnmount, onDeactivated, onMounted, ref, watch } from 'vue'
 import { Capacitor } from '@capacitor/core'
-import { ALF, ALFAppLovinMAX, type NativeAdTemplate } from '@alf/app-sdk'
+import { ALF, type NativeAdTemplate } from '@alf/app-sdk'
 import { adsAvailable, adsSuppressed } from '../adRuntime'
 import { maxUnit, NATIVE_HEIGHTS } from '../adsConfig'
+import { hideMrec, moveMrec, showMrec } from '../mrec'
 
 // The ad is drawn in a native view above the WebView (an AppLovin MAX MREC for the mrec template while MAX has a unit,
 // otherwise the Google Mobile Ads native ad), so this element only reserves the space
@@ -20,7 +21,10 @@ const canShow = computed(() => adsAvailable.value && !adsSuppressed.value && act
 
 // MAX MREC first for the mrec template; flips to false (AdMob native takes over) if MAX cannot create the view.
 let useMax = props.template === 'mrec' && !!maxUnit('mrec')
-let maxCreated = false
+// The MAX view moves with the page, so it is hidden while the page scrolls and comes back once it has settled.
+let scrolling = false
+let settleTimer: ReturnType<typeof setTimeout> | undefined
+const SCROLL_SETTLE_MS = 350
 let shown = false
 let everShown = false
 let frame = 0
@@ -45,7 +49,7 @@ async function sync() {
   const ads = ALF.Instance.Ads
   const el = box.value
   let place: { x: number; y: number; width: number; height: number } | null = null
-  if (canShow.value && el) {
+  if (canShow.value && el && !(useMax && scrolling)) {
     const r = el.getBoundingClientRect()
     const area = freeArea()
     if (r.width > 0 && r.top >= area.top && r.bottom <= area.bottom) {
@@ -56,13 +60,13 @@ async function sync() {
     if (!place) {
       if (shown) {
         shown = false
-        if (useMax) await ALFAppLovinMAX.hideMRec({ adUnitId: maxUnit('mrec')! })
+        if (useMax) await hideMrec(props.name)
         else await ads.HideAdMobNativeAd(props.name)
       }
     } else if (shown) {
-      if (useMax) await ALFAppLovinMAX.updateMRecRect({ adUnitId: maxUnit('mrec')!, rect: place })
+      if (useMax) await moveMrec(props.name, place)
       else await ads.UpdateAdMobNativeAdRect(place, props.name)
-    } else if (useMax && (await showMax(place))) {
+    } else if (useMax && (await showMrec(props.name, place))) {
       shown = true
     } else {
       useMax = false
@@ -75,23 +79,6 @@ async function sync() {
   }
 }
 
-async function showMax(place: { x: number; y: number; width: number; height: number }): Promise<boolean> {
-  const adUnitId = maxUnit('mrec')!
-  try {
-    if (maxCreated) {
-      await ALFAppLovinMAX.updateMRecRect({ adUnitId, rect: place })
-      await ALFAppLovinMAX.showMRec({ adUnitId })
-    } else {
-      await ALFAppLovinMAX.createMRec({ adUnitId, position: 'CENTER', rect: place })
-      maxCreated = true
-    }
-    return true
-  } catch (error) {
-    console.warn('[ads] MAX MREC failed, using AdMob', error)
-    return false
-  }
-}
-
 function fail() {
   shown = false
   if (everShown) void ALF.Instance.Ads.DestroyAdMobNativeAd(props.name)
@@ -100,6 +87,18 @@ function fail() {
 }
 
 // The ad sits above the page and does not scroll with it: track the placeholder.
+function onScroll() {
+  if (useMax) {
+    scrolling = true
+    clearTimeout(settleTimer)
+    settleTimer = setTimeout(() => {
+      scrolling = false
+      track()
+    }, SCROLL_SETTLE_MS)
+  }
+  track()
+}
+
 function track() {
   if (frame) return
   frame = requestAnimationFrame(() => {
@@ -112,7 +111,7 @@ watch(canShow, track)
 
 onMounted(() => {
   if (!native) return
-  document.addEventListener('scroll', track, { capture: true, passive: true })
+  document.addEventListener('scroll', onScroll, { capture: true, passive: true })
   window.addEventListener('resize', track)
   // Layout shifts (a banner appearing, the list growing) move the box without a scroll.
   resizeObserver = new ResizeObserver(track)
@@ -133,12 +132,13 @@ onDeactivated(() => {
 
 onBeforeUnmount(() => {
   if (!native) return
-  document.removeEventListener('scroll', track, { capture: true })
+  document.removeEventListener('scroll', onScroll, { capture: true })
   window.removeEventListener('resize', track)
   resizeObserver?.disconnect()
   unsubscribe?.()
   if (frame) cancelAnimationFrame(frame)
-  if (maxCreated) void queue.then(() => ALFAppLovinMAX.destroyMRec({ adUnitId: maxUnit('mrec')! }))
+  clearTimeout(settleTimer)
+  if (useMax) void queue.then(() => hideMrec(props.name))
   if (everShown) void queue.then(() => ALF.Instance.Ads.DestroyAdMobNativeAd(props.name))
 })
 </script>

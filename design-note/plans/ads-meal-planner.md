@@ -79,7 +79,7 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 
 | View / trạng thái | Quảng cáo | Vị trí và điều kiện |
 |---|---|---|
-| `/begin` (mở lại app) | Banner + native small + App Open | Xem mục 10. |
+| `/begin` (mở lại app) | Banner + native small + quảng cáo toàn màn hình (interstitial MAX, dự phòng App Open AdMob) | Xem mục 10. |
 | `/onboarding/language` | Banner + native small | Dưới danh sách ngôn ngữ, cách danh sách ≥ 24px, nằm trong vùng cuộn; chỉ hiện nếu viewport cao ≥ 760px. Banner ở dải riêng dưới cùng, cách nút Tiếp tục ≥ 12px (nút nằm trong phần trang đã trừ chỗ banner). Cách nút Tiếp tục bởi phần `flex-1` của trang. |
 | `/onboarding` (3 slide) | Banner + native small | **Một** native cố định giữa vùng slide và footer, ngoài vùng vuốt (không tải lại khi đổi slide); chỉ hiện nếu viewport cao ≥ 880px. Banner như màn ngôn ngữ. Cách footer (dots + nút) ≥ 16px. |
 | `/setup` (6 bước: người ăn, chế độ ăn, dị ứng, khẩu vị, lịch, nhắc) | Banner + native | Native video (`mrec`, có vùng media, video tự phát tắt tiếng), mỗi bước một quảng cáo riêng, đặt dưới nút Tiếp tục (cách nút 40px, có nhãn "Quảng cáo"), chỉ hiện khi màn cao từ 800px trở lên và không có bàn phím/sheet đang mở; màn thấp hơn thì ẩn để không chen vào phần nhập liệu. Banner ở dải riêng dưới cùng, nút Tiếp tục nằm trong phần trang đã trừ chỗ banner; ở màn fullscreen cuộn được, dải này dính đáy và có nền đặc để nội dung không trượt xuống dưới banner. |
@@ -148,7 +148,7 @@ Khoá AdMob thật + `testAds: false`; consent theo khu vực (UMP); Privacy Pol
 
 ## 10. Màn khởi động `/begin` (mở lại app)
 
-Luồng: mở app khi đã xong setup → router chuyển tới `/begin` (chỉ trên app native, mỗi lần khởi động nguội một lần; trên web chỉ vào được bằng địa chỉ) → dòng chữ "Đang tải quảng cáo..." (cửa sổ chờ tối đa 5 giây, dòng chữ ẩn đi khi quảng cáo kết thúc) → **App Open** toàn màn hình → đếm 3, 2, 1 (nút khoá) → nút "Vào app" → `/home`.
+Luồng: mở app khi đã xong setup → router chuyển tới `/begin` (chỉ trên app native, mỗi lần khởi động nguội một lần; trên web chỉ vào được bằng địa chỉ) → dòng chữ "Đang tải quảng cáo..." (cửa sổ chờ tối đa 5 giây, dòng chữ ẩn đi khi quảng cáo kết thúc) → quảng cáo toàn màn hình (**interstitial AppLovin MAX** chờ tối đa 5 giây; không có thì dùng **App Open** của AdMob) → đếm 3, 2, 1 (nút khoá) → nút "Vào app" → `/home`.
 
 - **Vì sao App Open chứ không phải Interstitial:** policy §1 cấm Interstitial lúc khởi chạy và chỉ ra App Open cho trường hợp này. Dùng plugin AdMob trực tiếp với test unit; sẽ cần ad unit App Open thật khi phát hành.
 - **Banner + native** hiện trên `/begin` (banner ở dải riêng dưới cùng, native nhỏ ở giữa, cách nút ≥ 24px); cả hai tạm ẩn khi App Open đang hiện.
