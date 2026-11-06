@@ -12,6 +12,7 @@ import Stepper from '../../shared/ui/Stepper.vue'
 import ToggleSwitch from '../../shared/ui/ToggleSwitch.vue'
 import { dayNames, usePlanner } from '../planner'
 import { text } from '../../backend/catalogText'
+import InFeedAd from '../ads/components/InFeedAd.vue'
 import { usePreferences } from '../preferences'
 import { useShopping } from '../shopping'
 import { listIngredients } from '../../backend/catalog'
@@ -104,6 +105,7 @@ function addToPlan() {
   <section v-if="meal && recipe" class="px-5 pb-40 pt-[calc(max(env(safe-area-inset-top),1rem)+2.75rem)]">
     <!-- Back and favourite stay fixed at the top while the page scrolls. -->
     <div
+      data-ad-chrome="top"
       class="pointer-events-none fixed inset-x-0 top-0 z-20 mx-auto flex max-w-2xl items-center justify-between px-5 pt-[max(env(safe-area-inset-top),1rem)]"
     >
       <RouterLink :to="{ name: 'meals' }" class="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-card shadow-card" :aria-label="t('meal.back')">
@@ -182,6 +184,8 @@ function addToPlan() {
         <MacroCards :macros="recipe.macros" />
       </section>
 
+      <InFeedAd name="meal-detail" template="mrec" />
+
       <section class="space-y-3">
         <div class="flex items-center justify-between">
           <h2 class="text-lg font-semibold">{{ t('meal.detail.ingredients') }}</h2>
@@ -242,7 +246,8 @@ function addToPlan() {
       </section>
     </div>
 
-    <div class="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-2xl bg-gradient-to-t from-[#e4ecff] via-[#e4ecff]/80 to-transparent px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-8">
+    <!-- Sits above the banner strip, and counts as bottom chrome so a native ad never slides under it. -->
+    <div data-ad-chrome="bottom" class="fixed inset-x-0 bottom-[var(--ad-bottom,0px)] z-20 mx-auto max-w-2xl bg-gradient-to-t from-[#e4ecff] via-[#e4ecff]/80 to-transparent px-5 pb-[max(env(safe-area-inset-bottom),1rem)] pt-8">
       <button
         type="button"
         class="w-full rounded-full bg-brand py-4 text-base font-semibold text-white shadow-lg shadow-brand/30 transition active:scale-[0.98]"

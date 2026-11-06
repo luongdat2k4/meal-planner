@@ -46,7 +46,7 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 | Điều khoản | Cách đáp ứng |
 |---|---|
 | Vùng riêng, không che nội dung/nút | Banner nằm ở mép đáy; tab bar được **đẩy lên** đúng bằng chiều cao banner + khoảng cách; `<main>` cộng cùng giá trị vào padding đáy để nội dung cuối cuộn tới không bị che. |
-| Không sát nút điều hướng/vùng cuộn | Khoảng cách tối thiểu **12px** giữa mép trên banner và mép dưới tab bar (hằng số `BANNER_GAP`). Không đặt banner ở route có nút cố định đáy khác (`/meals/:id`). |
+| Không sát nút điều hướng/vùng cuộn | Khoảng cách tối thiểu **12px** giữa mép trên banner và mép dưới tab bar (hằng số `BANNER_GAP`). Ở route có nút cố định đáy (`/meals/:id`), nút "Thêm vào ngày" nằm trên dải banner (`bottom: var(--ad-bottom)`), vẫn cách banner ít nhất `BANNER_GAP`. |
 | Không giả điều khiển của app | Banner do SDK vẽ, không bọc thêm khung giống nút. |
 | Anchored adaptive ưu tiên khi phù hợp | **Lệch có chủ đích:** dùng cỡ cố định `BANNER` (320×50) vì web không biết chiều cao thật của adaptive, cần dự trữ đúng chỗ để không nhảy layout. Có thể đổi sang adaptive khi đã đo được chiều cao thật trên máy. |
 | Tôn trọng safe area/thanh điều hướng | Tab bar giữ padding `env(safe-area-inset-bottom)` của mình; chưa biết banner có tự tránh thanh điều hướng hệ thống không → **mục kiểm tra bắt buộc trên máy thật**. |
@@ -88,7 +88,7 @@ Bottom sheet (Teleport, z-50): QuickSuggestSheet, ImportRangeSheet
 | `/home` | Banner + native small | Native sau khối "Kế hoạch hôm nay", tách khỏi thẻ món; hiện khi nằm trọn giữa header/avatar và tab bar. |
 | `/planner` | Banner | Lưới thao tác dày, không native. |
 | `/meals` | Banner | Không native: lưới ảo hoá đo chiều cao hàng, và native vẽ đè khi cuộn. |
-| `/meals/:id` | Không | Fullscreen, thanh "Nấu" cố định đáy. |
+| `/meals/:id` | Banner + native MREC (giữa trang, sau phần dinh dưỡng) | Fullscreen; thanh nút cố định đáy được nâng lên trên banner và đánh dấu `data-ad-chrome="bottom"`, thanh nút trên cùng là `data-ad-chrome="top"`. Native chỉ hiện khi cả ô nằm giữa hai thanh, ẩn khi cuộn. |
 | `/shopping` | Banner + native small | Native sau danh sách khi có ≥ 5 mục chưa tick, không sát nút "Xoá đã mua" / nút thêm. |
 | `/ingredients` | Banner | Có ô tìm kiếm: ẩn khi bàn phím hiện. |
 | `/settings` | Banner | Không native giữa các hàng. |
@@ -132,7 +132,7 @@ Sửa file hiện có: `main.ts` (gọi `initializeAds()`), `route-meta.d.ts` + 
 
 ## 7. Tiêu chí nghiệm thu / kiểm thử (trên thiết bị)
 
-- Không có quảng cáo ở `/meals/:id`, màn phủ "đang tạo kế hoạch", khi bottom sheet mở, khi bàn phím hiện.
+- Không có quảng cáo ở màn phủ "đang tạo kế hoạch", khi bottom sheet mở, khi bàn phím hiện.
 - Banner không che tab bar, nội dung cuối trang cuộn tới được, khoảng cách banner–tab bar ≥ 12px; kiểm tra máy có notch + thanh cử chỉ + thanh điều hướng 3 nút.
 - Native luôn có nhãn "Quảng cáo", AdChoices nhìn thấy, không đè lên header/tab bar/sheet, không có hơn một native mỗi view.
 - Offline, không fill, nền/foreground, xoay màn hình, màn thấp, đổi ngôn ngữ vn/en. Chỉ dùng test ads, không click/impression giả.
