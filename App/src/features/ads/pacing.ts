@@ -6,7 +6,7 @@ import { adsAvailable, adsSuppressed, msSinceFullScreenAd, preloadInterstitial, 
 // on the current screen, and it appears a moment after the new screen is in place. A frequency cap in time keeps it
 // from being tiring, and the setup, the welcome screens and the launch screen (/begin) neither count nor show it.
 const EVERY = [2, 3] as const
-const MIN_GAP_MS = 15_000
+const MIN_GAP_MS = 30_000
 const SETTLE_MS = 600
 
 const pick = () => EVERY[Math.floor(Math.random() * EVERY.length)]

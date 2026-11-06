@@ -4,7 +4,7 @@ import { Capacitor } from '@capacitor/core'
 import { ALF, type NativeAdTemplate } from '@alf/app-sdk'
 import { adsAvailable, adsSuppressed } from '../adRuntime'
 import { maxUnit, NATIVE_HEIGHTS } from '../adsConfig'
-import { hideMrec, moveMrec, showMrec } from '../mrec'
+import { hideMrec, moveMrec, showMrec, type Follow } from '../mrec'
 
 // The ad is drawn in a native view above the WebView (an AppLovin MAX MREC for the mrec template while MAX has a unit,
 // otherwise the Google Mobile Ads native ad), so this element only reserves the space
@@ -21,8 +21,11 @@ const canShow = computed(() => adsAvailable.value && !adsSuppressed.value && act
 
 // MAX MREC first for the mrec template; flips to false (AdMob native takes over) if MAX cannot create the view.
 let useMax = props.template === 'mrec' && !!maxUnit('mrec')
-// The MAX view moves with the page, so it is hidden while the page scrolls and comes back once it has settled.
+// Where the page scrolls on a scroll box inside it, Android cannot see that scroll, so the MAX view is hidden while the
+// page scrolls and comes back once it has settled. Where the page scrolls on the document, Android moves the view in
+// the frame being drawn (see AdFollowPlugin.java) and nothing has to be hidden.
 let scrolling = false
+let followKey = ''
 let settleTimer: ReturnType<typeof setTimeout> | undefined
 const SCROLL_SETTLE_MS = 350
 let shown = false
@@ -45,14 +48,30 @@ function freeArea() {
   return { top, bottom }
 }
 
+// True when no scroll box sits between the element and the document, so the document's own scroll moves it.
+function scrollsOnDocument(el: HTMLElement) {
+  for (let parent = el.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
+    const overflow = getComputedStyle(parent).overflowY
+    if (overflow === 'auto' || overflow === 'scroll' || overflow === 'overlay') return false
+  }
+  return true
+}
+
 async function sync() {
   const ads = ALF.Instance.Ads
   const el = box.value
   let place: { x: number; y: number; width: number; height: number } | null = null
-  if (canShow.value && el && !(useMax && scrolling)) {
+  let follow: Follow | undefined
+  if (canShow.value && el) {
     const r = el.getBoundingClientRect()
     const area = freeArea()
-    if (r.width > 0 && r.top >= area.top && r.bottom <= area.bottom) {
+    if (useMax && scrollsOnDocument(el)) {
+      // Android keeps the view inside the free band by itself, frame by frame.
+      if (r.width > 0) {
+        place = { x: Math.round(r.left), y: Math.round(r.top), width: Math.round(r.width), height: Math.round(r.height) }
+        follow = { pageTop: Math.round(r.top + window.scrollY), clipTop: Math.round(area.top), clipBottom: Math.round(area.bottom) }
+      }
+    } else if (!(useMax && scrolling) && r.width > 0 && r.top >= area.top && r.bottom <= area.bottom) {
       place = { x: Math.round(r.left), y: Math.round(r.top), width: Math.round(r.width), height: Math.round(r.height) }
     }
   }
@@ -64,9 +83,14 @@ async function sync() {
         else await ads.HideAdMobNativeAd(props.name)
       }
     } else if (shown) {
-      if (useMax) await moveMrec(props.name, place)
-      else await ads.UpdateAdMobNativeAdRect(place, props.name)
-    } else if (useMax && (await showMrec(props.name, place))) {
+      if (useMax) {
+        // Following the page, nothing changes while it scrolls: send only when the ad's place in the page or the band moves.
+        const key = follow ? `${place.x},${place.width},${place.height},${follow.pageTop},${follow.clipTop},${follow.clipBottom}` : ''
+        if (!follow || key !== followKey) await moveMrec(props.name, place, follow)
+        followKey = key
+      } else await ads.UpdateAdMobNativeAdRect(place, props.name)
+    } else if (useMax && (await showMrec(props.name, place, follow))) {
+      followKey = follow ? `${place.x},${place.width},${place.height},${follow.pageTop},${follow.clipTop},${follow.clipBottom}` : ''
       shown = true
     } else {
       useMax = false
@@ -88,7 +112,7 @@ function fail() {
 
 // The ad sits above the page and does not scroll with it: track the placeholder.
 function onScroll() {
-  if (useMax) {
+  if (useMax && box.value && !scrollsOnDocument(box.value)) {
     scrolling = true
     clearTimeout(settleTimer)
     settleTimer = setTimeout(() => {

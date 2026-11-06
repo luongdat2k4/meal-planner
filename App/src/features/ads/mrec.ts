@@ -1,4 +1,5 @@
 import { ALFAppLovinMAX } from '@alf/app-sdk'
+import { AdFollow } from './adFollow'
 import { maxUnit } from './adsConfig'
 
 // One AppLovin MREC view shared by every ad slot. It is created once (ahead of time, off screen) and afterwards only
@@ -6,12 +7,16 @@ import { maxUnit } from './adsConfig'
 // fight over it. The slot that asked last owns the view; a slot that lost it cannot hide or move the new owner's.
 
 type Rect = { x: number; y: number; width: number; height: number }
+/** The ad's top edge inside the page and the band it may show in (CSS px), for screens that scroll on the document. */
+export type Follow = { pageTop: number; clipTop: number; clipBottom: number }
 
 const OFF_SCREEN: Rect = { x: 0, y: -2000, width: 300, height: 250 }
 
 let queue: Promise<unknown> = Promise.resolve()
 let created = false
 let owner: string | null = null
+let following = false
+let lastRectKey = ''
 
 // Native commands run one after another so a quick hide/show cannot interleave.
 function run<T>(action: () => Promise<T>): Promise<T> {
@@ -20,20 +25,40 @@ function run<T>(action: () => Promise<T>): Promise<T> {
   return result
 }
 
-/** Creates the view off screen and hidden so an ad is already loaded when the first slot needs it. */
+// createMRec only resolves once the first ad has loaded, and rejects when there is none (no fill). The view exists
+// either way and MAX keeps retrying, so the call is not waited for: later commands go straight after it.
+function create(adUnitId: string, rect: Rect) {
+  created = true
+  void ALFAppLovinMAX.createMRec({ adUnitId, position: 'CENTER', rect }).catch((error) => console.warn('[ads] MREC load', error))
+}
+
+/** Creates the view off screen and hidden so an ad is already loading when the first slot needs it. */
 export function preloadMrec(): Promise<void> {
   const adUnitId = maxUnit('mrec')
   if (!adUnitId) return Promise.resolve()
   return run(async () => {
     if (created) return
-    await ALFAppLovinMAX.createMRec({ adUnitId, position: 'CENTER', rect: OFF_SCREEN })
-    created = true
+    create(adUnitId, OFF_SCREEN)
     await ALFAppLovinMAX.hideMRec({ adUnitId })
   }).catch((error) => console.warn('[ads] MREC preload failed', error))
 }
 
-/** Puts the view over `rect` for `slot`. False when MAX cannot show it, so the caller can use another network. */
-export function showMrec(slot: string, rect: Rect): Promise<boolean> {
+async function place(adUnitId: string, rect: Rect, follow?: Follow) {
+  // In follow mode the vertical position is Android's job; the rect only has to be re-sent when it changes sideways or in size.
+  const rectKey = follow ? `${rect.x},${rect.width},${rect.height}` : ''
+  if (!follow || rectKey !== lastRectKey) await ALFAppLovinMAX.updateMRecRect({ adUnitId, rect })
+  lastRectKey = rectKey
+  if (follow) {
+    following = true
+    await AdFollow.follow({ adUnitId, ...follow })
+  } else if (following) {
+    following = false
+    await AdFollow.unfollow({ adUnitId })
+  }
+}
+
+/** Puts the view over `rect` for `slot`. False when MAX has no unit, so the caller can use another network. */
+export function showMrec(slot: string, rect: Rect, follow?: Follow): Promise<boolean> {
   const adUnitId = maxUnit('mrec')
   if (!adUnitId) return Promise.resolve(false)
   owner = slot
@@ -41,11 +66,16 @@ export function showMrec(slot: string, rect: Rect): Promise<boolean> {
     if (owner !== slot) return true
     try {
       if (created) {
-        await ALFAppLovinMAX.updateMRecRect({ adUnitId, rect })
+        lastRectKey = ''
+        await place(adUnitId, rect, follow)
         await ALFAppLovinMAX.showMRec({ adUnitId })
       } else {
-        await ALFAppLovinMAX.createMRec({ adUnitId, position: 'CENTER', rect })
-        created = true
+        create(adUnitId, rect)
+        lastRectKey = follow ? `${rect.x},${rect.width},${rect.height}` : ''
+        if (follow) {
+          following = true
+          await AdFollow.follow({ adUnitId, ...follow })
+        }
       }
       return true
     } catch (error) {
@@ -55,11 +85,11 @@ export function showMrec(slot: string, rect: Rect): Promise<boolean> {
   })
 }
 
-export function moveMrec(slot: string, rect: Rect): Promise<void> {
+export function moveMrec(slot: string, rect: Rect, follow?: Follow): Promise<void> {
   const adUnitId = maxUnit('mrec')
   if (!adUnitId || owner !== slot) return Promise.resolve()
   return run(async () => {
-    if (owner === slot) await ALFAppLovinMAX.updateMRecRect({ adUnitId, rect })
+    if (owner === slot) await place(adUnitId, rect, follow)
   }).catch((error) => console.warn('[ads] MREC move failed', error))
 }
 
@@ -68,5 +98,11 @@ export function hideMrec(slot: string): Promise<void> {
   const adUnitId = maxUnit('mrec')
   if (!adUnitId || owner !== slot) return Promise.resolve()
   owner = null
-  return run(() => ALFAppLovinMAX.hideMRec({ adUnitId })).catch((error) => console.warn('[ads] MREC hide failed', error))
+  return run(async () => {
+    await ALFAppLovinMAX.hideMRec({ adUnitId })
+    if (following) {
+      following = false
+      await AdFollow.unfollow({ adUnitId })
+    }
+  }).catch((error) => console.warn('[ads] MREC hide failed', error))
 }

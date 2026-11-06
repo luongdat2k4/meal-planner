@@ -47,7 +47,7 @@ export const adsConfig: Config = {
   settings: {
     dev: import.meta.env.DEV,
     // Off so the SDK takes the MAX units above first; with it on the SDK serves Google's AdMob test units instead.
-    testAds: false,
+    testAds: true,
     isGame: false,
     isApp: true,
     appName: 'Meal Planner',

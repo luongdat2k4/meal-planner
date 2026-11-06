@@ -18,6 +18,7 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         // Before the bridge starts the SDK is not running, so no cached file is in use.
         trimAdCache(new File(getFilesDir(), "al"), AD_CACHE_LIMIT_BYTES);
+        registerPlugin(AdFollowPlugin.class);
         super.onCreate(savedInstanceState);
 
         // Ép bật DevTools (Inspect) trên Chrome cho app này
