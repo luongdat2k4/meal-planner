@@ -9,7 +9,7 @@ Chính sách chính thức của AdMob, Google Play, Apple luôn là nguồn quy
 
 | Nội dung | Quyết định |
 |---|---|
-| Interstitial | Hai điểm: (1) ngay sau khi hoàn tất bước cuối của `/setup`, trước khi chuyển sang `/planner` (nút Bỏ qua không kích hoạt); (2) **mỗi 2–3 lần chuyển màn** trong app (đổi tab, vào/ra Cài đặt...), xem `features/ads/pacing.ts`: đếm khi đã sang màn mới chứ không đếm chạm đổi trạng thái trong màn, hiện sau ~0,6 giây khi màn mới đã ổn định, không hiện khi có sheet/bàn phím, và phải cách quảng cáo toàn màn trước ít nhất 15 giây (frequency cap theo thời gian và số lần chuyển màn như policy). Setup, onboarding và `/begin` không đếm, không hiện. Dùng đơn vị interstitial test của Google (có thể ra video). |
+| Interstitial | Hai điểm: (1) ngay sau khi hoàn tất bước cuối của `/setup`, trước khi chuyển sang `/planner` (nút Bỏ qua không kích hoạt); (2) **mỗi 2–3 lần chuyển màn** trong app (đổi tab, vào/ra Cài đặt...), xem `features/ads/pacing.ts`: đếm khi đã sang màn mới chứ không đếm chạm đổi trạng thái trong màn, hiện sau ~0,6 giây khi màn mới đã ổn định, không hiện khi có sheet/bàn phím, và phải cách quảng cáo toàn màn trước ít nhất 30 giây, tính từ lúc quảng cáo đó được đóng (frequency cap theo thời gian và số lần chuyển màn như policy). Setup, onboarding và `/begin` không đếm, không hiện. Dùng đơn vị interstitial test của Google (có thể ra video). |
 | App Open | **Chỉ ở màn khởi động `/begin`** (xem mục 10). Không dùng ở nơi khác (không khi app quay lại từ nền). |
 | Phạm vi view | Chỉ thêm vào **các view hiện có**: banner + native. Không thêm màn/route mới. |
 | Onboarding | **Có** native (màn ngôn ngữ và 3 slide giới thiệu). |

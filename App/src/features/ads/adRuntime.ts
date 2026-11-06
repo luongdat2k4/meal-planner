@@ -87,7 +87,7 @@ export async function preloadInterstitial(): Promise<void> {
 
 let interstitialShowing = false
 
-// When a full-screen ad (interstitial or launch ad) was last on screen: the pacing of the interstitials in between
+// When a full-screen ad (interstitial or launch ad) was last on screen, set again when it is closed: the pacing of the interstitials in between
 // (see pacing.ts) counts from it.
 let lastFullScreenAt = 0
 export const msSinceFullScreenAd = () => Date.now() - lastFullScreenAt
@@ -102,10 +102,15 @@ function present(
   handles: Handle[],
 ): Promise<void> {
   return new Promise<void>((resolve) => {
-    const timer = setTimeout(resolve, 120_000)
+    // The pause before the next full-screen ad counts from the moment this one is closed.
+    const finish = () => {
+      lastFullScreenAt = Date.now()
+      resolve()
+    }
+    const timer = setTimeout(finish, 120_000)
     const done = () => {
       clearTimeout(timer)
-      resolve()
+      finish()
     }
     void (async () => {
       try {
@@ -238,6 +243,7 @@ export async function showAppOpenAd(loadWindowMs: number, onShowing?: () => void
     // Showing resolves when the ad opens; wait for it to be closed. The watchdog releases the caller if the native
     // callback is lost.
     await Promise.race([dismissed, new Promise((resolve) => setTimeout(resolve, 60_000))])
+    lastFullScreenAt = Date.now()
   } catch (error) {
     console.warn('[ads] launch ad skipped', error)
   } finally {
