@@ -4,7 +4,7 @@ import { Capacitor } from '@capacitor/core'
 import { ALF, type NativeAdTemplate } from '@alf/app-sdk'
 import { adsAvailable, adsSuppressed } from '../adRuntime'
 import { maxUnit, NATIVE_HEIGHTS } from '../adsConfig'
-import { hideMrec, moveMrec, showMrec, type Follow } from '../mrec'
+import { hideMrec, moveMrec, mrecLoading, showMrec, type Follow } from '../mrec'
 
 // The ad is drawn in a native view above the WebView (an AppLovin MAX MREC for the mrec template while MAX has a unit,
 // otherwise the Google Mobile Ads native ad), so this element only reserves the space
@@ -20,7 +20,8 @@ const active = ref(true)
 const canShow = computed(() => adsAvailable.value && !adsSuppressed.value && active.value)
 
 // MAX MREC first for the mrec template; flips to false (AdMob native takes over) if MAX cannot create the view.
-let useMax = props.template === 'mrec' && !!maxUnit('mrec')
+const maxSlot = props.template === 'mrec' && !!maxUnit('mrec')
+let useMax = maxSlot
 // Where the page scrolls on a scroll box inside it, Android cannot see that scroll, so the MAX view is hidden while the
 // page scrolls and comes back once it has settled. Where the page scrolls on the document, Android moves the view in
 // the frame being drawn (see AdFollowPlugin.java) and nothing has to be hidden.
@@ -141,10 +142,20 @@ onMounted(() => {
   resizeObserver = new ResizeObserver(track)
   resizeObserver.observe(document.body)
   if (box.value) resizeObserver.observe(box.value)
+  subscribe()
+  track()
+})
+
+// The slot is drawn before the SDK has started, when ALF.Instance.Ads does not exist yet: listen once it does.
+function subscribe() {
+  if (unsubscribe || !adsAvailable.value) return
   unsubscribe = ALF.Instance.Ads.SetOnNativeAdEventHandler((event) => {
     if (event.slot === props.name && event.type === 'failed') fail()
   })
-  track()
+}
+
+watch(adsAvailable, () => {
+  if (native) subscribe()
 })
 
 onActivated(() => {
@@ -168,5 +179,13 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div v-if="native" ref="box" class="w-full shrink-0 rounded-2xl bg-gray-200/60" :style="{ height: `${height}px` }" aria-hidden="true" />
+  <!-- Always drawn, in one size: shimmer while the ad loads, a still background otherwise, the ad over it once it is there. -->
+  <div
+    v-if="native"
+    ref="box"
+    class="w-full shrink-0 overflow-hidden rounded-2xl"
+    :class="maxSlot && mrecLoading ? 'skeleton' : 'bg-gray-200/60'"
+    :style="{ height: `${height}px` }"
+    aria-hidden="true"
+  />
 </template>

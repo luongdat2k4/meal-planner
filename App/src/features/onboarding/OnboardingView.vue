@@ -6,6 +6,7 @@ import { assetUrl, thumbUrl } from '../../shared/assets'
 import { t } from '../../shared/i18n'
 import { ICONS } from '../../shared/icons'
 import { preloadInterstitial, showInterstitial } from '../ads/adRuntime'
+import InFeedAd from '../ads/components/InFeedAd.vue'
 import { getMeal } from '../meals'
 import { usePreferences } from '../preferences'
 

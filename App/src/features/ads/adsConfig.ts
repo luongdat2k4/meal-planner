@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core'
-import { ALF, type Config } from '@alf/app-sdk'
+import { ALF, type Config, type NativeAdTemplate } from '@alf/app-sdk'
 import { version } from '../../../package.json'
 
 // Placement settings in one place. Policy notes: design-note/plans/ads-meal-planner.md.
@@ -57,6 +57,15 @@ export const appLovinReady = !!adsConfig.keys.applovin?.[platform()]?.sdkKey
 /** The MAX unit for a format on this platform, or undefined while MAX is off or the unit is empty. */
 export function maxUnit(format: 'banner' | 'mrec' | 'interstitial'): string | undefined {
   return appLovinReady ? adsConfig.keys.applovin?.[platform()]?.[format] || undefined : undefined
+}
+
+/**
+ * Whether a native slot of this template can ever be filled, from the configuration alone (never from the state of the
+ * SDK or of a load). A slot that cannot is not drawn; one that can is drawn from the first frame and keeps its size.
+ */
+export function nativeConfigured(template: NativeAdTemplate): boolean {
+  if (template === 'mrec' && maxUnit('mrec')) return true
+  return adsConfig.settings?.testAds === true || !!adsConfig.keys.admob?.[platform()]?.native
 }
 
 // Ads only: the rest of the framework (analytics, push, i18n, IAP) is not

@@ -2,6 +2,7 @@ import { computed, onBeforeUnmount, ref, watch, type Ref } from 'vue'
 import { Capacitor } from '@capacitor/core'
 import { ALF, ALFAdMob, ALFAppLovinMAX } from '@alf/app-sdk'
 import { adsConfig, initAds, maxUnit } from './adsConfig'
+import { markBannerSdkReady, preloadBanner, syncBannerHeight } from './banner'
 import { preloadMrec } from './mrec'
 
 // Shared state of the ad layer. Ads only exist in the native app: on the web `adsAvailable` stays false, so no ad
@@ -23,6 +24,9 @@ export function initializeAds(): Promise<void> {
     .then(() => {
       initialized.value = true
       void preloadMrec()
+      markBannerSdkReady()
+      preloadBanner()
+      syncBannerHeight()
     })
     .catch((error) => console.warn('[ads] init failed', error)))
 }

@@ -1,3 +1,4 @@
+import { computed, ref } from 'vue'
 import { ALFAppLovinMAX } from '@alf/app-sdk'
 import { AdFollow } from './adFollow'
 import { maxUnit } from './adsConfig'
@@ -9,6 +10,14 @@ import { maxUnit } from './adsConfig'
 type Rect = { x: number; y: number; width: number; height: number }
 /** The ad's top edge inside the page and the band it may show in (CSS px), for screens that scroll on the document. */
 export type Follow = { pageTop: number; clipTop: number; clipBottom: number }
+
+// What the shared MREC is doing, for the slots' placeholder: shimmer while loading, a still background otherwise.
+// `slow` (no ad after 10 s) only stops the shimmer; the slot keeps its size and the ad still fills it if it arrives.
+// MAX retries on its own after a failure, so `failed` is not final: the ad can still appear over the background.
+export type MrecState = 'idle' | 'loading' | 'slow' | 'ready' | 'failed'
+const LOADING_MS = 10_000
+export const mrecState = ref<MrecState>('idle')
+export const mrecLoading = computed(() => mrecState.value === 'idle' || mrecState.value === 'loading')
 
 const OFF_SCREEN: Rect = { x: 0, y: -2000, width: 300, height: 250 }
 
@@ -29,7 +38,17 @@ function run<T>(action: () => Promise<T>): Promise<T> {
 // either way and MAX keeps retrying, so the call is not waited for: later commands go straight after it.
 function create(adUnitId: string, rect: Rect) {
   created = true
-  void ALFAppLovinMAX.createMRec({ adUnitId, position: 'CENTER', rect }).catch((error) => console.warn('[ads] MREC load', error))
+  mrecState.value = 'loading'
+  setTimeout(() => {
+    if (mrecState.value === 'loading') mrecState.value = 'slow'
+  }, LOADING_MS)
+  ALFAppLovinMAX.createMRec({ adUnitId, position: 'CENTER', rect }).then(
+    () => (mrecState.value = 'ready'),
+    (error) => {
+      console.warn('[ads] MREC load', error)
+      mrecState.value = 'failed'
+    },
+  )
 }
 
 /** Creates the view off screen and hidden so an ad is already loading when the first slot needs it. */

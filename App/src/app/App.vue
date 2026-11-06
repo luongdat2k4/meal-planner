@@ -3,7 +3,9 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { Icon } from '@iconify/vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import { useShopping } from '../features/shopping'
-import { adsAvailable, adsSuppressed } from '../features/ads/adRuntime'
+import { adsSuppressed } from '../features/ads/adRuntime'
+import { adsPossible, bannerHeight } from '../features/ads/banner'
+import { BANNER_GAP } from '../features/ads/adsConfig'
 import BannerAd from '../features/ads/components/BannerAd.vue'
 import { startInterstitialPacing } from '../features/ads/pacing'
 import QuickSuggestSheet from '../features/planner/components/QuickSuggestSheet.vue'
@@ -41,7 +43,14 @@ router.isReady().then(() => {
 const showChrome = computed(() => ready.value && !route.meta.fullscreen)
 const showHeader = computed(() => showChrome.value && !route.meta.hideHeader)
 // The bottom banner: on routes that ask for it, and never over a sheet or the keyboard.
-const shellBanner = computed(() => adsAvailable.value && !!route.meta.ads?.banner && !adsSuppressed.value)
+// It depends on what the user does (the screen, a sheet, the keyboard), never on whether an ad has loaded.
+const shellBanner = computed(() => adsPossible && !!route.meta.ads?.banner && !adsSuppressed.value)
+// The one writer of --ad-bottom, set before the first paint: the tab bar and the page padding follow it.
+watch(
+  [shellBanner, bannerHeight],
+  ([on, height]) => document.documentElement.style.setProperty('--ad-bottom', on ? `${height + BANNER_GAP}px` : '0px'),
+  { immediate: true, flush: 'sync' },
+)
 
 const pendingCount = computed(() => shopping.items.filter((item) => !item.checked).length)
 
@@ -175,7 +184,7 @@ router.afterEach((to) => {
     <!-- Room for the banner, which the SDK draws over the bottom edge of the screen. -->
     <div v-if="route.meta.ads?.banner" data-ad-chrome="bottom" class="h-[var(--ad-bottom,0px)] shrink-0 transition-[height] duration-200" :class="showChrome ? '' : 'sticky bottom-0 z-30 bg-surface'" aria-hidden="true" />
 
-    <BannerAd v-if="adsAvailable" :visible="shellBanner" />
+    <BannerAd v-if="adsPossible" :visible="shellBanner" />
     <QuickSuggestSheet v-model="suggestOpen" />
     <ToastHost />
   </div>
