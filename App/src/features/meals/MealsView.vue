@@ -34,6 +34,15 @@ watch(
   { immediate: true },
 )
 
+// The home screen's search links here with ?q=<text> to show every match.
+watch(
+  () => route.query.q,
+  (q) => {
+    if (typeof q === 'string') query.value = q
+  },
+  { immediate: true },
+)
+
 // Suggestions that fit the user's preferences. The screen is kept alive between tabs, so they are picked each
 // time it is shown again: leaving the screen and coming back gives a fresh set of five.
 onActivated(() => {
