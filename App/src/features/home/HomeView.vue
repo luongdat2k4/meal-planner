@@ -141,6 +141,6 @@ const tiles = computed(() => [
       </div>
     </div>
 
-    <InFeedAd name="home" />
+    <InFeedAd name="home" template="mrec" />
   </section>
 </template>

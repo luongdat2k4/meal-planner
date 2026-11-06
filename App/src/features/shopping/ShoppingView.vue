@@ -194,7 +194,7 @@ async function copyList() {
       <p class="text-gray-500">{{ t('shopping.empty') }}</p>
     </div>
 
-    <InFeedAd v-if="state.items.length - checkedCount >= 5" name="shopping" />
+    <InFeedAd v-if="state.items.length - checkedCount >= 5" name="shopping" template="mrec" />
 
     <ImportRangeSheet v-model="rangeOpen" @pick="importFromPlan" />
   </section>

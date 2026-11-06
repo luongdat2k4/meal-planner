@@ -9,6 +9,6 @@ import FieldReminder from '../preferences/components/FieldReminder.vue'
       <FieldReminder />
     </div>
 
-    <InFeedAd name="settings-reminder" :min-viewport-height="700" class="mt-6" />
+    <InFeedAd name="settings-reminder" template="mrec" :min-viewport-height="700" class="mt-6" />
   </section>
 </template>

@@ -62,22 +62,21 @@ const suggestOpen = ref(false)
 // Tab screens keep their state (search text, scroll) while switching tabs.
 const cachedViews = ['HomeView', 'MealsView', 'PlannerView', 'ShoppingView']
 
-// Only the area between the title and the tab bar scrolls (`main`, marked data-scroll-root); the header and the tab
-// bar stay put. Tab screens come back at the scroll position they were left at, other screens start at the top.
-const scroller = ref<HTMLElement | null>(null)
+// The page scrolls on the document, not in a box of its own: Android can only read the document's scroll, and that is
+// what lets a native ad view follow the page frame by frame (see AdFollowPlugin.java). The tab bar and the banner strip
+// stay put by being sticky at the bottom. Tab screens come back at the scroll position they were left at, other screens
+// start at the top.
 const scrollPositions = new Map<string, number>()
 router.beforeEach((_to, from) => {
-  if (scroller.value) scrollPositions.set(from.fullPath, scroller.value.scrollTop)
+  scrollPositions.set(from.fullPath, window.scrollY)
 })
 router.afterEach((to) => {
-  void nextTick(() => {
-    if (scroller.value) scroller.value.scrollTop = to.meta.tab ? (scrollPositions.get(to.fullPath) ?? 0) : 0
-  })
+  void nextTick(() => window.scrollTo(0, to.meta.tab ? (scrollPositions.get(to.fullPath) ?? 0) : 0))
 })
 </script>
 
 <template>
-  <div class="mx-auto flex max-w-2xl flex-col" :class="showChrome ? 'h-dvh overflow-hidden' : 'min-h-dvh'">
+  <div class="mx-auto flex min-h-dvh max-w-2xl flex-col">
     <!-- Paints the status bar area when the app is drawn edge to edge (no height where there is no status bar). -->
     <div
       data-ad-chrome="top"
@@ -114,12 +113,7 @@ router.afterEach((to) => {
       </RouterLink>
     </div>
 
-    <main
-      ref="scroller"
-      data-scroll-root
-      class="flex-1"
-      :class="showChrome ? (showHeader ? 'min-h-0 overflow-y-auto overscroll-contain px-5 pb-6 pt-3' : 'min-h-0 overflow-y-auto overscroll-contain px-5 pb-6') : ''"
-    >
+    <main class="flex-1" :class="showChrome ? (showHeader ? 'px-5 pb-6 pt-3' : 'px-5 pb-6') : ''">
       <RouterView v-slot="{ Component }">
         <KeepAlive :include="cachedViews">
           <component :is="Component" />
@@ -127,7 +121,11 @@ router.afterEach((to) => {
       </RouterView>
     </main>
 
-    <nav v-if="showChrome" data-ad-chrome="bottom" class="z-30 w-full shrink-0 px-5 pb-[max(env(safe-area-inset-bottom),0.75rem)] pt-2">
+    <nav
+      v-if="showChrome"
+      data-ad-chrome="bottom"
+      class="sticky bottom-[var(--ad-bottom,0px)] z-30 w-full shrink-0 bg-gradient-to-t from-surface via-surface/90 to-transparent px-5 pb-[max(env(safe-area-inset-bottom),0.75rem)] pt-4"
+    >
       <ul class="flex items-center justify-between rounded-full bg-white p-2 shadow-[0_12px_36px_rgb(70_80_140/0.18)] ring-1 ring-white/70">
         <li v-for="tab in leftTabs" :key="tab.name">
           <RouterLink :to="{ name: tab.name }" custom v-slot="{ href, navigate, isActive }">
@@ -182,7 +180,7 @@ router.afterEach((to) => {
     </nav>
 
     <!-- Room for the banner, which the SDK draws over the bottom edge of the screen. -->
-    <div v-if="route.meta.ads?.banner" data-ad-chrome="bottom" class="h-[var(--ad-bottom,0px)] shrink-0 transition-[height] duration-200" :class="showChrome ? '' : 'sticky bottom-0 z-30 bg-surface'" aria-hidden="true" />
+    <div v-if="route.meta.ads?.banner" data-ad-chrome="bottom" class="sticky bottom-0 z-30 h-[var(--ad-bottom,0px)] shrink-0 bg-surface transition-[height] duration-200" aria-hidden="true" />
 
     <BannerAd v-if="adsPossible" :visible="shellBanner" />
     <QuickSuggestSheet v-model="suggestOpen" />

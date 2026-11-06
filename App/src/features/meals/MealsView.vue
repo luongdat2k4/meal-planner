@@ -79,8 +79,8 @@ const filtered = computed(() => {
 
 // The catalog has hundreds of meals, so the grid is windowed: only the rows near the viewport are in the DOM, and
 // padding above and below stands in for the rows that are not, so the page keeps its full height and scrollbar.
-// The area between the title and the tab bar scrolls (App.vue's data-scroll-root), so the window is computed from
-// that element's scroll position and the grid's position inside it.
+// The page scrolls on the document (App.vue), so the window is computed from the window's scroll position and the
+// grid's position in the page.
 const COLUMNS = 2
 const GAP = 16
 const OVERSCAN = 500
@@ -103,11 +103,9 @@ function updateRows() {
   const card = grid.value?.querySelector('article')
   if (card && Math.abs(card.offsetHeight + GAP - pitch.value) > 0.5) pitch.value = card.offsetHeight + GAP
 
-  const root = scrollRoot()
-  if (!root) return
-  const top = host.getBoundingClientRect().top - root.getBoundingClientRect().top + root.scrollTop
-  const first = Math.floor((root.scrollTop - OVERSCAN - top) / pitch.value)
-  const last = Math.ceil((root.scrollTop + root.clientHeight + OVERSCAN - top) / pitch.value)
+  const top = host.getBoundingClientRect().top + window.scrollY
+  const first = Math.floor((window.scrollY - OVERSCAN - top) / pitch.value)
+  const last = Math.ceil((window.scrollY + window.innerHeight + OVERSCAN - top) / pitch.value)
   const start = Math.min(Math.max(first, 0), Math.max(rowCount.value - 1, 0))
   const end = Math.min(Math.max(last, start + 1), rowCount.value)
   if (start !== rows.value.start || end !== rows.value.end) rows.value = { start, end }
@@ -122,22 +120,14 @@ function scheduleUpdate() {
   })
 }
 
-function scrollRoot(): HTMLElement | null {
-  return gridHost.value?.closest<HTMLElement>('[data-scroll-root]') ?? document.querySelector<HTMLElement>('[data-scroll-root]')
-}
-
-let listeningOn: HTMLElement | null = null
-
 function listen() {
-  listeningOn = scrollRoot()
-  listeningOn?.addEventListener('scroll', scheduleUpdate, { passive: true })
+  window.addEventListener('scroll', scheduleUpdate, { passive: true })
   window.addEventListener('resize', scheduleUpdate)
   scheduleUpdate()
 }
 
 function unlisten() {
-  listeningOn?.removeEventListener('scroll', scheduleUpdate)
-  listeningOn = null
+  window.removeEventListener('scroll', scheduleUpdate)
   window.removeEventListener('resize', scheduleUpdate)
   cancelAnimationFrame(frame)
   frame = 0
